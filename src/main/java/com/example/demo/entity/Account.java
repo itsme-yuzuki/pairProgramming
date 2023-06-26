@@ -13,6 +13,7 @@ import lombok.Data;
 @Component
 @Data
 @Entity
+@Component
 @Table(name = "account")
 public class Account {
 	@Id
@@ -39,11 +40,19 @@ public class Account {
 	}
 
 	public Account(String name, String email,
+<<<<<<< HEAD
 			String password, Integer authoriseId) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.authoriseId = authoriseId;
+=======
+			String password, Integer authoriseId){
+		this.name= name;
+		this.email= email;
+		this.password= password;
+		this.authoriseId= authoriseId;
+>>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
 	}
 
 	public Account(Integer id, String name, String email, String password, Integer authoriseId) {
