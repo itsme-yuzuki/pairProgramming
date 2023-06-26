@@ -36,7 +36,7 @@ public class AdminController {
 		}
 
 	//postでアカウントの新規追加
-	@PostMapping("/admin")
+	@PostMapping("/admin/add")
 	public String addAccount(
 			@RequestParam(name= "name") String name,
 			@RequestParam(name= "email", defaultValue="") String email,
