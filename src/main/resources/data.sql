@@ -9,8 +9,8 @@ INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 
 INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 'sato2@abc.com','sato2020', 2);
 
 -- アテンダンステーブルデータ
-INSERT INTO attendance(submit_date, attendance_id) VALUES(date, 1);
-INSERT INTO attendance(submit_date, attendance_id) VALUES(date, 2); 
+--INSERT INTO attendance(submit_date, attendance_id) VALUES(date, 1);
+--INSERT INTO attendance(submit_date, attendance_id) VALUES(date, 2); 
 
 --アテンダンスタイプテーブル
 INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(1,'出勤');
@@ -34,7 +34,7 @@ INSERT INTO leave_type(leave_id, leave_type) VALUES(11, '連続特別休暇');
 INSERT INTO leave_type(leave_id, leave_type) VALUES(12, 'その他休暇');
 
 --approval_statusテーブル
-INSERT INTO approval_status(approval_id, approval_status) VALUES(1, '未申請')
-INSERT INTO approval_status(approval_id, approval_status) VALUES(2, '承認待ち')
-INSERT INTO approval_status(approval_id, approval_status) VALUES(3, '差し戻し')
-INSERT INTO approval_status(approval_id, approval_status) VALUES(4, '承認済み')
+INSERT INTO approval_status(approval_id, approval_status) VALUES(1, '未申請');
+INSERT INTO approval_status(approval_id, approval_status) VALUES(2, '承認待ち');
+INSERT INTO approval_status(approval_id, approval_status) VALUES(3, '差し戻し');
+INSERT INTO approval_status(approval_id, approval_status) VALUES(4, '承認済み');
