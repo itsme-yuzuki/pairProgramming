@@ -8,30 +8,21 @@ import lombok.Data;
 @Data
 @Component
 @SessionScope
-public class Account {
+public class User {
 	//フィールド
 	private String name;
 	private Integer id;
 	
 	//コンストラクタ
-	public Account() {
+	public User() {
 		
 	}
 
-	public Account(String name) {
+	public User(String name) {
 		this.name = name;
 	}
 	
-	public Account(String name, String address, String phoneNumber, 
-		String email, String password) {
-			this.name= name;
-			this.name= address;
-			this.name= phoneNumber;
-			this.name= email;
-			this.name= password;
-	}
-	
-	public Account(Integer id, String name) {
+	public User(Integer id, String name) {
 		this.id= id;
 		this.name = name;
 	}

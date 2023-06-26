@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Item;
 import com.example.demo.model.Cart;
+import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.ItemRepository;
 
 import jakarta.servlet.http.HttpSession;

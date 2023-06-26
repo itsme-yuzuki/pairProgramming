@@ -51,6 +51,8 @@ CREATE TABLE attendance
 CREATE TABLE leave
 (
    id SERIAL REFERENCES account (id),
+   authoriser_id SERIAL REFERENCES account (id),
    leave_id Integer REFERENCES leave_type (leave_id),
-   approval_id Integer REFERENCES approval_status (approval_id)
+   approval_id Integer REFERENCES approval_status (approval_id),
+   message TEXT
 );
