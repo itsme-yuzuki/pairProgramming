@@ -32,7 +32,7 @@ public class AccountController {
 	@Autowired
 	Account account;
 
-	// ログイン画面を表示
+	//	 ログイン画面を表示
 	@GetMapping({ "/login", "/logout" })
 	public String index(
 			@RequestParam(name = "password", defaultValue = "") String password,
@@ -74,6 +74,7 @@ public class AccountController {
 		// セッション管理されたアカウント情報に名前をセット
 		user.setName(account.getName());
 		user.setId(account.getId());
+		user.setAuthorise(account.getAuthoriseId());
 
 		return "redirect:/items";
 	}
@@ -95,38 +96,48 @@ public class AccountController {
 
 	}
 
-	@GetMapping("accountDetail")
+	@GetMapping("/accountDetail")
 	public String accountDetail(Model model) {
 
-		Optional<Account> account = accountRepository.findById(user.getId());
+		account = null;
+
+		Optional<Account> record = accountRepository.findById(user.getId());
+		//		Optional<Account> record = accountRepository.findById(1);
+
+		if (record.isEmpty() == false) {
+			account = record.get();
+		}
 
 		model.addAttribute("account", account);
 
 		return "accountDetail";
 	}
 
-	@PostMapping("accountDetail")
+	@PostMapping("/accountDetail")
 	public String accountDetail(@RequestParam("oldPassword") String oldPassword,
 			@RequestParam("newPassword") String newPassword,
 			Model model) {
-		Optional<Account> passwordCheck = accountRepository.findByIdAndPassword(user.getId(), oldPassword);
+		Optional<Account> record = accountRepository.findById(user.getId());
+		//		Optional<Account> record = accountRepository.findById(1);
 
-		List<String> errorMessage = new ArrayList<String>();
+		account = record.get();
 
-		if (passwordCheck.isEmpty()) {
-			errorMessage.add("パスワードが不一致");
+		List<String> errormessage = new ArrayList<String>();
+
+		if (account.getPassword().equals(oldPassword) == false) {
+			errormessage.add("パスワードが不一致");
 		}
-		if (errorMessage.size() > 0) {
-			model.addAttribute("message",errorMessage);
-			return "accountDetail";
+		if (errormessage.size() > 0) {
+			model.addAttribute("errormessage", errormessage);
+			return accountDetail(model);
 		}
 
-		account = new Account(user.getId(), newPassword);
-		
+		account.setPassword(newPassword);
+
 		accountRepository.save(account);
 
 		model.addAttribute("message", "パスワードの変更が成功しました");
-		
-		return "/accountDetail";
+
+		return accountDetail(model);
 	}
 }

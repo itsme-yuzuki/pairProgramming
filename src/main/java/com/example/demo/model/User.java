@@ -12,6 +12,7 @@ public class User {
 	//フィールド
 	private String name;
 	private Integer id;
+	private Integer authorise;
 	
 	//コンストラクタ
 	public User() {
