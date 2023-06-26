@@ -1,3 +1,7 @@
+--authorise_nameテーブル
+INSERT INTO authorise_name(authorise_id,authorise_name) VALUES(1,'上位');
+INSERT INTO authorise_name(authorise_id,authorise_name) VALUES(2, '下位');
+
 -- accountテーブルデータ
 INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 'suzuki1@abc.com','suzuki1010', 1);
 INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木二郎', 'suzuki2@abc.com','suzuki2020', 2);
@@ -15,9 +19,6 @@ INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(3,'遅刻');
 INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(4,'早退');
 INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(5,'交通遅延');
 
---authorise_nameテーブル
-INSERT INTO authorise_name(authorise_id,authorise_name) VALUES(1,'上位');
-INSERT INTO authorise_name(authorise_id,authorise_name) VALUES(2, '下位');
 
 --leave_typeテーブル
 INSERT INTO leave_type(leave_id, leave_type) VALUES(1, '全日有給休暇');
