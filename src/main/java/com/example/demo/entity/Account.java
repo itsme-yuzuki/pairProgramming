@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Component
 @Data
 @Entity
 @Component
@@ -39,20 +38,12 @@ public class Account {
 		this.password = password;
 	}
 
-	public Account(String name, String email,
-<<<<<<< HEAD
-			String password, Integer authoriseId) {
+	public Account(String name, String email, String password, Integer authoriseId) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.authoriseId = authoriseId;
-=======
-			String password, Integer authoriseId){
-		this.name= name;
-		this.email= email;
-		this.password= password;
-		this.authoriseId= authoriseId;
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
+
 	}
 
 	public Account(Integer id, String name, String email, String password, Integer authoriseId) {
