@@ -5,8 +5,8 @@ INSERT INTO authorise_name(authorise_id,authorise_name) VALUES(2, '下位');
 -- accountテーブルデータ
 INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 'suzuki1@abc.com','suzuki1010', 1);
 INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木二郎', 'suzuki2@abc.com','suzuki2020', 2);
-INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 'suzuki3@abc.com','suzuki3030', 1);
-INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 'sato2@abc.com','sato2020', 2);
+INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木三郎', 'suzuki3@abc.com','suzuki3030', 1);
+INSERT INTO account(name, email, password, authorise_id) VALUES('佐藤二朗', 'sato2@abc.com','sato2020', 2);
 
 -- アテンダンステーブルデータ
 --INSERT INTO attendance(submit_date, attendance_id) VALUES(date, 1);
