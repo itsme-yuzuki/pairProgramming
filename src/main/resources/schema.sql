@@ -1,3 +1,12 @@
+-- テーブル削除
+DROP TABLE IF EXISTS attendance_type;
+DROP TABLE IF EXISTS authorise_name;
+DROP TABLE IF EXISTS leave_type;
+DROP TABLE IF EXISTS approval_status;
+DROP TABLE IF EXISTS account;
+DROP TABLE IF EXISTS attendance
+DROP TABLE IF EXISTS leave;
+
 -- 勤怠状況テーブル（主キー）
 CREATE TABLE attendance_type
 (
