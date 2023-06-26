@@ -24,5 +24,10 @@ public class Account {
 	
 	@Column(name = "authorise_id")
 	public Integer authoriseId; // 権限
+
+	public Account(Integer id, String password) {
+		this.id = id;
+		this.password = password;
+	}
 	
 }
