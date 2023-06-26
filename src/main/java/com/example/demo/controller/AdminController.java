@@ -26,17 +26,23 @@ public class AdminController {
 	AccountRepository accountRepository;
 	
 	//getでアカウント一覧を表示
-	@GetMapping("/account")
+	@GetMapping("/admin")
 	public String index(
 		@RequestParam(name= "admin", defaultValue= "")String admin,
 		Model model) {
-		List<Account> users = accountRepository.findAll();
-		model.addAttribute("users", users);
+		List<Account> accounts = accountRepository.findAll();
+		model.addAttribute("accounts", accounts);
 			return "admin";
 		}
 
+	//アカウント追加編集画面への遷移
+	@GetMapping("/admin/edit")
+	public String addAccount() {
+		return "adminEdit";
+	}
+	
 	//postでアカウントの新規追加
-	@PostMapping("/admin/add")
+	@PostMapping("/admin/edit")
 	public String addAccount(
 			@RequestParam(name= "name") String name,
 			@RequestParam(name= "email", defaultValue="") String email,
@@ -47,7 +53,7 @@ public class AdminController {
 		Account account= new Account(name, email, password, authoriseId);
 		model.addAttribute("account", account);
 			
-		return "admin";
+		return "adminEdit";
 	}
 	
 }

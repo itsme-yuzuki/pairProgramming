@@ -9,30 +9,28 @@
 	<header th:replace="header"></header>
 	<hr>
 	<main>
-		<h1>管理者 - アカウント一覧</h1>
+		<h1>管理者 - アカウント編集</h1>
 		<hr>
-		<form action="/admin/edit" method="get">
+		<form action="/admin/edit" method="post">
 		<table border="1">
 				<tr>
 					<th>氏名</th>
-					<td th:text="${accounts.name}"></td>
+					<td><input type="text" name="name" th:value="${account.name}"></td>
 				</tr>
 				<tr>
 					<th>メールアドレス</th>
-					<td th:text="${accounts.email}"></td>
+					<td><input type="text" name="email" th:value="${account.email}"></td>
 				</tr>
 				<tr>
 					<th>パスワード</th>
-					<td th:text="${accounts.password}"></td>
+					<td><input type="text" name="password" th:value="${account.password}"></td>
 				</tr>
 				<tr>
 					<th>付与済み権限</th>
-					<td th:text="${accounts.authoriseId}"></td>
+					<td><input type="text" name="authoriseId" th:value="${account.authoriseId}"></td>
 				</tr>
 			</table>
-			<br>
-		
-			<button>アカウント新規追加・編集</button>
+	
 		</form>
 	</main>
 	<hr>
