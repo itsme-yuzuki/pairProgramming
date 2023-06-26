@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CustomerInfo</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	<header th:replace="header"></header>
+	<hr>
+	<main>
+		<h3>管理者 - アカウント一覧</h3>
+		<span th:replace="cartItem"></span>
+		<hr>
+		<table border="1">
+				<tr>
+					<th>氏名</th>
+					<td th:text="${account.name}"></td>
+				</tr>
+				<tr>
+					<th>メールアドレス</th>
+					<td th:text="${account.email}"></td>
+				</tr>
+				<tr>
+					<th>パスワード</th>
+					<td th:text="${account.password}"></td>
+				</tr>
+				<tr>
+					<th>付与済み権限</th>
+					<td th:text="${account.authoriseId}"></td>
+				</tr>
+			</table>
+	
+		<form action="/admin" method="post">
+			<button>アカウント新規追加・編集</button>
+		</form>
+	</main>
+	<hr>
+	<footer th:replace="footer"></footer>
+</body>
+</html>
