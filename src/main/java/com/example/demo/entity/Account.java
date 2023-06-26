@@ -25,4 +25,20 @@ public class Account {
 	@Column(name = "authorise_id")
 	public Integer authoriseId; // 権限
 	
+	//コンストラクタ
+	public Account() {
+		
+	}
+	
+	public Account(String name, String email,
+			String password, Integer authoriseId){
+		this.name= name;
+		this.email= email;
+		this.password= password;
+		this.authoriseId= authoriseId;
+		
+		
+	}
+	
+	
 }
