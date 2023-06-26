@@ -1,33 +1,23 @@
--- アカウントテーブルデータ(name)
-INSERT INTO account(name) VALUES('鈴木一郎');
-INSERT INTO account(name) VALUES('鈴木二郎');
-INSERT INTO account(name) VALUES('鈴木三郎');
-INSERT INTO account(name) VALUES('佐藤二郎');
--- アカウントテーブルデータ(email)
-INSERT INTO account(email) VALUES('suzuki1@abc.com');
-INSERT INTO account(email) VALUES('suzuki2@abc.com');
-INSERT INTO account(email) VALUES('suzuki3@abc.com');
-INSERT INTO account(email) VALUES('sato2@abc.com');
--- アカウントテーブルデータ(password)
-INSERT INTO account(password) VALUES('suzuki1010');
-INSERT INTO account(password) VALUES('suzuki2020');
-INSERT INTO account(password) VALUES('suzuki3030');
-INSERT INTO account(password) VALUES('sato2020');
+-- accountテーブルデータ
+INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 'suzuki1@abc.com','suzuki1010', 1);
+INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木二郎', 'suzuki2@abc.com','suzuki2020', 2);
+INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 'suzuki3@abc.com','suzuki3030', 1);
+INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 'sato2@abc.com','sato2020', 2);
 
 -- アテンダンステーブルデータ
 --INSERT INTO attendance(submit_date, attendance_id) VALUES(, date, );
 --INSERT INTO items(category_id, name, price) VALUES(1, 'MLB Fun', 980); 
 
 --アテンダンスタイプテーブル
-INSERT INTO attendance_type(attendance_type) VALUES('出勤');
-INSERT INTO attendance_type(attendance_type) VALUES('退勤');
-INSERT INTO attendance_type(attendance_type) VALUES('遅刻');
-INSERT INTO attendance_type(attendance_type) VALUES('早退');
-INSERT INTO attendance_type(attendance_type) VALUES('交通遅延');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(1,'出勤');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(2,'退勤');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(3,'遅刻');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(4,'早退');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(5,'交通遅延');
 
 --authorise_nameテーブル
-INSERT INTO authorise_name(authorise_name) VALUES('上位');
-INSERT INTO authorise_name(authorise_name) VALUES('下位');
+INSERT INTO authorise_name(authorise_id,authorise_name) VALUES(1,'上位');
+INSERT INTO authorise_name(authorise_id,authorise_name) VALUES(2, '下位');
 
 --leave_typeテーブル
 INSERT INTO leave_type(leave_type) VALUES('全日有給休暇');
