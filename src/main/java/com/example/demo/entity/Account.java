@@ -11,8 +11,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
 @Component
+@Entity
 @Table(name = "account")
 public class Account {
 	@Id
@@ -53,5 +53,5 @@ public class Account {
 		this.password = password;
 		this.authoriseId = authoriseId;
 	}
-
+	
 }
