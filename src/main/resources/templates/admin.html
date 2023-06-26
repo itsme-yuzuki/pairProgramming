@@ -11,28 +11,28 @@
 	<main>
 		<h1>管理者 - アカウント一覧</h1>
 		<hr>
-		<form action="/admin/edit" method="get">
+		<form action="/admin/${accounts.id}/edit" method="get">
 		<table border="1">
-				<tr>
-					<th>氏名</th>
-					<td th:text="${accounts.name}"></td>
-				</tr>
-				<tr>
-					<th>メールアドレス</th>
-					<td th:text="${accounts.email}"></td>
-				</tr>
-				<tr>
-					<th>パスワード</th>
-					<td th:text="${accounts.password}"></td>
-				</tr>
-				<tr>
-					<th>付与済み権限</th>
-					<td th:text="${accounts.authoriseId}"></td>
-				</tr>
-			</table>
-			<br>
-		
-			<button>アカウント新規追加・編集</button>
+			<tr>
+				<th>社員番号</th>
+				<th>氏名</th>
+				<th>メールアドレス</th>
+				<th>パスワード</th>
+				<th>付与済み権限</th>
+			</tr>
+			<tr th:each="accounts:${accounts}">
+				<td th:text="${accounts.id}"></td>
+				<td th:text="${accounts.name}"></td>
+				<td th:text="${accounts.email}"></td>
+				<td th:text="${accounts.password}"></td>
+				<td th:text="${accounts.authoriseId}"></td>
+				<td><input type="submit" value="編集"></td>
+			</tr>
+		</table>
+		<br>
+		</form>
+		<form action="admin/add" method="get">
+			<button>アカウント新規追加</button>
 		</form>
 	</main>
 	<hr>

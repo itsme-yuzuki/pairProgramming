@@ -28,22 +28,36 @@ public class AdminController {
 	//getでアカウント一覧を表示
 	@GetMapping("/admin")
 	public String index(
-		@RequestParam(name= "admin", defaultValue= "")String admin,
 		Model model) {
 		List<Account> accounts = accountRepository.findAll();
 		model.addAttribute("accounts", accounts);
 			return "admin";
 		}
 
-	//アカウント追加編集画面への遷移
-	@GetMapping("/admin/edit")
-	public String addAccount() {
-		return "adminEdit";
+	//アカウント新規追加画面への遷移
+	@GetMapping("/admin/add")
+	public String accountAdding() {
+		return "addAccount";
 	}
 	
-	//postでアカウントの新規追加
-	@PostMapping("/admin/edit")
+	//アカウント新規追加
+	@PostMapping("/admin/add")
 	public String addAccount(
+			@RequestParam(name= "name") String name,
+			@RequestParam(name= "email", defaultValue="") String email,
+			@RequestParam(name= "password", defaultValue= "") String password,
+			@RequestParam(name= "authorise_id", defaultValue="") Integer authoriseId,
+			Model model
+			) {
+		Account account= new Account(name, email, password, authoriseId);
+		accountRepository.save(account);
+		
+		return "redirect:/account";
+	}
+	
+	//アカウント編集
+	@GetMapping("/admin/{id}/edit")
+	public String editAccount(
 			@RequestParam(name= "name") String name,
 			@RequestParam(name= "email", defaultValue="") String email,
 			@RequestParam(name= "password", defaultValue= "") String password,

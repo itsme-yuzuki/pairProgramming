@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.model.Account;
-import com.example.demo.repository.CustomerRepository;
+import com.example.demo.entity.Account;
+import com.example.demo.repository.AccountRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,7 +21,7 @@ public class AttendanceController {
 	Account account;
 
 	@Autowired
-	CustomerRepository customerRepository;
+	AccountRepository accountRepository;
 
 	// ログイン画面を表示
 	@GetMapping("index")

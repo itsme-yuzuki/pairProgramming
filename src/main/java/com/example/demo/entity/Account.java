@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Component
 @Table(name = "account")
 public class Account {
 	@Id
@@ -41,8 +44,6 @@ public class Account {
 		this.email= email;
 		this.password= password;
 		this.authoriseId= authoriseId;
-		
-		
 	}
 	
 	
