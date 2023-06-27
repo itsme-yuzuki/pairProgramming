@@ -1,6 +1,7 @@
 -- テーブル削除
 DROP TABLE IF EXISTS attendance;
 DROP TABLE IF EXISTS leave;
+DROP TABLE IF EXISTS leave_status;
 DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS attendance_type;
 DROP TABLE IF EXISTS authorise_name;
@@ -30,6 +31,7 @@ CREATE TABLE approval_status
    approval_id Integer PRIMARY KEY,
    approval_status text
 );
+
 -- アカウントテーブル
 CREATE TABLE account
 (
@@ -38,6 +40,14 @@ CREATE TABLE account
    email TEXT,
    password TEXT,
    authorise_id INTEGER REFERENCES authorise_name (authorise_id)
+);
+
+-- 休暇日数テーブル
+CREATE TABLE leave_status
+(
+   account_id SERIAL REFERENCES account (account_id),
+   leave_default Integer,
+   leave_remain Integer
 );
 -- 勤怠参照テーブル
 CREATE TABLE attendance

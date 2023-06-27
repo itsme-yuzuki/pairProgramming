@@ -13,10 +13,11 @@ public class User {
 	private String name;
 	private Integer accountId;
 	private Integer authorise;
+	private Integer leaveRemain;
 	
 	//コンストラクタ
 	public User() {
 		
 	}
 
-}
+} 

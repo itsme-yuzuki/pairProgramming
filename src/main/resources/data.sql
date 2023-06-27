@@ -38,3 +38,9 @@ INSERT INTO approval_status(approval_id, approval_status) VALUES(1, '未申請')
 INSERT INTO approval_status(approval_id, approval_status) VALUES(2, '承認待ち');
 INSERT INTO approval_status(approval_id, approval_status) VALUES(3, '差し戻し');
 INSERT INTO approval_status(approval_id, approval_status) VALUES(4, '承認済み');
+
+--leave_statusデーブル
+INSERT INTO leave_status(account_id, leave_default, leave_remain) VALUES(1, 10, 10);
+INSERT INTO leave_status(account_id, leave_default, leave_remain) VALUES(2, 10, 10);
+INSERT INTO leave_status(account_id, leave_default, leave_remain) VALUES(3, 10, 10);
+INSERT INTO leave_status(account_id, leave_default, leave_remain) VALUES(4, 10, 10);

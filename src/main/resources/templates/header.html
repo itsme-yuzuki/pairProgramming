@@ -1,7 +1,13 @@
 <header>
 	<h1><a href="/index">勤怠管理システム</a></h1>
-	<span th:text="${@account.name}+' さんがログイン中'"></span>
-	<a href="/logout">ログアウト</a>
+	<span th:text="${@user.name}+' さんがログイン中'"></span>
+	<a href="/logout">ログアウト</a><br>
+	<a href="/index?menu=1">勤怠管理</a>
+	<a href="/index?menu=2">承認待ち一覧</a>
+	<a href="/index?menu=3">申請先上位ユーザー編集・登録</a>
+	<a href="/index?menu=4">休暇申請</a>
+	<a href="/index?menu=5">振替勤務申請</a>
+	<a href="/index?menu=6">アカウントパスワード変更</a>
 </header>
 <script>
 	
