@@ -16,8 +16,9 @@ import lombok.Data;
 @Table(name = "account")
 public class Account {
 	@Id
+	@Column(name = "account_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id; // 社員番号
+	private Integer accountId; // 社員番号
 
 	private String name; // 名前
 
@@ -33,8 +34,8 @@ public class Account {
 
 	}
 
-	public Account(Integer id, String password) {
-		this.id = id;
+	public Account(Integer accountId, String password) {
+		this.accountId = accountId;
 		this.password = password;
 	}
 
@@ -46,8 +47,8 @@ public class Account {
 
 	}
 
-	public Account(Integer id, String name, String email, String password, Integer authoriseId) {
-		this.id = id;
+	public Account(Integer accountId, String name, String email, String password, Integer authoriseId) {
+		this.accountId = accountId;
 		this.name = name;
 		this.email = email;
 		this.password = password;

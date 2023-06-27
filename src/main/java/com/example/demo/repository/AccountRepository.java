@@ -10,9 +10,9 @@ import com.example.demo.entity.Account;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
 	//SELECT name FROM customers WHERE email=? AND password=?
-	Optional<Account> findByIdAndPassword(Integer id, String password);
+	Optional<Account> findByAccountIdAndPassword(Integer accountId, String password);
 	
-	Optional<Account> findByIdAndEmail(Integer id, String email);
+	Optional<Account> findByAccountIdAndEmail(Integer accountId, String email);
 	
 	List<Account>findAllByOrderById();
 
