@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PasswordResetGenerator {
-	static String getRandomString(int i) {
+	public static String getRandomString(int i) {
 		String theAlphaNumericS;
 		StringBuilder builder;
 
@@ -34,6 +34,6 @@ public class PasswordResetGenerator {
 		// output 
 		return (getRandomString(i));
 		
-//		System.out.println("A random string: " + getRandomString(i));
+//		System.out.println(getRandomString(i));
 	}
 }
