@@ -14,23 +14,22 @@
 		<form action="/admin/edit" method="post">
 		<table border="1">
 				<tr>
+					<th>社員番号</th>
 					<th>氏名</th>
-					<td><input type="text" name="name" th:value="${account.name}"></td>
-				</tr>
-				<tr>
 					<th>メールアドレス</th>
-					<td><input type="text" name="email" th:value="${account.email}"></td>
-				</tr>
-				<tr>
 					<th>パスワード</th>
-					<td><input type="text" name="password" th:value="${account.password}"></td>
+					<th>付与権限</th>
 				</tr>
-				<tr>
-					<th>付与済み権限</th>
+				<tr th:each="account:${account}">
+					<input type="hidden" name="id" th:value="${account.id}">
+					<td>[[${account.id}]]</td>
+					<td><input type="text" name="name" th:value="${account.name}"></td>
+					<td><input type="text" name="email" th:value="${account.email}"></td>
+					<td><input type="text" name="password" th:value="${account.password}"></td>
 					<td><input type="text" name="authoriseId" th:value="${account.authoriseId}"></td>
 				</tr>
 			</table>
-	
+			<button>更新</button>
 		</form>
 	</main>
 	<hr>
