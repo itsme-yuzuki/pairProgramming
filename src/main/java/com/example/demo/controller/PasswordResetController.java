@@ -34,11 +34,10 @@ public class PasswordResetController {
 	public String reset() {
 		PasswordResetGenerator pwdGen = new PasswordResetGenerator();
 		
-		
 	//データベースに仮パスワードを登録
-		Account account= new Account(int id, String password);
+		Account account= new Account(accountId, password);
 		
-		accountRepository.save(account);
+		accountRepository.save(pwdGen);
 	
 	//登録した仮パスワードをメールアドレスに送信
 		
