@@ -6,7 +6,6 @@ DROP TABLE IF EXISTS attendance_type;
 DROP TABLE IF EXISTS authorise_name;
 DROP TABLE IF EXISTS leave_type;
 DROP TABLE IF EXISTS approval_status;
-
 -- 勤怠状況テーブル（主キー）
 CREATE TABLE attendance_type
 (
@@ -34,7 +33,7 @@ CREATE TABLE approval_status
 -- アカウントテーブル
 CREATE TABLE account
 (
-   id SERIAL PRIMARY KEY,
+   account_id SERIAL PRIMARY KEY,
    name TEXT,
    email TEXT,
    password TEXT,
@@ -43,15 +42,19 @@ CREATE TABLE account
 -- 勤怠参照テーブル
 CREATE TABLE attendance
 (
-   id SERIAL REFERENCES account (id),
+   id SERIAL,
+   account_id SERIAL REFERENCES account (account_id),
    submit_date date,
-   attendance_id INTEGER REFERENCES attendance_type (attendance_id)
+   submit_time text,
+   attendance_id INTEGER REFERENCES attendance_type (attendance_id),
+   telework Integer
 );
 -- 休暇テーブル
 CREATE TABLE leave
 (
-   id SERIAL REFERENCES account (id),
-   authoriser_id SERIAL REFERENCES account (id),
+   id SERIAL,
+   account_id SERIAL REFERENCES account (account_id),
+   authoriser_id SERIAL REFERENCES account (account_id),
    leave_id Integer REFERENCES leave_type (leave_id),
    approval_id Integer REFERENCES approval_status (approval_id),
    message TEXT

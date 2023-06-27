@@ -11,7 +11,7 @@
 	</header>
 	<main>
 		<form action="/login" method="post">
-			<input type="text" name="email" placeholder="メールアドレス">
+			<input type="text" name="accountId" placeholder="社員番号">
 			<br>
 			<input type="password" name="password" placeholder="パスワード">
 			<br>
@@ -20,7 +20,7 @@
 			<br> <span th:text="${message}" style="color: red"></span>
 		</form>
 		<br>
-		<a href="/login?password=forget">パスワード変更</a>
+		<a href="/login?password=forget">パスワードお忘れの方</a>
 	</main>
 </body>
 </html>

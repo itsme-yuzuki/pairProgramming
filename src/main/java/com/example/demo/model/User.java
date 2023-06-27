@@ -11,21 +11,12 @@ import lombok.Data;
 public class User {
 	//フィールド
 	private String name;
-	private Integer id;
+	private Integer accountId;
 	private Integer authorise;
 	
 	//コンストラクタ
 	public User() {
 		
-	}
-
-	public User(String name) {
-		this.name = name;
-	}
-	
-	public User(Integer id, String name) {
-		this.id= id;
-		this.name = name;
 	}
 
 }
