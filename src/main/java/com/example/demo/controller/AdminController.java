@@ -30,7 +30,7 @@ public class AdminController {
 	@GetMapping("/admin")
 	public String index(
 		Model model) {
-		List<Account> accounts = accountRepository.findAllByOrderById();
+		List<Account> accounts = accountRepository.findAllByOrderByAccountId();
 		model.addAttribute("accounts", accounts);
 			return "admin";
 		}

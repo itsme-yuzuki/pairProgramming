@@ -35,7 +35,7 @@ public class PasswordResetController {
 		PasswordResetGenerator pwdGen = new PasswordResetGenerator();
 	
 	//データベースに仮パスワードを登録
-		Account account= new Account(id, password);
+//		Account account= new Account(id, password);
 		
 		accountRepository.save(account);
 	

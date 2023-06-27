@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PasswordResetGenerator {
 	static String getRandomString(int i) {
 		String theAlphaNumericS;
