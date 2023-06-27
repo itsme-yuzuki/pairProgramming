@@ -41,8 +41,9 @@ public class AttendanceController {
 	//	 ログイン画面を表示
 	@GetMapping("/attendance")
 	public String attendance(@RequestParam(name = "status") Integer status,
-			@RequestParam(name = "telework", defaultValue = "1") Integer telework,
 			Model model) {
+
+		Integer telework = 0;
 
 		LocalDate dateNow = LocalDate.now();
 
@@ -56,15 +57,37 @@ public class AttendanceController {
 
 		if (status == 1) {
 			if (timeNow.isBefore(time1)) {
+				//	telework=0;
 				attendanceStatus = 1;
 			} else if (timeNow.isAfter(time1)) {
+				//	telework=0;
 				attendanceStatus = 3;
 			}
 		}
 		if (status == 2) {
 			if (timeNow.isAfter(time2)) {
+				//	telework=0;
 				attendanceStatus = 2;
 			} else if (timeNow.isBefore(time2)) {
+				//	telework=0;
+				attendanceStatus = 4;
+			}
+		}
+		if (status == 3) {
+			if (timeNow.isBefore(time1)) {
+				telework = 1;
+				attendanceStatus = 1;
+			} else if (timeNow.isAfter(time1)) {
+				telework = 1;
+				attendanceStatus = 3;
+			}
+		}
+		if (status == 4) {
+			if (timeNow.isAfter(time2)) {
+				telework = 1;
+				attendanceStatus = 2;
+			} else if (timeNow.isBefore(time2)) {
+				telework = 1;
 				attendanceStatus = 4;
 			}
 		}
@@ -72,28 +95,32 @@ public class AttendanceController {
 		System.err.println(timeNow);
 		String time = timeNow.toString();
 		time = time.substring(0, 8);
-		
-		attendance = new Attendance(1, dateNow, time, attendanceStatus, telework);
+
+		attendance = new Attendance(user.getAccountId(), dateNow, time, attendanceStatus, telework);
 
 		attendanceReposity.save(attendance);
-		
-		return "ATTENDANCETEST";
+
+		return "homePage";
 	}
 
 	@GetMapping("/index")
 	public String index(
 			@RequestParam(name = "menu", defaultValue = "") Integer menu,
 			Model model) {
-//		switch (menu) {
-//		case 1:
-//			return "";
-//		case 2:
-//			return "";
-//		case 3:
-//			return "";
-//		case 4:
-//			return "";
-//		}
-		return "ATTENDANCETEST";
+		//		switch (menu) {
+		//		case 1:
+		//			return "";
+		//		case 2:
+		//			return "";
+		//		case 3:
+		//			return "";
+		//		case 4:
+		//			return "";
+		//		case 5:
+		//			return "";
+		//		case 6:
+		//			return "";
+		//		}
+		return "homePage";
 	}
 }
