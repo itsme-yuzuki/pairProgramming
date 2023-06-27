@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entity.Account;
-import com.example.demo.model.PasswordResetGenerator;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
@@ -16,7 +15,4 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	Optional<Account> findByAccountIdAndEmail(Integer accountId, String email);
 	
 	List<Account>findAllByOrderByAccountId();
-
-	void save(Integer accountId, PasswordResetGenerator pwdGen);
-
 }

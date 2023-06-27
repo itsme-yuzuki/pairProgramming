@@ -35,7 +35,7 @@ public class PasswordResetController {
 		PasswordResetGenerator.getRandomString(0);
 		
 	//データベースに仮パスワードを登録
-		accountRepository.save();
+		accountRepository.save(0);
 	
 	//登録した仮パスワードをメールアドレスに送信
 		
