@@ -10,10 +10,12 @@ header, nav, footer {
 	color: #ffffff; /* 文字色 */
 	padding-top: 5px; /* 内側余白(上) */
 	padding-bottom: 5px; /* 内側余白(下) */
+	
 }
 /* ヘッダー、ナビゲーション内リンク */
 header a, nav a {
 	color: #ffffff;
+	
 }
 /* ヘッダー内見出し */
 header h1 {
