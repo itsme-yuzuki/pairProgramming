@@ -31,15 +31,20 @@ public class PasswordResetController {
 
 	//仮パスワードを生成
 	@PostMapping("/reset")
-	public void reset() {
+	public String reset() {
 		PasswordResetGenerator pwdGen = new PasswordResetGenerator();
-	
+		
+		
 	//データベースに仮パスワードを登録
-//		Account account= new Account(id, password);
+		Account account= new Account(int id, String password);
 		
 		accountRepository.save(account);
 	
 	//登録した仮パスワードをメールアドレスに送信
+		
+		
+	//ログイン画面にリダイレクト
+		return "redirect:/login";
 	
 	}
 }
