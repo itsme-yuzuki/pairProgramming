@@ -53,14 +53,14 @@ public class AccountController {
 	// ログインを実行
 	@PostMapping("/login")
 	public String login(
-			@RequestParam("id") Integer id,
+			@RequestParam("accountId") Integer accountId,
 			@RequestParam("password") String password,
 			Model model) {
 
 		//DBからアドレスとパスワードを基に名前と顧客IDを取得する？
 		account = null;
 
-		Optional<Account> record = accountRepository.findByIdAndPassword(id, password);
+		Optional<Account> record = accountRepository.findByAccountIdAndPassword(accountId, password);
 
 		if (record.isEmpty() == false) {
 			account = record.get();
@@ -73,19 +73,19 @@ public class AccountController {
 
 		// セッション管理されたアカウント情報に名前をセット
 		user.setName(account.getName());
-		user.setId(account.getId());
+		user.setAccountId(account.getAccountId());
 		user.setAuthorise(account.getAuthoriseId());
 
-		return "redirect:/items";
+		return "redirect:/index";
 	}
 
 	@PostMapping("/passwordReset")
 	public String passwordReset(
-			@RequestParam("id") Integer id,
+			@RequestParam("accountId") Integer accountId,
 			@RequestParam("email") String email,
 			Model model) {
 
-		Optional<Account> emailCheck = accountRepository.findByIdAndEmail(id, email);
+		Optional<Account> emailCheck = accountRepository.findByAccountIdAndEmail(accountId, email);
 
 		if (emailCheck.isEmpty()) {
 			model.addAttribute("message", "社員番号とメールアドレスが不一致");
@@ -101,7 +101,7 @@ public class AccountController {
 
 		account = null;
 
-		Optional<Account> record = accountRepository.findById(user.getId());
+		Optional<Account> record = accountRepository.findById(user.getAccountId());
 		//		Optional<Account> record = accountRepository.findById(1);
 
 		if (record.isEmpty() == false) {
@@ -117,7 +117,7 @@ public class AccountController {
 	public String accountDetail(@RequestParam("oldPassword") String oldPassword,
 			@RequestParam("newPassword") String newPassword,
 			Model model) {
-		Optional<Account> record = accountRepository.findById(user.getId());
+		Optional<Account> record = accountRepository.findById(user.getAccountId());
 		//		Optional<Account> record = accountRepository.findById(1);
 
 		account = record.get();

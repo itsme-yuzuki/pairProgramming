@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+	<header>
+		<h1>test</h1>
+	</header>
+	<main>
+		<form action="/attendance" method="get">
+			<input type="hidden" name="status" value="1">
+			<button>出勤</button>
+		</form>
+		<form action="/attendance?status=2" method="get">
+			<input type="hidden" name="status" value="2">
+			<button>退勤</button>
+		</form>
+	</main>
+</body>
+
+</html>
