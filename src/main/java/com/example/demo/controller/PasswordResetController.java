@@ -32,13 +32,10 @@ public class PasswordResetController {
 	//仮パスワードを生成
 	@PostMapping("/reset")
 	public String reset() {
-		PasswordResetGenerator pwdGen = new PasswordResetGenerator();
-		
+		PasswordResetGenerator.getRandomString(0);
 		
 	//データベースに仮パスワードを登録
-//		Account account= new Account(int id, String password);
-		
-		accountRepository.save(account);
+
 	
 	//登録した仮パスワードをメールアドレスに送信
 		

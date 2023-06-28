@@ -15,5 +15,4 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	Optional<Account> findByAccountIdAndEmail(Integer accountId, String email);
 	
 	List<Account>findAllByOrderByAccountId();
-
 }
