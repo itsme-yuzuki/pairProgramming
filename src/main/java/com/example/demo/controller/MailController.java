@@ -28,5 +28,5 @@ public class MailController {
 		javaMailSender.send(mailMessage);
 		return "メール送信しました";
 	}
-	
+
 }
