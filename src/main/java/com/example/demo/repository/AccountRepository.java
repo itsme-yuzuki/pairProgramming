@@ -18,12 +18,8 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	//SELECT * FROM account ORDER BY accountId
 	List<Account>findAllByOrderByAccountId();
 	
-<<<<<<< HEAD
 	//UPDATE password WHERE accountId=?
 //	public void save(Integer accountId, String randomString);
-
-=======
->>>>>>> refs/heads/MOK
 }
 
 	
