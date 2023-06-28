@@ -9,10 +9,18 @@ import com.example.demo.entity.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
-	//SELECT name FROM customers WHERE email=? AND password=?
+	//SELECT * FROM account WHERE email=? AND password=?
 	Optional<Account> findByAccountIdAndPassword(Integer accountId, String password);
 	
+	//SELECT * FROM account WHERE accountId=? AND email=?
 	Optional<Account> findByAccountIdAndEmail(Integer accountId, String email);
 	
+	//SELECT * FROM account ORDER BY accountId
 	List<Account>findAllByOrderByAccountId();
+	
+	//UPDATE password WHERE accountId=?
+	 public void update(Customer customer) {
+	        customerRepository.save(customer);
+	    }
+	
 }
