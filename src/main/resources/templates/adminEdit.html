@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>CustomerInfo</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/style2.css">
 </head>
 <body>
 	<header th:replace="header"></header>
@@ -21,7 +21,7 @@
 					<th>付与権限</th>
 				</tr>
 				<tr th:each="account:${account}">
-					<input type="hidden" name="id" th:value="${account.id}">
+					<input type="hidden" name="id" th:value="${account.accountId}">
 					<td>[[${account.id}]]</td>
 					<td><input type="text" name="name" th:value="${account.name}"></td>
 					<td><input type="text" name="email" th:value="${account.email}"></td>

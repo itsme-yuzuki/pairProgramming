@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>CustomerInfo</title>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/style2.css">
 </head>
 
 <body>
@@ -13,7 +13,6 @@
 	<main>
 		<h1>管理者 - アカウント一覧</h1>
 		<hr>
-
 		<table border="1">
 			<tr>
 				<th>社員番号</th>
@@ -24,12 +23,12 @@
 			</tr>
 
 			<tr th:each="accounts:${accounts}">
-				<td th:text="${accounts.id}"></td>
+				<td th:text="${accounts.accountId}"></td>
 				<td th:text="${accounts.name}"></td>
 				<td th:text="${accounts.email}"></td>
 				<td th:text="${accounts.password}"></td>
 				<td th:text="${accounts.authoriseId}"></td>
-				<form th:action="|admin/${accounts.id}/edit|" method="get">
+				<form th:action="|admin/${accounts.accountId}/edit|" method="get">
 					<td><button>編集</button></td>
 				</form>
 			</tr>

@@ -33,7 +33,7 @@ public class PasswordResetController {
 	Account account;
 
 	//仮パスワードを生成
-	@PostMapping("/passwordReset")
+	@PostMapping("/reset")
 	public String reset(
 			@RequestParam(name = "accountId", defaultValue = "1") Integer accountId) {
 		int i = 12;
