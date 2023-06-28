@@ -13,10 +13,18 @@
 		<h1>勤怠一覧表</h1>
 		<table border="1">
 			<tr>
-				<th>社員番号</th>
 				<th>日付</th>
-				<th></th>
-				<th></th>
+				<th>出勤時間</th>
+				<th>退勤時間</th>
+				<th>勤怠状況</th>
+				<th>勤務先</th>
+			</tr>
+			<tr th:each="attendance:${attendance}">
+				<td>[[${attendance.date}]]</td>
+				<td>[[${attendance.arrivingTime}]]</td>
+				<td>[[${attendance.leftTime}]]</td>
+				<td>[[${attendance.attendanceId}]]</td>
+				<td>[[${attendance.telework}]]</td>
 			</tr>
 		</table>
 	</main>

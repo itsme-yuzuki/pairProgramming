@@ -20,15 +20,18 @@ public class Attendance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; // 勤怠ID
-	
+
 	@Column(name = "account_id")
 	private Integer accountId; // 日付
 
 	@Column(name = "submit_date")
-	private LocalDate Date; // 日付
+	private LocalDate date; // 日付
 
-	@Column(name = "submit_time")
-	private String time; // 時間
+	@Column(name = "arriving_time")
+	private String arrivingTime; // 時間
+
+	@Column(name = "left_time")
+	private String leftTime; // 時間
 
 	@Column(name = "attendance_id")
 	public Integer attendanceId; // 勤怠状況
@@ -40,11 +43,25 @@ public class Attendance {
 
 	}
 
-	public Attendance(Integer accountId, LocalDate date, String time, Integer attendanceId, Integer telework) {
-		super();
+	//出勤用
+	public Attendance(Integer accountId, LocalDate date, String arrivingTime, String leftTime, Integer attendanceId,
+			Integer telework) {
 		this.accountId = accountId;
-		Date = date;
-		this.time = time;
+		this.date = date;
+		this.arrivingTime = arrivingTime;
+		this.leftTime = leftTime;
+		this.attendanceId = attendanceId;
+		this.telework = telework;
+	}
+
+	//退勤用
+	public Attendance(Integer id, Integer accountId, LocalDate date, String arrivingTime, String leftTime,
+			Integer attendanceId, Integer telework) {
+		this.id = id;
+		this.accountId = accountId;
+		this.date = date;
+		this.arrivingTime = arrivingTime;
+		this.leftTime = leftTime;
 		this.attendanceId = attendanceId;
 		this.telework = telework;
 	}

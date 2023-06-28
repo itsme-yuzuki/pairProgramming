@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,19 +59,15 @@ public class AttendanceController {
 
 		if (status == 1) {
 			if (timeNow.isBefore(time1)) {
-				//	telework=0;
 				attendanceStatus = 1;
 			} else if (timeNow.isAfter(time1)) {
-				//	telework=0;
 				attendanceStatus = 3;
 			}
 		}
 		if (status == 2) {
 			if (timeNow.isAfter(time2)) {
-				//	telework=0;
 				attendanceStatus = 2;
 			} else if (timeNow.isBefore(time2)) {
-				//	telework=0;
 				attendanceStatus = 4;
 			}
 		}
@@ -97,8 +94,31 @@ public class AttendanceController {
 
 		time = time.substring(0, 8);
 
-		attendance = new Attendance(user.getAccountId(), dateNow, time, attendanceStatus, telework);
-
+		if (status == 1 || status == 3) {
+			Optional<Attendance> record = attendanceReposity.findByDate(dateNow);
+			if(record.isEmpty() == false) {
+				model.addAttribute("message", "出勤が二重しています。修正をしてください");
+				return "homePage";
+			}
+			model.addAttribute("message", "出勤しました");
+			attendance = new Attendance(user.getAccountId(), dateNow, time, null, attendanceStatus, telework);
+		} else if (status == 2 || status == 4) {
+			Optional<Attendance> record = attendanceReposity.findByDate(dateNow);
+			if (record.isEmpty()) {
+				model.addAttribute("message", "出勤記録がありません。修正をしてください");
+				return "homePage";
+			}
+			if(record.isEmpty() == false) {
+				attendance =  record.get();
+				if(attendance.getLeftTime() != null) {
+					model.addAttribute("message", "退勤が二重しています。修正をしてください");
+					return "homePage";
+				}
+			}
+			model.addAttribute("message", "退勤しました");
+			attendance = record.get();
+			attendance.setLeftTime(time);
+		}
 		attendanceReposity.save(attendance);
 
 		return "homePage";
@@ -110,11 +130,11 @@ public class AttendanceController {
 			Model model) {
 
 		int accountId = user.getAccountId();
-		
+
 		switch (menu) {
 		case 1:
-			List<Attendance>attendance = attendanceReposity.findByAccountIdOrderByDate(accountId);
-			model.addAttribute("attendance",attendance);
+			List<Attendance> attendance = attendanceReposity.findByAccountIdOrderByDate(accountId);
+			model.addAttribute("attendance", attendance);
 			return "attendance";
 		case 2:
 			return "attendanceEdit";
