@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +19,10 @@ public class PasswordResetController {
 
 	@Autowired
 	HttpSession session;
-	
+
 	@Autowired
 	User user;
-	
+
 	@Autowired
 	PasswordResetGenerator passwordResetGenerator;
 
@@ -33,20 +35,23 @@ public class PasswordResetController {
 	//仮パスワードを生成
 	@PostMapping("/passwordReset")
 	public String reset(
-			@RequestParam("accountId") Integer accountId
-			) {
-		int i= 12;
-		PasswordResetGenerator.getRandomString(i);
-	//データベースに仮パスワードを登録
-		accountRepository.save(accountId, PasswordResetGenerator.getRandomString(i));
+			@RequestParam(name = "accountId", defaultValue = "1") Integer accountId) {
+		int i = 12;
+		String passwword = PasswordResetGenerator.getRandomString(i);
 
+		//データベースに仮パスワードを登録
+		//	public void save(accountId,PasswordResetGenerator.getRandomString(i) account){
+		//		repository.save(account);
+		Optional<Account> record = accountRepository.findById(accountId);
+		account = record.get();
+		account.setPassword(passwword);
+		accountRepository.save(account);
 
-	
-	//登録した仮パスワードをメールアドレスに送信
-		
-		
-	//ログイン画面にリダイレクト
+		//登録した仮パスワードをメールアドレスに送信
+
+		//ログイン画面にリダイレクト
 		return "redirect:/login";
-	
+
 	}
+
 }

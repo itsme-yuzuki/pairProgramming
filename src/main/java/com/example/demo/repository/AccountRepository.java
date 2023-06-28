@@ -19,8 +19,8 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	List<Account>findAllByOrderByAccountId();
 	
 	//UPDATE password WHERE accountId=?
-	 public void update(Customer customer) {
-	        customerRepository.save(customer);
-	    }
-	
+//	public void save(Integer accountId, String randomString);
+
 }
+
+	
