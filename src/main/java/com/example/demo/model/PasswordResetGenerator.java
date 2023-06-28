@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Component
 public class PasswordResetGenerator {
-	public static String getRandomString(int i) {
+	public static String getRandomString(Integer i) {
 		String theAlphaNumericS;
 		StringBuilder builder;
 
