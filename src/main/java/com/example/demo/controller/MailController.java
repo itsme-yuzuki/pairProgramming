@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MailController {
-	private final JavaMailSender javaMailSender;
 	@Autowired
+	private final JavaMailSender javaMailSender;
+	
 	MailController(JavaMailSender javaMailSender){
 		this.javaMailSender= javaMailSender;
 	}
