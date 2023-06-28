@@ -131,6 +131,8 @@ public class AttendanceController {
 
 		int accountId = user.getAccountId();
 
+		
+		
 		switch (menu) {
 		case 1:
 			List<Attendance> attendance = attendanceReposity.findByAccountIdOrderByDate(accountId);
