@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -92,8 +93,8 @@ public class AttendanceController {
 			}
 		}
 
-		System.err.println(timeNow);
 		String time = timeNow.toString();
+
 		time = time.substring(0, 8);
 
 		attendance = new Attendance(user.getAccountId(), dateNow, time, attendanceStatus, telework);
@@ -105,22 +106,33 @@ public class AttendanceController {
 
 	@GetMapping("/index")
 	public String index(
-			@RequestParam(name = "menu", defaultValue = "") Integer menu,
+			@RequestParam(name = "menu", defaultValue = "0") Integer menu,
 			Model model) {
-		//		switch (menu) {
-		//		case 1:
-		//			return "";
-		//		case 2:
-		//			return "";
-		//		case 3:
-		//			return "";
-		//		case 4:
-		//			return "";
-		//		case 5:
-		//			return "";
-		//		case 6:
-		//			return "";
-		//		}
+
+		int accountId = user.getAccountId();
+		
+		switch (menu) {
+		case 1:
+			List<Attendance>attendance = attendanceReposity.findByAccountIdOrderByDate(accountId);
+			model.addAttribute("attendance",attendance);
+			return "attendance";
+		case 2:
+			return "attendanceEdit";
+		case 3:
+			return "pending";
+		case 4:
+			return "supervisor";
+		case 5:
+			return "leave";
+		case 6:
+			return "leaveRequest";
+		case 7:
+			return "alternate";
+		case 8:
+			return "alternateRequest";
+		case 9:
+			return "editPassword";
+		}
 		return "homePage";
 	}
 }

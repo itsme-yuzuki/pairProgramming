@@ -1,14 +1,42 @@
-<header>
+<header class="sample01">
 	<h1><a href="/index">勤怠管理システム</a></h1>
 	<span th:text="${@user.name}+' さんがログイン中'"></span>
-	<a href="/logout">ログアウト</a><br>
-	<a href="/index?menu=1">勤怠管理</a>
-	<a href="/index?menu=2">承認待ち一覧</a>
-	<a href="/index?menu=3">申請先上位ユーザー編集・登録</a>
-	<a href="/index?menu=4">休暇申請</a>
-	<a href="/index?menu=5">振替勤務申請</a>
-	<a href="/index?menu=6">アカウントパスワード変更</a>
+	<ul>
+		<li>勤怠管理▼
+			<ul id="attendance">
+				<li><a href="/index?menu=1">勤怠一覧</a></li>
+				<li><a href="/index?menu=2">勤怠編集</a></li>
+			</ul>
+		</li>
+		<li>申請承認待ち▼
+			<ul class="">
+				<li><a href="/index?menu=3">申請承認受け付け一覧</a></li>
+			</ul>
+		</li>
+		<li>申請先登録▼
+			<ul>
+				<li><a href="/index?menu=4">申請先一覧</a></li>
+			</ul>
+		</li>
+		<li>休暇申請▼
+			<ul>
+				<li><a href="/index?menu=5">休暇申請一覧</a></li>
+				<li><a href="/index?menu=6">新規休暇申請</a></li>
+			</ul>
+		</li>
+		<li>振替業務申請▼
+			<ul>
+				<li><a href="/index?menu=7">振替申請一覧</a></li>
+				<li><a href="/index?menu=8">新規振替申請</a></li>
+			</ul>
+		</li>
+		<li>アカウント管理▼
+			<ul>
+				<li><a href="/index?menu=9">パスワード変更</a></li>
+			</ul>
+		</li>
+	</ul>
 </header>
 <script>
-	
+
 </script>

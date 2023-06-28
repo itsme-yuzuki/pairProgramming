@@ -4,13 +4,12 @@ body {
 	text-align: center; /* 中央寄せ */
     min-width: 900px; /* 最小幅 */
 }
-/* ヘッダー、ナビゲーションメニュー、フッター */
-header, nav, footer {
-	background-color: #45496a; /* 背景色 */
-	color: #ffffff; /* 文字色 */
-	padding-top: 5px; /* 内側余白(上) */
-	padding-bottom: 5px; /* 内側余白(下) */
-	
+header{
+    margin-bottom: 10em;
+    position: relative;
+    width: 100%;
+    background-color: #45496a; /* 背景色 */
+    color: #ffffff; /* 文字色 */
 }
 /* ヘッダー、ナビゲーション内リンク */
 header a, nav a {
@@ -22,7 +21,6 @@ header h1 {
 	font-size: 20pt;
 	margin: 10px auto;
 }
-
 /* 仕切り線 */
 hr {
 	border-top: 2px dashed #7d8bae;
@@ -62,3 +60,48 @@ button {
 button:hover {
 	background-color: #f1b2b2;
 }
+/* Global Menu */
+ul > li{
+    display: inline-block;
+}
+ul > li > a{
+    padding: 15px 30px;
+    display: block;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+}
+ul > li > span{
+    margin-left: 1.2em;
+}
+ul > li:hover{
+    background-color: #efefef;
+    color: #444;
+}
+ 
+/* Submenu */
+ 
+ul li ul{
+    position: absolute;
+    top: 150px;
+    left: 0;
+}
+ul li ul li{
+    display: block;
+}
+ul li ul li a{
+    background-color: #efefef;
+    color: #444;
+}
+ul li ul li a:hover{
+    background-color: #ddd;
+}
+/*displayを使う方法 (sample01)*/
+.sample01 ul li ul{
+    display: none;
+}
+.sample01 ul li:hover ul{
+    display: block;
+}
+
+	

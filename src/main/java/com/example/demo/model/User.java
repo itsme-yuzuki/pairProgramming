@@ -14,7 +14,7 @@ public class User {
 	private Integer accountId;
 	private Integer authorise;
 	private Integer leaveRemain;
-	
+
 	//コンストラクタ
 	public User() {
 		
