@@ -63,10 +63,10 @@ CREATE TABLE attendance
    id SERIAL,
    account_id SERIAL REFERENCES account (account_id),
    submit_date text,
-   dow TEXT,
    arriving_time text,
    left_time text,
-   attendance_id INTEGER REFERENCES attendance_type (attendance_id),
+   attendance_id1 INTEGER REFERENCES attendance_type (attendance_id),
+   attendance_id2 INTEGER REFERENCES attendance_type (attendance_id),
    telework Integer
 );
 -- 休暇テーブル

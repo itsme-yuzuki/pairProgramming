@@ -10,27 +10,36 @@
 <body>
 	<header th:replace="header"></header>
 	<main>
-		<h1>勤怠一覧表</h1>
+		<h1>[[${month}]]月勤怠一覧表</h1>
+		<form action="/attendanceDetail" method="get">
+			<select name="month">
+				<option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}+ '月'"></option>
+			</select>
+			<input type="submit" value="検索">
+		</form>
 		<table border="1">
 			<tr>
 				<th>日付</th>
 				<th>曜日</th>
 				<th>出勤時間</th>
 				<th>退勤時間</th>
-				<th>勤怠状況</th>
+				<th>出勤状況</th>
+				<th>退勤状況</th>
 				<th>勤務先</th>
 			</tr>
 			<tr th:each="monthDetail:${monthDetail}">
-				<td>[[${monthDetail.ymd}]]</td>
+				<td><a href="/edit/${monthDetail.ymd}/attendance">[[${monthDetail.ymd}]]<a></td>
 				<td>[[${monthDetail.weekname}]]</td>
 				<th:block th:each="attendance:${attendance}">
 					<th:block th:if="${monthDetail.ymd == attendance.date}">
 						<td>[[${attendance.arrivingTime}]]</td>
 						<td>[[${attendance.leftTime}]]</td>
-						<td>[[${attendance.attendanceId}]]</td>
+						<td></td>
+						<td></td>
 						<td>[[${attendance.telework}]]</td>
 					</th:block>
-					<th:block th:if="${monthDetail.ymd != attendance.date}" >
+					<th:block th:if="${monthDetail.ymd != attendance.date}">
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
