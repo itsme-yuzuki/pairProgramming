@@ -50,10 +50,10 @@ public class AttendanceController {
 
 	@Autowired
 	Date2023Repository date2023Repository;
-	
+
 	@Autowired
 	AttendanceTypeRepository attendanceTypeRepository;
-	
+
 	@Autowired
 	AttendanceType attendanceType;
 
@@ -112,12 +112,9 @@ public class AttendanceController {
 		time = time.substring(0, 8);
 
 		if (status == 1 || status == 3) {
-<<<<<<< HEAD
-			Optional<Attendance> record = attendanceRepository.findByDateAndAccountId(dateNow.toString(),
-					user.getAccountId());
-=======
+
 			Optional<Attendance> record = attendanceRepository.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
+
 			if (record.isEmpty() == false) {
 				model.addAttribute("message", "出勤が二重しています。修正をしてください");
 				return "homePage";
@@ -126,12 +123,10 @@ public class AttendanceController {
 			attendance = new Attendance(user.getAccountId(), dateNow.toString(), time, null, attendanceStatus, null,
 					telework);
 		} else if (status == 2 || status == 4) {
-<<<<<<< HEAD
+
 			Optional<Attendance> record = attendanceRepository.findByDateAndAccountId(dateNow.toString(),
 					user.getAccountId());
-=======
-			Optional<Attendance> record = attendanceRepository.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
+
 			if (record.isEmpty()) {
 				model.addAttribute("message", "出勤記録がありません。修正をしてください");
 				return "homePage";
@@ -160,15 +155,7 @@ public class AttendanceController {
 
 		switch (menu) {
 		case 1:
-<<<<<<< HEAD
 			return "redirect:/attendanceDetail";
-=======
-			List<Date2023> monthDetail = date2023Repository.findByMonthOrderByDateId(6);
-			List<Attendance> attendance = attendanceRepository.findByAccountIdOrderByDate(accountId);
-			model.addAttribute("monthDetail", monthDetail);
-			model.addAttribute("attendance", attendance);
-			return "attendance";
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
 		case 2:
 			return "attendanceEdit";
 		case 3:
@@ -188,7 +175,6 @@ public class AttendanceController {
 		}
 		return "homePage";
 	}
-<<<<<<< HEAD
 
 	@GetMapping("/attendanceDetail")
 	public String attendanceDetail(@RequestParam(name = "month", defaultValue = "") Integer month,
@@ -197,7 +183,7 @@ public class AttendanceController {
 		int accountId = user.getAccountId();
 
 		List<AttendanceType> attendanceType = attendanceTypeRepository.findAll();
-		
+
 		if (month == null) {
 			month = LocalDate.now().getMonthValue();
 		}
@@ -205,20 +191,19 @@ public class AttendanceController {
 		List<Date2023> monthDetail = date2023Repository.findByMonthOrderByDateId(month);
 		List<Attendance> attendance = attendanceRepository.findByAccountIdOrderByDate(accountId);
 		model.addAttribute("month", month);
-		model.addAttribute("attendanceType",attendanceType);
+		model.addAttribute("attendanceType", attendanceType);
 		model.addAttribute("monthDetail", monthDetail);
 		model.addAttribute("attendance", attendance);
 		return "attendance";
-=======
-	
+	}
+
 	@GetMapping("/edit/{id}/attendance")
 	public String editAttendance(
-			@PathVariable("id")String id,
-			Model model
-			) {
+			@PathVariable("id") String id,
+			Model model) {
 		Optional<Attendance> record = attendanceRepository.findByDateLike(id);
-		
+
 		return "redirect:/attendanceEdit";
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
+
 	}
 }
