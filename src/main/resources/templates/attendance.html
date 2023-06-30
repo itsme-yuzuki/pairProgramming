@@ -13,7 +13,8 @@
 		<h1>[[${month}]]月勤怠一覧表</h1>
 		<form action="/attendanceDetail" method="get">
 			<select name="month">
-				<option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}+ '月'"></option>
+				<option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}+ '月'" th:selected="${month == i}">
+					[[${i}]]</option>
 			</select>
 			<input type="submit" value="検索">
 		</form>
@@ -34,8 +35,8 @@
 					<th:block th:if="${monthDetail.ymd == attendance.date}">
 						<td>[[${attendance.arrivingTime}]]</td>
 						<td>[[${attendance.leftTime}]]</td>
-						<td></td>
-						<td></td>
+						<td th:each="a : ${attendanceType}" th:if="${a.attendanceId == attendance.attendanceId1}">[[${a.attendanceType}]]</td>
+						<td th:each="a : ${attendanceType}" th:if="${a.attendanceId == attendance.attendanceId2}">[[${a.attendanceType}]]</td>
 						<td>[[${attendance.telework}]]</td>
 					</th:block>
 					<th:block th:if="${monthDetail.ymd != attendance.date}">
