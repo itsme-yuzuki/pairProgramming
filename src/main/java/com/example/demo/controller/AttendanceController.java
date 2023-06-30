@@ -181,6 +181,10 @@ public class AttendanceController {
 			) {
 		Optional<Attendance> record = attendanceRepository.findByDateLike(id);
 		
-		return "redirect:/attendanceEdit";
+		model.addAttribute(record);
+		
+		System.err.println(record);
+		
+		return "attendanceEdit";
 	}
 }

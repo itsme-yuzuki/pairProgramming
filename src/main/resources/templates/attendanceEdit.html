@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>勤怠管理</title>
+	<title>勤怠編集</title>
 	<link rel="stylesheet" type="text/css" href="/css/style2.css">
 </head>
 
@@ -20,7 +20,7 @@
 				<th>勤怠状況</th>
 				<th>勤務先</th>
 			</tr>
-			<tr th:each="attendance:${attendance}">
+			<tr th:each="attendance:${record}">
 				<td><input type="date" name="date"
 				th:value=[[${attendance.date}]]></td>
 				<td><input type="time" name="arrivingTime"
@@ -30,9 +30,8 @@
 				<td><input type="text" name="attendanceId"
 				th:value=[[${attendance.attendanceId}]]></td>
 				<td><select name="telework" th:value=[[${attendance.telework}]]>
-					<option>テレワーク</option>
-					<option>出社</option>
-					<option>混合</option>
+					<option value="1">テレワーク</option>
+					<option value="0">出社</option>
 				</td>
 			</tr>
 		</table>
