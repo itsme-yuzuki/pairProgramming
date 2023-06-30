@@ -203,16 +203,17 @@ public class AttendanceController {
 	public String editAttendance(
 			@PathVariable("id") String id,
 			Model model) {
+
 		Optional<Attendance> record = attendanceRepository.findByDateLike(id);
-
+		List<AttendanceType> attendanceType = attendanceTypeRepository.findAll();
 		attendance = record.get();
-		model.addAttribute("record",attendance);
 
-		System.err.println(record);
+		model.addAttribute("attendanceType", attendanceType);
+		model.addAttribute("attendance", attendance);
 
 		return "attendanceEdit";
 	}
-	
+
 	@PostMapping("/edit/{id}/attendance")
 	public String submitAttendance(
 			@PathVariable("id") String id,
@@ -223,12 +224,12 @@ public class AttendanceController {
 			@RequestParam("attendanceId1") Integer attendanceId1,
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") Integer telework,
-			Model model
-			) {
-		Attendance attendance= new Attendance(accountId, date, arrivingTime, leftTime, attendanceId1, attendanceId2, telework);
+			Model model) {
+		Attendance attendance = new Attendance(accountId, date, arrivingTime, leftTime, attendanceId1, attendanceId2,
+				telework);
 		attendanceRepository.save(attendance);
-		
+
 		return "redirect:/attendanceEdit";
-		
+
 	}
 }

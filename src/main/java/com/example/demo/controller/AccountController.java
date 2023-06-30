@@ -41,7 +41,7 @@ public class AccountController {
 	LeaveStatusRepository leaveStatusRepository;
 
 	//	 ログイン画面を表示
-	@GetMapping({ "/login", "/logout" })
+	@GetMapping({ "/", "/logout" })
 	public String index(
 			@RequestParam(name = "password", defaultValue = "") String password,
 			Model model) {
