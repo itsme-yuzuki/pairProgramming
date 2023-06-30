@@ -205,7 +205,8 @@ public class AttendanceController {
 			Model model) {
 		Optional<Attendance> record = attendanceRepository.findByDateLike(id);
 
-		model.addAttribute("record",record);
+		attendance = record.get();
+		model.addAttribute("record",attendance);
 
 		System.err.println(record);
 

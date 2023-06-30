@@ -17,16 +17,24 @@
 				<th>日付</th>
 				<th>出勤時間</th>
 				<th>退勤時間</th>
-				<th>勤怠状況</th>
+				<th>出勤状況</th>
+				<th>退勤状況</th>
 				<th>勤務先</th>
 			</tr>
-			<tr th:each="attendance:${record}">
-				<input type="date" name="date" th:value="${attendance.date}"></td>
-				<td><input type="time" name="arrivingTime" th:value="${attendace.arrivingTime}"></td>
-				<td><input type="time" name="leftTime" th:value="${attendance.leftTime}"></td>
-				<td><input type="text" name="attendanceId1" th:value="${attendance.attendanceId1}"></td>
-				<td><input type="text" name="attendanceId2" th:value="${attendance.attendanceId2}"></td>
-				<td><input type="text" name="telework" th:value=[[${attendance.telework}]]></td>
+			<tr th:each="record:${record}">
+<!--				<td><span th:text="${record.date}"></span></td>
+				<td><span th:text="${record.arrivingTime}"></span></td>
+				<td><span th:text="${record.leftTime}"></span></td>
+				<td><span th:text="${record.attendanceId1}"></span></td>
+				<td><span th:text="${record.attendanceId2}"></span></td>
+				<td><span th:text="${record.telework}"></span></td>
+-->
+				<td><input type="date" name="date" th:value="${record.date}"></td>
+				<td><input type="time" name="arrivingTime" th:value="${record.arrivingTime}"></td>
+				<td><input type="time" name="leftTime" th:value="${record.leftTime}"></td>
+				<td><input type="text" name="attendanceId1" th:value="${record.attendanceId1}"></td>
+				<td><input type="text" name="attendanceId2" th:value="${record.attendanceId2}"></td>
+				<td><input type="text" name="telework" th:value=${record.telework}></td>
 			</tr>
 		</table>
 		<button>更新</button>
