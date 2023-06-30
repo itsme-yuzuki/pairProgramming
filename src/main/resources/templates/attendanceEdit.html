@@ -8,10 +8,10 @@
 </head>
 
 <body>
-	<header th:replace="header">header>
+	<header th:replace="header"></header>
 	<main>
-		<h1>勤怠管理</h1>
-		<form action="edit/attendance" method="post">
+		<h1>勤怠編集</h1>
+		<form action="|edit/${monthDetail.ymd}/attendance|" method="post">
 		<table border="1">
 			<tr>
 				<th>日付</th>
@@ -21,20 +21,15 @@
 				<th>勤務先</th>
 			</tr>
 			<tr th:each="attendance:${record}">
-				<td><input type="date" name="date"
-				th:value=[[${attendance.date}]]></td>
-				<td><input type="time" name="arrivingTime"
-				th:value=[[${attendance.arrivingTime}]]></td>
-				<td><input type="time" name="leftTime"
-				th:value=[[${attendance.leftTime}]]></td>
-				<td><input type="text" name="attendanceId"
-				th:value=[[${attendance.attendanceId}]]></td>
-				<td><select name="telework" th:value=[[${attendance.telework}]]>
-					<option value="1">テレワーク</option>
-					<option value="0">出社</option>
-				</td>
+				<input type="date" name="date" th:value="${attendance.date}"></td>
+				<td><input type="time" name="arrivingTime" th:value="${attendace.arrivingTime}"></td>
+				<td><input type="time" name="leftTime" th:value="${attendance.leftTime}"></td>
+				<td><input type="text" name="attendanceId1" th:value="${attendance.attendanceId1}"></td>
+				<td><input type="text" name="attendanceId2" th:value="${attendance.attendanceId2}"></td>
+				<td><input type="text" name="telework" th:value=[[${attendance.telework}]]></td>
 			</tr>
 		</table>
+		<button>更新</button>
 		</form>
 	</main>	
 </body>

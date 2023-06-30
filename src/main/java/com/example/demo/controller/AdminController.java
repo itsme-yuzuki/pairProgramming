@@ -62,7 +62,7 @@ public class AdminController {
 			@PathVariable("id") Integer id,
 			Model model
 			) {
-		account = accountRepository.findById(id).get();
+		account = accountRepository.findByAccountId(id).get();
 		model.addAttribute("account", account);
 			
 		return "adminEdit";

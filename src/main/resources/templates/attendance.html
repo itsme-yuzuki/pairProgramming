@@ -28,7 +28,7 @@
 				<th>勤務先</th>
 			</tr>
 			<tr th:each="monthDetail:${monthDetail}">
-				<td><a href="/edit/${monthDetail.ymd}/attendance">[[${monthDetail.ymd}]]<a></td>
+				<td><a th:href="|/edit/${monthDetail.ymd}/attendance|">[[${monthDetail.ymd}]]<a></td>
 				<td>[[${monthDetail.weekname}]]</td>
 				<th:block th:each="attendance:${attendance}">
 					<th:block th:if="${monthDetail.ymd == attendance.date}">

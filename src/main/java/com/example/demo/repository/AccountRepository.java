@@ -18,8 +18,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	//SELECT * FROM account ORDER BY accountId
 	List<Account>findAllByOrderByAccountId();
 	
-	//UPDATE password WHERE accountId=?
-//	public void save(Integer accountId, String randomString);
+	Optional<Account>findByAccountId(Integer accountId);
 }
 
 	

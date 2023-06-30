@@ -22,7 +22,7 @@
 				</tr>
 				<tr th:each="account:${account}">
 					<input type="hidden" name="id" th:value="${account.accountId}">
-					<td>[[${account.id}]]</td>
+					<td>[[${account.accountId}]]</td>
 					<td><input type="text" name="name" th:value="${account.name}"></td>
 					<td><input type="text" name="email" th:value="${account.email}"></td>
 					<td><input type="text" name="password" th:value="${account.password}"></td>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
@@ -204,10 +205,29 @@ public class AttendanceController {
 			Model model) {
 		Optional<Attendance> record = attendanceRepository.findByDateLike(id);
 
-		model.addAttribute(record);
+		model.addAttribute("record",record);
 
 		System.err.println(record);
 
 		return "attendanceEdit";
+	}
+	
+	@PostMapping("/edit/{id}/attendance")
+	public String submitAttendance(
+			@PathVariable("id") String id,
+			@RequestParam("accountId") Integer accountId,
+			@RequestParam("date") String date,
+			@RequestParam("arrvingTime") String arrivingTime,
+			@RequestParam("leftTime") String leftTime,
+			@RequestParam("attendanceId1") Integer attendanceId1,
+			@RequestParam("attendanceId2") Integer attendanceId2,
+			@RequestParam("telework") Integer telework,
+			Model model
+			) {
+		Attendance attendance= new Attendance(accountId, date, arrivingTime, leftTime, attendanceId1, attendanceId2, telework);
+		attendanceRepository.save(attendance);
+		
+		return "redirect:/attendanceEdit";
+		
 	}
 }
