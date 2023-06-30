@@ -185,7 +185,7 @@ public class AttendanceController {
 			@RequestParam("telework")Integer telework,
 			Model model
 			) {
-		
+	}
 		
 		return "redirect:/attendanceEdit";
 	}
