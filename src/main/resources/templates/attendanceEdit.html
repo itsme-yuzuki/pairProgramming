@@ -11,11 +11,7 @@
 	<header th:replace="header"></header>
 	<main>
 		<h1>勤怠編集</h1>
-<<<<<<< HEAD
 		<form th:action="|/edit/${attendance.id}|" method="post">
-=======
-		<form th:action="|edit/${attendance.id}/attendance|" method="post">
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
 			<table border="1">
 				<tr>
 					<th>日付</th>
@@ -37,17 +33,10 @@
 							</option>
 						</select>
 					</td>
-<<<<<<< HEAD
 					<td><select name="attendanceId2">
-							<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}" 
-							th:selected="${attendanceType.attendanceId == attendance.attendanceId2}">
-							[[${attendanceType.attendanceType}]]
-=======
-					<td><select name="attendanceId1">
 							<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}"
 								th:selected="${attendanceType.attendanceId == attendance.attendanceId2}">
 								[[${attendanceType.attendanceType}]]
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
 							</option>
 						</select></td>
 					<td><select name="telework" th:value="${attendance.telework}">
