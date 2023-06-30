@@ -12,5 +12,4 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 	List<Attendance> findByAccountIdOrderByDate(Integer accountId);
 	
 	Optional<Attendance> findByDate(LocalDate date);
-	
 }
