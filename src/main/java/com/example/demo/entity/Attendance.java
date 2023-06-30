@@ -37,7 +37,7 @@ public class Attendance {
 	@Column(name = "attendance_id2")
 	public Integer attendanceId2; // 出勤状況
 
-	public Integer telework;
+	public String telework;
 
 	//コンストラクタ	
 	public Attendance() {
@@ -46,7 +46,7 @@ public class Attendance {
 
 	//出勤用
 	public Attendance(Integer accountId, String date, String arrivingTime, String leftTime,
-			Integer attendanceId1, Integer attendanceId2, Integer telework) {
+			Integer attendanceId1, Integer attendanceId2, String telework) {
 		this.accountId = accountId;
 		this.date = date;
 		this.arrivingTime = arrivingTime;
@@ -58,7 +58,7 @@ public class Attendance {
 
 	//退勤用
 	public Attendance(Integer id, Integer accountId, String date, String arrivingTime, String leftTime,
-			Integer attendanceId1, Integer attendanceId2, Integer telework) {
+			Integer attendanceId1, Integer attendanceId2, String telework) {
 		this.id = id;
 		this.accountId = accountId;
 		this.date = date;

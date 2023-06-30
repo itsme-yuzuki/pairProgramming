@@ -63,7 +63,7 @@ public class AttendanceController {
 	public String attendance(@RequestParam(name = "status") Integer status,
 			Model model) {
 
-		Integer telework = 0;
+		String telework = "出社";
 
 		LocalDate dateNow = LocalDate.now();
 
@@ -91,19 +91,19 @@ public class AttendanceController {
 		}
 		if (status == 3) {
 			if (timeNow.isBefore(time1)) {
-				telework = 1;
+				telework = "テレワーク";
 				attendanceStatus = 1;
 			} else if (timeNow.isAfter(time1)) {
-				telework = 1;
+				telework = "テレワーク";
 				attendanceStatus = 3;
 			}
 		}
 		if (status == 4) {
 			if (timeNow.isAfter(time2)) {
-				telework = 1;
+				telework = "テレワーク";
 				attendanceStatus = 2;
 			} else if (timeNow.isBefore(time2)) {
-				telework = 1;
+				telework = "テレワーク";
 				attendanceStatus = 4;
 			}
 		}
@@ -223,7 +223,7 @@ public class AttendanceController {
 			@RequestParam("leftTime") String leftTime,
 			@RequestParam("attendanceId1") Integer attendanceId1,
 			@RequestParam("attendanceId2") Integer attendanceId2,
-			@RequestParam("telework") Integer telework,
+			@RequestParam("telework") String telework,
 			Model model) {
 		Attendance attendance = new Attendance(accountId, date, arrivingTime, leftTime, attendanceId1, attendanceId2,
 				telework);

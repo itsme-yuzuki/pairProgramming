@@ -67,7 +67,7 @@ CREATE TABLE attendance
    left_time text,
    attendance_id1 INTEGER REFERENCES attendance_type (attendance_id),
    attendance_id2 INTEGER REFERENCES attendance_type (attendance_id),
-   telework Integer
+   telework Text
 );
 -- 休暇テーブル
 CREATE TABLE leave
