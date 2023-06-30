@@ -39,7 +39,12 @@
 							[[${attendanceType.attendanceType}]]
 							</option>
 						</select></td>
-					<td><input type="text" name="telework" th:value=${attendance.telework}></td>
+					<td><select name="telework">
+							<option th:each="attendance:${attendance}" th:value="${attendance.telework}" 
+							th:selected="${attendance.telework == attendance.telework}">
+							[[${attendance.telework}]]
+							</option>
+						</select></td>
 				</tr>
 			</table>
 			<button>更新</button>
