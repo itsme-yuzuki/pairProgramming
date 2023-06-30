@@ -4,13 +4,12 @@ body {
 	text-align: center; /* 中央寄せ */
     min-width: 900px; /* 最小幅 */
 }
-/* ヘッダー、ナビゲーションメニュー、フッター */
-header, nav, footer {
-	background-color: #45496a; /* 背景色 */
-	color: #ffffff; /* 文字色 */
-	padding-top: 5px; /* 内側余白(上) */
-	padding-bottom: 5px; /* 内側余白(下) */
-	
+header{
+    margin-bottom: 10em;
+    position: relative;
+    width: 100%;
+    background-color: #45496a; /* 背景色 */
+    color: #ffffff; /* 文字色 */
 }
 /* ヘッダー、ナビゲーション内リンク */
 header a, nav a {
@@ -22,7 +21,6 @@ header h1 {
 	font-size: 20pt;
 	margin: 10px auto;
 }
-
 /* 仕切り線 */
 hr {
 	border-top: 2px dashed #7d8bae;
@@ -61,4 +59,120 @@ button {
 /* 送信ボタン(マウスオーバー時) */
 button:hover {
 	background-color: #f1b2b2;
+}
+
+/*グローバルメニュー*/
+.menu {
+    position: relative;
+    width: 111%;
+    height: 50px;
+    margin: auto;
+    padding: 0;
+}
+
+.menu > li {
+    float: left;
+    width: 15%; /* グローバルナビ4つの場合 */
+    height: 50px;
+    line-height: 50px;
+    background: rgb(29, 33, 19);
+}
+
+.menu > li a {
+    display: block;
+    color: #fff;
+}
+
+.menu > li a:hover {
+    color: #999;
+}
+
+ul.menu__second-level {
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+}
+
+ul.menu__third-level {
+    visibility: hidden;
+    opacity: 0;
+}
+
+ul.menu__fourth-level {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.menu > li:hover {
+    background: #072A24;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+
+.menu__second-level li {
+    border-top: 1px solid #111;
+}
+
+.menu__third-level li {
+    border-top: 1px solid #111;
+}
+
+.menu__second-level li a:hover {
+    background: #111;
+}
+
+.menu__third-level li a:hover {
+    background: #2a1f1f;
+}
+
+.menu__fourth-level li a:hover {
+    background: #1d0f0f;
+}
+
+/* 下矢印 */
+.init-bottom:after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 0 0 15px;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* floatクリア */
+.menu:before,
+.menu:after {
+    content: " ";
+    display: table;
+}
+
+.menu:after {
+    clear: both;
+}
+
+.menu {
+    *zoom: 1;
+}
+
+.menu > li.menu__single {
+    position: relative;
+}
+
+li.menu__single ul.menu__second-level {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    background: #072A24;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+li.menu__single:hover ul.menu__second-level {
+    top: 50px;
+    visibility: visible;
+    opacity: 1;
 }

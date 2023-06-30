@@ -11,7 +11,7 @@
 	<header th:replace="header"></header>
 	<main>
 		<h1>勤怠編集</h1>
-		<form action="|edit/${attendance.id}/attendance|" method="post">
+		<form th:action="|edit/${attendance.id}/attendance|" method="post">
 			<table border="1">
 				<tr>
 					<th>日付</th>
