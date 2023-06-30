@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
@@ -156,5 +159,18 @@ public class AttendanceController {
 			return "editPassword";
 		}
 		return "homePage";
+	}
+	
+	@PostMapping("/edit/attendance")
+	public String editAttendance(
+			@RequestParam("date") Date date,
+			@RequestParam("arrivingTime")Time arrivingtime,
+			@RequestParam("leftTime")Time leftTime,
+			@RequestParam("attendaceId")Integer attendaceId,
+			@RequestParam("telework")Integer telework,
+			Model model
+			) {
+		
+		return "redirect:/attendanceEdit";
 	}
 }

@@ -4,14 +4,40 @@
 <head>
 	<meta charset="UTF-8">
 	<title>勤怠管理</title>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/style2.css">
 </head>
 
 <body>
-	<header>
-		<h1></h1>
-	</header>
-	
+	<header th:replace="header">header>
+	<main>
+		<h1>勤怠管理</h1>
+		<form action="">
+		<table border="1">
+			<tr>
+				<th>日付</th>
+				<th>出勤時間</th>
+				<th>退勤時間</th>
+				<th>勤怠状況</th>
+				<th>勤務先</th>
+			</tr>
+			<tr th:each="attendance:${attendance}">
+				<td><input type="date" name="date"
+				th:value=[[${attendance.date}]]></td>
+				<td><input type="time" name="arrivingTime"
+				th:value=[[${attendance.arrivingTime}]]></td>
+				<td><input type="time" name="leftTime"
+				th:value=[[${attendance.leftTime}]]></td>
+				<td><input type="text" name="attendanceId"
+				th:value=[[${attendance.attendanceId}]]></td>
+				<td><select name="telework" th:value=[[${attendance.telework}]]>
+					<option>テレワーク</option>
+					<option>出社</option>
+					<option>混合</option>
+				</td>
+			</tr>
+		</table>
+		</form>
+	</main>	
 </body>
 
 </html>
