@@ -1,7 +1,5 @@
 package com.example.demo.entity;
 
-import java.time.LocalDate;
-
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
@@ -25,7 +23,9 @@ public class Attendance {
 	private Integer accountId; // 日付
 
 	@Column(name = "submit_date")
-	private LocalDate date; // 日付
+	private String date; // 日付
+
+	private String dow;
 
 	@Column(name = "arriving_time")
 	private String arrivingTime; // 時間
@@ -44,10 +44,12 @@ public class Attendance {
 	}
 
 	//出勤用
-	public Attendance(Integer accountId, LocalDate date, String arrivingTime, String leftTime, Integer attendanceId,
+	public Attendance(Integer accountId, String date, String dow, String arrivingTime, String leftTime,
+			Integer attendanceId,
 			Integer telework) {
 		this.accountId = accountId;
 		this.date = date;
+		this.dow = dow;
 		this.arrivingTime = arrivingTime;
 		this.leftTime = leftTime;
 		this.attendanceId = attendanceId;
@@ -55,11 +57,12 @@ public class Attendance {
 	}
 
 	//退勤用
-	public Attendance(Integer id, Integer accountId, LocalDate date, String arrivingTime, String leftTime,
+	public Attendance(Integer id, Integer accountId, String date, String dow, String arrivingTime, String leftTime,
 			Integer attendanceId, Integer telework) {
 		this.id = id;
 		this.accountId = accountId;
 		this.date = date;
+		this.dow = dow;
 		this.arrivingTime = arrivingTime;
 		this.leftTime = leftTime;
 		this.attendanceId = attendanceId;

@@ -14,17 +14,29 @@
 		<table border="1">
 			<tr>
 				<th>日付</th>
+				<th>曜日</th>
 				<th>出勤時間</th>
 				<th>退勤時間</th>
 				<th>勤怠状況</th>
 				<th>勤務先</th>
 			</tr>
-			<tr th:each="attendance:${attendance}">
-				<td>[[${attendance.date}]]</td>
-				<td>[[${attendance.arrivingTime}]]</td>
-				<td>[[${attendance.leftTime}]]</td>
-				<td>[[${attendance.attendanceId}]]</td>
-				<td>[[${attendance.telework}]]</td>
+			<tr th:each="monthDetail:${monthDetail}">
+				<td>[[${monthDetail.ymd}]]</td>
+				<td>[[${monthDetail.weekname}]]</td>
+				<th:block th:each="attendance:${attendance}">
+					<th:block th:if="${monthDetail.ymd == attendance.date}">
+						<td>[[${attendance.arrivingTime}]]</td>
+						<td>[[${attendance.leftTime}]]</td>
+						<td>[[${attendance.attendanceId}]]</td>
+						<td>[[${attendance.telework}]]</td>
+					</th:block>
+					<th:block th:if="${monthDetail.ymd != attendance.date}" >
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</th:block>
+				</th:block>
 			</tr>
 		</table>
 	</main>
