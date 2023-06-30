@@ -11,7 +11,7 @@
 	<header th:replace="header"></header>
 	<main>
 		<h1>勤怠編集</h1>
-		<form action="|edit/${attendance.id}/attendance|" method="post">
+		<form th:action="|/edit/${attendance.id}|" method="post">
 			<table border="1">
 				<tr>
 					<th>日付</th>
@@ -22,7 +22,7 @@
 					<th>勤務先</th>
 				</tr>
 				<tr th:each="attendance:${attendance}">
-					<td><input type="date" name="date" th:value="${attendance.date}"></td>
+					<td><input type="text" name="date" th:value="${attendance.date}"></td>
 					<td><input type="time" name="arrivingTime" th:value="${attendance.arrivingTime}"></td>
 					<td><input type="time" name="leftTime" th:value="${attendance.leftTime}"></td>
 					<td>
@@ -33,7 +33,7 @@
 							</option>
 						</select>
 					</td>
-					<td><select name="attendanceId1">
+					<td><select name="attendanceId2">
 							<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}" 
 							th:selected="${attendanceType.attendanceId == attendance.attendanceId2}">
 							[[${attendanceType.attendanceType}]]

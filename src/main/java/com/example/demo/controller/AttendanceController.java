@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -214,11 +215,11 @@ public class AttendanceController {
 		return "attendanceEdit";
 	}
  
-	@PostMapping("/edit/{id}/attendance")
+	@PostMapping("/edit/{idd}")
 	public String submitAttendance(
-			@PathVariable("id") Integer id,
-			@RequestParam("arrvingTime") String arrivingTime,
-			@RequestParam("leftTime") String leftTime,
+			@PathVariable("idd") Integer id,
+			@RequestParam("arrivingTime") Time arrivingTime,
+			@RequestParam("leftTime") Time leftTime,
 			@RequestParam("attendanceId1") Integer attendanceId1,
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
@@ -233,9 +234,13 @@ public class AttendanceController {
 		attendance.setAttendanceId2(attendanceId2);
 		attendance.setTelework(telework);
 		
+		String date = attendance.getDate();
+		
 		attendanceRepository.save(attendance);
 
-		return "redirect:/attendanceEdit";
+		
+		
+		return "redirect:/edit/" + date + "/attendance";
 
 	}
 }
