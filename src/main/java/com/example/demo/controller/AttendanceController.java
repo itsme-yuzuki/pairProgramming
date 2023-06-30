@@ -1,11 +1,9 @@
 package com.example.demo.controller;
 
-import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.TextStyle;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -14,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
@@ -43,7 +41,7 @@ public class AttendanceController {
 	Account account;
 
 	@Autowired
-	AttendanceRepository attendanceReposity;
+	AttendanceRepository attendanceRepository;
 
 	@Autowired
 	Attendance attendance;
@@ -113,7 +111,7 @@ public class AttendanceController {
 		time = time.substring(0, 8);
 
 		if (status == 1 || status == 3) {
-			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
+			Optional<Attendance> record = attendanceRepository.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
 			if (record.isEmpty() == false) {
 				model.addAttribute("message", "出勤が二重しています。修正をしてください");
 				return "homePage";
@@ -121,7 +119,7 @@ public class AttendanceController {
 			model.addAttribute("message", "出勤しました");
 			attendance = new Attendance(user.getAccountId(), dateNow.toString(), dow, time, null, attendanceStatus, telework);
 		} else if (status == 2 || status == 4) {
-			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
+			Optional<Attendance> record = attendanceRepository.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
 			if (record.isEmpty()) {
 				model.addAttribute("message", "出勤記録がありません。修正をしてください");
 				return "homePage";
@@ -137,7 +135,7 @@ public class AttendanceController {
 			attendance = record.get();
 			attendance.setLeftTime(time);
 		}
-		attendanceReposity.save(attendance);
+		attendanceRepository.save(attendance);
 
 		return "homePage";
 	}
@@ -152,7 +150,7 @@ public class AttendanceController {
 		switch (menu) {
 		case 1:
 			List<Date2023> monthDetail = date2023Repository.findByMonthOrderByDateId(6);
-			List<Attendance> attendance = attendanceReposity.findByAccountIdOrderByDate(accountId);
+			List<Attendance> attendance = attendanceRepository.findByAccountIdOrderByDate(accountId);
 			model.addAttribute("monthDetail", monthDetail);
 			model.addAttribute("attendance", attendance);
 			return "attendance";
@@ -176,16 +174,12 @@ public class AttendanceController {
 		return "homePage";
 	}
 	
-	@PostMapping("/edit/attendance")
+	@GetMapping("/edit/{id}/attendance")
 	public String editAttendance(
-			@RequestParam("date") Date date,
-			@RequestParam("arrivingTime")Time arrivingtime,
-			@RequestParam("leftTime")Time leftTime,
-			@RequestParam("attendaceId")Integer attendaceId,
-			@RequestParam("telework")Integer telework,
+			@PathVariable("id")String id,
 			Model model
 			) {
-	}
+		Optional<Attendance> record = attendanceRepository.findByDateLike(id);
 		
 		return "redirect:/attendanceEdit";
 	}

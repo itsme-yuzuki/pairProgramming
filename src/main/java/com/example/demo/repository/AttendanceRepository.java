@@ -10,5 +10,9 @@ import com.example.demo.entity.Attendance;
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer> {
 	List<Attendance> findByAccountIdAndDate(Integer accountId);
 	
+	List<Attendance> findByAccountIdOrderByDate(Integer accoutnId);
+	
 	Optional<Attendance> findByDateAndAccountId(String date, Integer accountId);
+	
+	Optional<Attendance> findByDateLike(String date);
 }
