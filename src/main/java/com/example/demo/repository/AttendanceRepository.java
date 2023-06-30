@@ -1,6 +1,5 @@
 package com.example.demo.repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,5 +14,4 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 	
 	//SELECT submit_date, DATE_PART('dow', submit_date) AS dayofWeek FROM attendance
 	@Query("select submit_date, date_part('dow', submit_date) as dayofWeek from attendance = ?1")
-	List<Attendace> ;
 }

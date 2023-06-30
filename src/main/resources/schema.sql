@@ -7,6 +7,16 @@ DROP TABLE IF EXISTS attendance_type;
 DROP TABLE IF EXISTS authorise_name;
 DROP TABLE IF EXISTS leave_type;
 DROP TABLE IF EXISTS approval_status;
+DROP TABLE IF EXISTS date2023;
+--2023年日付
+CREATE TABLE date2023
+(
+   date_id serial,
+   ymd Text,
+   month Integer,
+   weekname Text,
+   holiday Text
+);
 -- 勤怠状況テーブル（主キー）
 CREATE TABLE attendance_type
 (
@@ -31,7 +41,6 @@ CREATE TABLE approval_status
    approval_id Integer PRIMARY KEY,
    approval_status text
 );
-
 -- アカウントテーブル
 CREATE TABLE account
 (
@@ -41,7 +50,6 @@ CREATE TABLE account
    password TEXT,
    authorise_id INTEGER REFERENCES authorise_name (authorise_id)
 );
-
 -- 休暇日数テーブル
 CREATE TABLE leave_status
 (
@@ -54,7 +62,8 @@ CREATE TABLE attendance
 (
    id SERIAL,
    account_id SERIAL REFERENCES account (account_id),
-   submit_date date,
+   submit_date text,
+   dow TEXT,
    arriving_time text,
    left_time text,
    attendance_id INTEGER REFERENCES attendance_type (attendance_id),

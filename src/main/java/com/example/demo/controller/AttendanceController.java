@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
 import java.sql.Time;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.TextStyle;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Attendance;
+import com.example.demo.entity.Date2023;
 import com.example.demo.model.User;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.AttendanceRepository;
+import com.example.demo.repository.Date2023Repository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -43,6 +48,12 @@ public class AttendanceController {
 	@Autowired
 	Attendance attendance;
 
+	@Autowired
+	Date2023 date2023;
+	
+	@Autowired
+	Date2023Repository date2023Repository;
+
 	//	 ログイン画面を表示
 	@GetMapping("/attendance")
 	public String attendance(@RequestParam(name = "status") Integer status,
@@ -51,6 +62,10 @@ public class AttendanceController {
 		Integer telework = 0;
 
 		LocalDate dateNow = LocalDate.now();
+
+		DayOfWeek DOW = dateNow.getDayOfWeek();
+
+		String dow = DOW.getDisplayName(TextStyle.FULL, Locale.getDefault());
 
 		LocalTime timeNow = LocalTime.now();
 
@@ -98,22 +113,22 @@ public class AttendanceController {
 		time = time.substring(0, 8);
 
 		if (status == 1 || status == 3) {
-			Optional<Attendance> record = attendanceReposity.findByDate(dateNow);
-			if(record.isEmpty() == false) {
+			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
+			if (record.isEmpty() == false) {
 				model.addAttribute("message", "出勤が二重しています。修正をしてください");
 				return "homePage";
 			}
 			model.addAttribute("message", "出勤しました");
-			attendance = new Attendance(user.getAccountId(), dateNow, time, null, attendanceStatus, telework);
+			attendance = new Attendance(user.getAccountId(), dateNow.toString(), dow, time, null, attendanceStatus, telework);
 		} else if (status == 2 || status == 4) {
-			Optional<Attendance> record = attendanceReposity.findByDate(dateNow);
+			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
 			if (record.isEmpty()) {
 				model.addAttribute("message", "出勤記録がありません。修正をしてください");
 				return "homePage";
 			}
-			if(record.isEmpty() == false) {
-				attendance =  record.get();
-				if(attendance.getLeftTime() != null) {
+			if (record.isEmpty() == false) {
+				attendance = record.get();
+				if (attendance.getLeftTime() != null) {
 					model.addAttribute("message", "退勤が二重しています。修正をしてください");
 					return "homePage";
 				}
@@ -134,11 +149,11 @@ public class AttendanceController {
 
 		int accountId = user.getAccountId();
 
-		
-		
 		switch (menu) {
 		case 1:
+			List<Date2023> monthDetail = date2023Repository.findByMonthOrderByDateId(6);
 			List<Attendance> attendance = attendanceReposity.findByAccountIdOrderByDate(accountId);
+			model.addAttribute("monthDetail", monthDetail);
 			model.addAttribute("attendance", attendance);
 			return "attendance";
 		case 2:
