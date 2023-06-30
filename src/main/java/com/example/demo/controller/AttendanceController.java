@@ -47,7 +47,7 @@ public class AttendanceController {
 
 	@Autowired
 	Date2023 date2023;
-	
+
 	@Autowired
 	Date2023Repository date2023Repository;
 
@@ -110,15 +110,18 @@ public class AttendanceController {
 		time = time.substring(0, 8);
 
 		if (status == 1 || status == 3) {
-			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
+			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(),
+					user.getAccountId());
 			if (record.isEmpty() == false) {
 				model.addAttribute("message", "出勤が二重しています。修正をしてください");
 				return "homePage";
 			}
 			model.addAttribute("message", "出勤しました");
-			attendance = new Attendance(user.getAccountId(), dateNow.toString(), dow, time, null, attendanceStatus, telework);
+			attendance = new Attendance(user.getAccountId(), dateNow.toString(), dow, time, null, attendanceStatus,
+					telework);
 		} else if (status == 2 || status == 4) {
-			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(), user.getAccountId());
+			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(),
+					user.getAccountId());
 			if (record.isEmpty()) {
 				model.addAttribute("message", "出勤記録がありません。修正をしてください");
 				return "homePage";
@@ -144,15 +147,9 @@ public class AttendanceController {
 			@RequestParam(name = "menu", defaultValue = "0") Integer menu,
 			Model model) {
 
-		int accountId = user.getAccountId();
-
 		switch (menu) {
 		case 1:
-			List<Date2023> monthDetail = date2023Repository.findByMonthOrderByDateId(6);
-			List<Attendance> attendance = attendanceReposity.findByAccountIdOrderByDate(accountId);
-			model.addAttribute("monthDetail", monthDetail);
-			model.addAttribute("attendance", attendance);
-			return "attendance";
+			return "redirect:/attendanceDetail";
 		case 2:
 			return "attendanceEdit";
 		case 3:
@@ -171,5 +168,23 @@ public class AttendanceController {
 			return "editPassword";
 		}
 		return "homePage";
+	}
+
+	@GetMapping("/attendanceDetail")
+	public String attendanceDetail(@RequestParam(name = "month", defaultValue = "") Integer month,
+			Model model) {
+
+		int accountId = user.getAccountId();
+		
+		if(month == null) {
+			month = LocalDate.now().getMonthValue();
+		} 
+		System.err.println(month);
+		
+		List<Date2023> monthDetail = date2023Repository.findByMonthOrderByDateId(month);
+		List<Attendance> attendance = attendanceReposity.findByAccountIdOrderByDate(accountId);
+		model.addAttribute("monthDetail", monthDetail);
+		model.addAttribute("attendance", attendance);
+		return "attendance";
 	}
 }

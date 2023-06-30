@@ -10,7 +10,13 @@
 <body>
 	<header th:replace="header"></header>
 	<main>
-		<h1>勤怠一覧表</h1>
+		<h1>[[${month}]]月勤怠一覧表</h1>
+		<form action="/attendanceDetail" method="get">
+			<select name="month">
+				<option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}+ '月'"></option>
+			</select>
+			<input type="submit" value="検索">
+		</form>
 		<table border="1">
 			<tr>
 				<th>日付</th>
@@ -30,8 +36,14 @@
 						<td>[[${attendance.attendanceId}]]</td>
 						<td>[[${attendance.telework}]]</td>
 					</th:block>
-					<th:block th:if="${monthDetail.ymd != attendance.date}" >
+					<th:block th:if="${monthDetail.ymd != attendance.date}">
 						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</th:block>
+					<th:block th:if="${monthDetail.weekname == 'Sunday '}">
+						<td>休日</td>
 						<td></td>
 						<td></td>
 						<td></td>
