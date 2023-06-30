@@ -15,5 +15,5 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 	
 	//SELECT submit_date, DATE_PART('dow', submit_date) AS dayofWeek FROM attendance
 	@Query("select submit_date, date_part('dow', submit_date) as dayofWeek from attendance = ?1")
-	List<Attendace> 
+	List<Attendace> ;
 }
