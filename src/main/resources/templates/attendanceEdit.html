@@ -27,22 +27,21 @@
 					<td><input type="time" name="leftTime" th:value="${attendance.leftTime}"></td>
 					<td>
 						<select name="attendanceId1">
-							<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}" 
-							th:selected="${attendanceType.attendanceId == attendance.attendanceId1}">
-							[[${attendanceType.attendanceType}]]
+							<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}"
+								th:selected="${attendanceType.attendanceId == attendance.attendanceId1}">
+								[[${attendanceType.attendanceType}]]
 							</option>
 						</select>
 					</td>
 					<td><select name="attendanceId1">
-							<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}" 
-							th:selected="${attendanceType.attendanceId == attendance.attendanceId2}">
-							[[${attendanceType.attendanceType}]]
+							<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}"
+								th:selected="${attendanceType.attendanceId == attendance.attendanceId2}">
+								[[${attendanceType.attendanceType}]]
 							</option>
 						</select></td>
-					<td><select name="telework">
-							<option th:each="attendance:${attendance}" th:value="${attendance.telework}" 
-							th:selected="${attendance.telework == attendance.telework}">
-							[[${attendance.telework}]]
+					<td><select name="telework" th:value="${attendance.telework}">
+							<option value="出社">出社</option>
+							<option value="テレワーク">テレワーク</option>
 							</option>
 						</select></td>
 				</tr>
