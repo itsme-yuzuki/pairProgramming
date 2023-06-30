@@ -1,11 +1,8 @@
 package com.example.demo.controller;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Attendance;
+import com.example.demo.entity.AttendanceType;
 import com.example.demo.entity.Date2023;
 import com.example.demo.model.User;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.AttendanceRepository;
+import com.example.demo.repository.AttendanceTypeRepository;
 import com.example.demo.repository.Date2023Repository;
 
 import jakarta.servlet.http.HttpSession;
@@ -40,7 +39,7 @@ public class AttendanceController {
 	Account account;
 
 	@Autowired
-	AttendanceRepository attendanceReposity;
+	AttendanceRepository attendanceRepository;
 
 	@Autowired
 	Attendance attendance;
@@ -50,6 +49,12 @@ public class AttendanceController {
 
 	@Autowired
 	Date2023Repository date2023Repository;
+	
+	@Autowired
+	AttendanceTypeRepository attendanceTypeRepository;
+	
+	@Autowired
+	AttendanceType attendanceType;
 
 	//	 ログイン画面を表示
 	@GetMapping("/attendance")
@@ -59,10 +64,6 @@ public class AttendanceController {
 		Integer telework = 0;
 
 		LocalDate dateNow = LocalDate.now();
-
-		DayOfWeek DOW = dateNow.getDayOfWeek();
-
-		String dow = DOW.getDisplayName(TextStyle.FULL, Locale.getDefault());
 
 		LocalTime timeNow = LocalTime.now();
 
@@ -110,17 +111,17 @@ public class AttendanceController {
 		time = time.substring(0, 8);
 
 		if (status == 1 || status == 3) {
-			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(),
+			Optional<Attendance> record = attendanceRepository.findByDateAndAccountId(dateNow.toString(),
 					user.getAccountId());
 			if (record.isEmpty() == false) {
 				model.addAttribute("message", "出勤が二重しています。修正をしてください");
 				return "homePage";
 			}
 			model.addAttribute("message", "出勤しました");
-			attendance = new Attendance(user.getAccountId(), dateNow.toString(), dow, time, null, attendanceStatus,
+			attendance = new Attendance(user.getAccountId(), dateNow.toString(), time, null, attendanceStatus, null,
 					telework);
 		} else if (status == 2 || status == 4) {
-			Optional<Attendance> record = attendanceReposity.findByDateAndAccountId(dateNow.toString(),
+			Optional<Attendance> record = attendanceRepository.findByDateAndAccountId(dateNow.toString(),
 					user.getAccountId());
 			if (record.isEmpty()) {
 				model.addAttribute("message", "出勤記録がありません。修正をしてください");
@@ -136,8 +137,9 @@ public class AttendanceController {
 			model.addAttribute("message", "退勤しました");
 			attendance = record.get();
 			attendance.setLeftTime(time);
+			attendance.setAttendanceId2(attendanceStatus);
 		}
-		attendanceReposity.save(attendance);
+		attendanceRepository.save(attendance);
 
 		return "homePage";
 	}
@@ -175,14 +177,17 @@ public class AttendanceController {
 			Model model) {
 
 		int accountId = user.getAccountId();
+
+		List<AttendanceType> attendanceType = attendanceTypeRepository.findAll();
 		
-		if(month == null) {
+		if (month == null) {
 			month = LocalDate.now().getMonthValue();
-		} 
-		System.err.println(month);
-		
+		}
+
 		List<Date2023> monthDetail = date2023Repository.findByMonthOrderByDateId(month);
-		List<Attendance> attendance = attendanceReposity.findByAccountIdOrderByDate(accountId);
+		List<Attendance> attendance = attendanceRepository.findByAccountIdOrderByDate(accountId);
+		model.addAttribute("month", month);
+		model.addAttribute("attendanceType",attendanceType);
 		model.addAttribute("monthDetail", monthDetail);
 		model.addAttribute("attendance", attendance);
 		return "attendance";

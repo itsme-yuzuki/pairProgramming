@@ -25,17 +25,18 @@ public class Attendance {
 	@Column(name = "submit_date")
 	private String date; // 日付
 
-	private String dow;
-
 	@Column(name = "arriving_time")
 	private String arrivingTime; // 時間
 
 	@Column(name = "left_time")
 	private String leftTime; // 時間
 
-	@Column(name = "attendance_id")
-	public Integer attendanceId; // 勤怠状況
+	@Column(name = "attendance_id1")
+	public Integer attendanceId1; // 出勤状況
 
+	@Column(name = "attendance_id2")
+	public Integer attendanceId2; // 退勤状況
+	
 	public Integer telework;
 
 	//コンストラクタ	
@@ -44,28 +45,27 @@ public class Attendance {
 	}
 
 	//出勤用
-	public Attendance(Integer accountId, String date, String dow, String arrivingTime, String leftTime,
-			Integer attendanceId,
-			Integer telework) {
+	public Attendance(Integer accountId, String date, String arrivingTime, String leftTime,
+			Integer attendanceId1, Integer attendanceId2, Integer telework) {
 		this.accountId = accountId;
 		this.date = date;
-		this.dow = dow;
 		this.arrivingTime = arrivingTime;
 		this.leftTime = leftTime;
-		this.attendanceId = attendanceId;
+		this.attendanceId1 = attendanceId1;
+		this.attendanceId2 = attendanceId2;
 		this.telework = telework;
 	}
 
 	//退勤用
-	public Attendance(Integer id, Integer accountId, String date, String dow, String arrivingTime, String leftTime,
-			Integer attendanceId, Integer telework) {
+	public Attendance(Integer id, Integer accountId, String date, String arrivingTime, String leftTime,
+			Integer attendanceId1, Integer attendanceId2, Integer telework) {
 		this.id = id;
 		this.accountId = accountId;
 		this.date = date;
-		this.dow = dow;
 		this.arrivingTime = arrivingTime;
 		this.leftTime = leftTime;
-		this.attendanceId = attendanceId;
+		this.attendanceId1 = attendanceId1;
+		this.attendanceId2 = attendanceId2;
 		this.telework = telework;
 	}
 
