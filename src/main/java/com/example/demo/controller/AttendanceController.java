@@ -213,20 +213,26 @@ public class AttendanceController {
 
 		return "attendanceEdit";
 	}
-
+ 
 	@PostMapping("/edit/{id}/attendance")
 	public String submitAttendance(
-			@PathVariable("id") String id,
-			@RequestParam("accountId") Integer accountId,
-			@RequestParam("date") String date,
+			@PathVariable("id") Integer id,
 			@RequestParam("arrvingTime") String arrivingTime,
 			@RequestParam("leftTime") String leftTime,
 			@RequestParam("attendanceId1") Integer attendanceId1,
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
 			Model model) {
-		Attendance attendance = new Attendance(accountId, date, arrivingTime, leftTime, attendanceId1, attendanceId2,
-				telework);
+		
+		Optional<Attendance> record = attendanceRepository.findById(id);
+		
+		attendance = record.get();
+		attendance.setArrivingTime(arrivingTime.toString());
+		attendance.setLeftTime(leftTime.toString());
+		attendance.setAttendanceId1(attendanceId1);
+		attendance.setAttendanceId2(attendanceId2);
+		attendance.setTelework(telework);
+		
 		attendanceRepository.save(attendance);
 
 		return "redirect:/attendanceEdit";
