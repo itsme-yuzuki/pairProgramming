@@ -8,10 +8,9 @@
 </head>
 
 <body>
-	<header>
-		<h1>アカウント詳細</h1>
-	</header>
+	<header th:replace="header"></header>
 	<main>
+		<h1>アカウント詳細</h1>
 		<table border="1">
 			<tr>
 				<th>社員番号</th>
@@ -20,7 +19,7 @@
 				<th>権限</th>
 			</tr>
 			<tr>
-				<td>[[${account.id}]]</td>
+				<td>[[${account.accountId}]]</td>
 				<td>[[${account.name}]]</td>
 				<td>[[${account.email}]]</td>
 				<td>[[${account.authoriseId}]]</td>
@@ -31,11 +30,11 @@
 			<table border="1">
 				<tr>
 					<th>oldpassword</th>
-					<td><input type="text" name="oldPassword"></td>
+					<td><input type="password" name="oldPassword"></td>
 				</tr>
 				<tr>
 					<th>newpassword</th>
-					<td><input type="text" name="newPassword"></td>
+					<td><input type="password" name="newPassword"></td>
 				</tr>
 			</table>
 			<button>パスワード変更</button>

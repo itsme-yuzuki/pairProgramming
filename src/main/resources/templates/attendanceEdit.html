@@ -4,50 +4,101 @@
 <head>
 	<meta charset="UTF-8">
 	<title>勤怠編集</title>
-	<link rel="stylesheet" type="text/css" href="/css/style2.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
 	<header th:replace="header"></header>
 	<main>
 		<h1>勤怠編集</h1>
-		<form th:action="|/edit/${attendance.id}|" method="post">
-			<table border="1">
-				<tr>
-					<th>日付</th>
-					<th>出勤時間</th>
-					<th>退勤時間</th>
-					<th>出勤状況</th>
-					<th>退勤状況</th>
-					<th>勤務先</th>
-				</tr>
-				<tr th:each="attendance:${attendance}">
-					<td><input type="text" name="date" th:value="${attendance.date}"></td>
-					<td><input type="time" name="arrivingTime" th:value="${attendance.arrivingTime}"></td>
-					<td><input type="time" name="leftTime" th:value="${attendance.leftTime}"></td>
-					<td>
-						<select name="attendanceId1">
-							<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}"
-								th:selected="${attendanceType.attendanceId == attendance.attendanceId1}">
-								[[${attendanceType.attendanceType}]]
-							</option>
-						</select>
-					</td>
-					<td><select name="attendanceId2">
-							<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}"
-								th:selected="${attendanceType.attendanceId == attendance.attendanceId2}">
-								[[${attendanceType.attendanceType}]]
-							</option>
-						</select></td>
-					<td><select name="telework" th:value="${attendance.telework}">
-							<option value="出社">出社</option>
-							<option value="テレワーク">テレワーク</option>
-							</option>
-						</select></td>
-				</tr>
-			</table>
-			<button>更新</button>
-		</form>
+
+		<!--attendance情報があるとき-->
+		<th:block th:if="${attendance != null}">
+			<form th:action="|/edit/${attendance.id}|" method="post">
+				<table border="1">
+					<tr>
+						<th>日付</th>
+						<th>曜日</th>
+						<th>出勤時間</th>
+						<th>退勤時間</th>
+						<th>出勤状況</th>
+						<th>退勤状況</th>
+						<th>勤務先</th>
+					</tr>
+					<tr>
+						<td><span th:text="${attendance.date}"></span></td>
+						<td><span th:text="${date.weekname}"></td>
+						<td><input type="time" name="arrivingTime" th:value="${attendance.arrivingTime}"></td>
+						<td><input type="time" name="leftTime" th:value="${attendance.leftTime}"></td>
+						<td>
+							<select name="attendanceId1">
+								<option th:each="attendanceType:${attendanceType}"
+									th:value="${attendanceType.attendanceId}"
+									th:selected="${attendanceType.attendanceId == attendance.attendanceId1}">
+									[[${attendanceType.attendanceType}]]
+								</option>
+							</select>
+						</td>
+						<td><select name="attendanceId2">
+								<option th:each="attendanceType:${attendanceType}"
+									th:value="${attendanceType.attendanceId}"
+									th:selected="${attendanceType.attendanceId == attendance.attendanceId2}">
+									[[${attendanceType.attendanceType}]]
+								</option>
+							</select></td>
+						<td><select name="telework" th:value="${attendance.telework}">
+								<option value="出社">出社</option>
+								<option value="テレワーク">テレワーク</option>
+								</option>
+							</select></td>
+					</tr>
+				</table>
+				<button>更新</button>
+			</form>
+		</th:block>
+
+		<!--attendance情報がないとき-->
+		<th:bolck th:if="${attendance == null}">
+			<form action="/edit" method="post">
+				<table border="1">
+					<tr>
+						<th>日付</th>
+						<th>曜日</th>
+						<th>出勤時間</th>
+						<th>退勤時間</th>
+						<th>出勤状況</th>
+						<th>退勤状況</th>
+						<th>勤務先</th>
+					</tr>
+					<tr>
+						<td><span th:text="${date.ymd}"></span></td>
+						<td><span th:text="${date.weekname}"></span></td>
+						<td><input type="time" name="arrivingTime"></td>
+						<td><input type="time" name="leftTime"></td>
+						<td>
+							<select name="attendanceId1">
+								<option th:each="attendanceType:${attendanceType}"
+									th:value="${attendanceType.attendanceId}">
+									[[${attendanceType.attendanceType}]]
+								</option>
+							</select>
+						</td>
+						<td><select name="attendanceId2">
+								<option th:each="attendanceType:${attendanceType}"
+									th:value="${attendanceType.attendanceId}">
+									[[${attendanceType.attendanceType}]]
+								</option>
+							</select></td>
+						<td><select name="telework">
+								<option value="出社">出社</option>
+								<option value="テレワーク">テレワーク</option>
+								</option>
+							</select></td>
+					</tr>
+				</table>
+				<button>更新</button>
+			</form>
+		</th:bolck>
 	</main>
 </body>
 

@@ -203,16 +203,28 @@ public class AttendanceController {
 			@PathVariable("id") String id,
 			Model model) {
 
-		Optional<Attendance> record = attendanceRepository.findByDateLike(id);
+		Optional<Attendance> record = null;
+
+		Optional<Date2023> record2 = date2023Repository.findByYmd(id);
+
+		date2023 = record2.get();
+
+		record = attendanceRepository.findByDateLike(id);
+
+		if (record.isEmpty() == false) {
+			attendance = record.get();
+			model.addAttribute("attendance", attendance);
+		}
+
 		List<AttendanceType> attendanceType = attendanceTypeRepository.findAll();
-		attendance = record.get();
+
+		model.addAttribute("date", date2023);
 
 		model.addAttribute("attendanceType", attendanceType);
-		model.addAttribute("attendance", attendance);
 
 		return "attendanceEdit";
 	}
- 
+
 	@PostMapping("/edit/{idd}")
 	public String submitAttendance(
 			@PathVariable("idd") Integer id,
@@ -222,22 +234,20 @@ public class AttendanceController {
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
 			Model model) {
-		
+
 		Optional<Attendance> record = attendanceRepository.findById(id);
-		
+
 		attendance = record.get();
 		attendance.setArrivingTime(arrivingTime.toString());
 		attendance.setLeftTime(leftTime.toString());
 		attendance.setAttendanceId1(attendanceId1);
 		attendance.setAttendanceId2(attendanceId2);
 		attendance.setTelework(telework);
-		
+
 		String date = attendance.getDate();
-		
+
 		attendanceRepository.save(attendance);
 
-		
-		
 		return "redirect:/edit/" + date + "/attendance";
 
 	}
