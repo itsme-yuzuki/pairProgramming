@@ -18,13 +18,13 @@ public class LeaveStatus {
 	private Integer accountId; // 社員番号
 
 	@Column(name = "leave_default")
-	public Integer leaveDefault; // 権限
+	private Integer leaveDefault; // 権限
 
 	@Column(name = "leave_remain")
-	public Integer leaveRemain; // 権限
+	private Integer leaveRemain; // 権限
 
 	//コンストラクタ	
-	public LeaveStatus() {
+	private LeaveStatus() {
 
 	}
 

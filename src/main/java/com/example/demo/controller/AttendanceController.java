@@ -18,11 +18,13 @@ import com.example.demo.entity.Account;
 import com.example.demo.entity.Attendance;
 import com.example.demo.entity.AttendanceType;
 import com.example.demo.entity.Date2023;
+import com.example.demo.entity.Leave;
 import com.example.demo.model.User;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.AttendanceRepository;
 import com.example.demo.repository.AttendanceTypeRepository;
 import com.example.demo.repository.Date2023Repository;
+import com.example.demo.repository.LeaveRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -58,6 +60,12 @@ public class AttendanceController {
 
 	@Autowired
 	AttendanceType attendanceType;
+
+	@Autowired
+	Leave leave;
+
+	@Autowired
+	LeaveRepository leaveRepository;
 
 	//	 ログイン画面を表示
 	@GetMapping("/attendance")
@@ -164,9 +172,9 @@ public class AttendanceController {
 		case 3:
 			return "supervisor";
 		case 4:
-			return "leave";
+			return "redirect:/leave";
 		case 5:
-			return "leaveRequest";
+			return "redirect:/leaveRequest";
 		case 6:
 			return "alternate";
 		case 7:
@@ -251,7 +259,7 @@ public class AttendanceController {
 		return "redirect:/edit/" + date + "/attendance";
 
 	}
-	
+
 	@PostMapping("/edit")
 	public String newAttendance(
 			@RequestParam("ymd") String ymd,
@@ -261,14 +269,58 @@ public class AttendanceController {
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
 			Model model) {
-		
-		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString(), leftTime.toString(), attendanceId1, attendanceId2, telework);
-		
+
+		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString(), leftTime.toString(),
+				attendanceId1, attendanceId2, telework);
+
 		String newDate = attendance.getDate();
-		
+
 		attendanceRepository.save(attendance);
-		
+
 		return "redirect:/edit/" + newDate + "/attendance";
 	}
-	
+
+	@GetMapping("/leaveRequest")
+	public String leaveRequest(Model model) {
+
+		List<AttendanceType> attendanceType = attendanceTypeRepository.findByAttendanceIdGreaterThan(6);
+
+		model.addAttribute("attendanceType", attendanceType);
+
+		return "leaveRequest";
+	}
+
+	@PostMapping("/leaveRequest")
+	public String createLeave(@RequestParam(name = "date") LocalDate date,
+			@RequestParam(name = "leaveType") Integer leaveType,
+			@RequestParam(name = "message") String message,
+			@RequestParam(name = "approvalStatus") Integer approvalStatus,
+			Model model) {
+
+		Optional<Account> record = accountRepository.findByAccountId(user.getAccountId());
+
+		account = record.get();
+
+		if (account.getAuthoriserId() == null) {
+			model.addAttribute("message", "承認者を設定してください");
+			return leaveRequest(model);
+		}
+
+		leave = new Leave(date.toString(), user.getAccountId(), 1, leaveType,
+				approvalStatus, message);
+		leaveRepository.save(leave);
+
+		return "leaveRequest";
+	}
+
+	@GetMapping("/leave")
+	public String leaveDetail(Model model) {
+
+		List<Leave> leave = leaveRepository.findByAccountId(user.getAccountId());
+
+		model.addAttribute("leave", leave);
+
+		return "";
+	}
+
 }

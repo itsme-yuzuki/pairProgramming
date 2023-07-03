@@ -27,7 +27,10 @@ public class Account {
 	private String password; //　パスワード
 
 	@Column(name = "authorise_id")
-	public Integer authoriseId; // 権限
+	private Integer authoriseId; // 権限
+
+	@Column(name = "authoriser_id")
+	private Integer authoriserId;
 
 	//コンストラクタ	
 	public Account() {

@@ -11,13 +11,31 @@
 	<header th:replace="header">
 	</header>
 	<h1>休暇申請</h1>
-	<table>
-		<tr>
-			<th></th>
-			<td></td>
-		</tr>
-	</table>
-	
+	<form action="/leaveRequest" method="post">
+		<table>
+			<tr>
+				<th>日付</th>
+				<td><input type="date" name="date"></td>
+			</tr>
+			<tr>
+				<th>概要</th>
+				<td>
+					<select name="leaveType">
+						<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}">
+							[[${attendanceType.attendanceType}]]
+						</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>申請理由</th>
+				<td><textarea name="message"></textarea></td>
+			</tr>
+		</table>
+		<button name="approvalStatus" value="2">申請</button>
+		<button name="approvalStatus" value="1">下書き</button>
+	</form>
+	<span th:text="${message}" style="color: red;"></span>
 </body>
 
 </html>

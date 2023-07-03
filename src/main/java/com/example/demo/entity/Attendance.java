@@ -32,12 +32,12 @@ public class Attendance {
 	private String leftTime; // 時間
 	
 	@Column(name = "attendance_id1")
-	public Integer attendanceId1; // 出勤状況
+	private Integer attendanceId1; // 出勤状況
 
 	@Column(name = "attendance_id2")
-	public Integer attendanceId2; // 出勤状況
+	private Integer attendanceId2; // 出勤状況
 
-	public String telework;
+	private String telework;
 
 	//コンストラクタ	
 	public Attendance() {
