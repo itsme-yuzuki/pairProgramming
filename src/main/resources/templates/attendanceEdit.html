@@ -71,10 +71,10 @@
 						<th>勤務先</th>
 					</tr>
 					<tr>
-						<td><span th:text="${date.ymd}"></span></td>
+						<td><input type="date" name="ymd" th:value="${date.ymd}"></input></td>
 						<td><span th:text="${date.weekname}"></span></td>
-						<td><input type="time" name="arrivingTime"></td>
-						<td><input type="time" name="leftTime"></td>
+						<td><input type="time" step="1" name="arrivingTime"></td>
+						<td><input type="time" step="1" name="leftTime"></td>
 						<td>
 							<select name="attendanceId1">
 								<option th:each="attendanceType:${attendanceType}"
