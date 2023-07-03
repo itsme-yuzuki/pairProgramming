@@ -160,21 +160,19 @@ public class AttendanceController {
 		case 1:
 			return "redirect:/attendanceDetail";
 		case 2:
-			return "attendanceEdit";
-		case 3:
 			return "pending";
-		case 4:
+		case 3:
 			return "supervisor";
-		case 5:
+		case 4:
 			return "leave";
-		case 6:
+		case 5:
 			return "leaveRequest";
-		case 7:
+		case 6:
 			return "alternate";
-		case 8:
+		case 7:
 			return "alternateRequest";
-		case 9:
-			return "editPassword";
+		case 8:
+			return "redirect:/accountDetail";
 		}
 		return "homePage";
 	}
