@@ -323,13 +323,14 @@ public class AttendanceController {
 		return "";
 	}
 
+	//アカウントに紐づいている承認申請を一覧表示
 	@GetMapping("/pending")
 	public String index(
 			Model model) {
-		int accountId = user.getAccountId();
-		//レポジトリでDBから引き出す？
+		List<Leave> pendings = leaveRepository.findByAuthoriserId(user.getAccountId());
 		
-		
+		model.addAttribute("pendings",pendings);
+
 		return "redirect:/pending";
 	}
 }

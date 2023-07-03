@@ -53,11 +53,11 @@ public class AdminController {
 
 		Optional<Account> record = accountRepository.findByAccountIdAndPassword(accountId, password);
 
-		if (record.isEmpty() == false && record.get().authoriseId == 0) {
+		if (record.isEmpty() == false && record.get().getAuthoriseId() == 0) {
 			account = record.get();
 		}
 		
-		if (record.isEmpty() == false && record.get().authoriseId  !=0) {
+		if (record.isEmpty() == false && record.get().getAuthoriseId()  !=0) {
 			model.addAttribute("message", "管理者権限がありません");
 			return "login";
 		}

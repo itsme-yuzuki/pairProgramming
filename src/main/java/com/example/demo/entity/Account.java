@@ -32,9 +32,6 @@ public class Account {
 	@Column(name = "authoriser_id")
 	private Integer authoriserId;
 
-	@Column(name = "authoriser_id")
-	public Integer authoriserId;
-
 	//コンストラクタ	
 	public Account() {
 
