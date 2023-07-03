@@ -3,16 +3,34 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>承認待ち一覧</title>
+	<title>承認待ち申請</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
-	<header>
-		<h1></h1>
-	</header>
+	<header th:replace="header"></header>
 	<main>
-		
+		<h1>承認待ち申請一覧</h1>
+		<table border="1">
+			<tr>
+				<th>社員番号</th>
+				<th>氏名</th>
+				<th>申請内容</th>
+				<th>承認状況</th>
+				<th>備考</th>
+			</tr>
+			<th:block th:each="">
+				<tr>
+					<td>[[${{}]]</td>
+					<td>[[${{}]]</td>
+					<td>[[${{}]]</td>
+					<td>[[${{}]]</td>
+					<td>[[${{}]]</td>
+				</tr>
+				</th>
+		</table>
+	</main>
+
 </body>
 
 </html>

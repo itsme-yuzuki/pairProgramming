@@ -61,7 +61,6 @@ public class AttendanceController {
 	@Autowired
 	AttendanceType attendanceType;
 
-<<<<<<< HEAD
 	@Autowired
 	Leave leave;
 
@@ -69,8 +68,6 @@ public class AttendanceController {
 	LeaveRepository leaveRepository;
 
 	//	 ログイン画面を表示
-=======
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
 	@GetMapping("/attendance")
 	public String attendance(@RequestParam(name = "status") Integer status,
 			Model model) {
@@ -326,4 +323,13 @@ public class AttendanceController {
 		return "";
 	}
 
+	@GetMapping("/pending")
+	public String index(
+			Model model) {
+		int accountId = user.getAccountId();
+		//レポジトリでDBから引き出す？
+		
+		
+		return "redirect:/pending";
+	}
 }

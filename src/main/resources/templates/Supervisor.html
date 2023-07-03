@@ -11,6 +11,7 @@
 	<header th:replace="header"></header>
 	<h1>申請先ユーザ一覧</h1>
 	<main>
+		<span th:text="${message}" style="color:red"></span>
 		<hr>
 		<table border="1">
 			<tr>
@@ -27,13 +28,13 @@
 				<td th:text="${accounts.password}"></td>
 				<td th:text="${accounts.authoriseId}"></td>
 				<td>
-					<form th:action="/supervisor/${accounts.authoriserId}" method="post">
-						<input type="hidden" value="${accounts.accountId}">
+					<form th:action="|/supervisor/${accounts.accountId}|" method="post">
 						<button>登録する</button>
 					</form>
 				</td>
 			</tr>
 		</table>
+		
 	</main>
 
 </body>
