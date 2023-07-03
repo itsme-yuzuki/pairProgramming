@@ -13,7 +13,8 @@
 		<h1>[[${month}]]月勤怠一覧表</h1>
 		<form action="/attendanceDetail" method="get">
 			<select name="month">
-				<option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}+ '月'" th:selected="${month == i}">
+				<option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}+ '月'"
+					th:selected="${month == i}">
 					[[${i}]]</option>
 			</select>
 			<input type="submit" value="検索">
@@ -28,26 +29,34 @@
 				<th>退勤状況</th>
 				<th>勤務先</th>
 			</tr>
-			<tr th:each="monthDetail:${monthDetail}">
-				<td><a th:href="|/edit/${monthDetail.ymd}/attendance|">[[${monthDetail.ymd}]]<a></td>
-				<td>[[${monthDetail.weekname}]]</td>
+			<th:block th:each="monthDetail:${monthDetail}">
 				<th:block th:each="attendance:${attendance}">
 					<th:block th:if="${monthDetail.ymd == attendance.date}">
-						<td>[[${attendance.arrivingTime}]]</td>
-						<td>[[${attendance.leftTime}]]</td>
-						<td th:each="a : ${attendanceType}" th:if="${a.attendanceId == attendance.attendanceId1}">[[${a.attendanceType}]]</td>
-						<td th:each="a : ${attendanceType}" th:if="${a.attendanceId == attendance.attendanceId2}">[[${a.attendanceType}]]</td>
-						<td>[[${attendance.telework}]]</td>
+						<tr>
+							<td><a th:href="|/edit/${monthDetail.ymd}/attendance|">[[${monthDetail.ymd}]]<a></td>
+							<td>[[${monthDetail.weekname}]]</td>
+							<td>[[${attendance.arrivingTime}]]</td>
+							<td>[[${attendance.leftTime}]]</td>
+							<td th:each="a : ${attendanceType}" th:if="${a.attendanceId == attendance.attendanceId1}">
+								[[${a.attendanceType}]]</td>
+							<td th:each="a : ${attendanceType}" th:if="${a.attendanceId == attendance.attendanceId2}">
+								[[${a.attendanceType}]]</td>
+							<td>[[${attendance.telework}]]</td>
+						</tr>
 					</th:block>
 					<th:block th:if="${monthDetail.ymd != attendance.date}">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<tr>
+							<td><a th:href="|/edit/${monthDetail.ymd}/attendance|">[[${monthDetail.ymd}]]<a></td>
+							<td>[[${monthDetail.weekname}]]</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
 					</th:block>
 				</th:block>
-			</tr>
+			</th:block>
 		</table>
 	</main>
 </body>
