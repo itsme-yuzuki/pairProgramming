@@ -125,7 +125,8 @@ public class AccountController {
 	}
 
 	@PostMapping("/accountDetail")
-	public String accountDetail(@RequestParam("oldPassword") String oldPassword,
+	public String accountDetail(
+			@RequestParam("oldPassword") String oldPassword,
 			@RequestParam("newPassword") String newPassword,
 			Model model) {
 		Optional<Account> record = accountRepository.findById(user.getAccountId());
