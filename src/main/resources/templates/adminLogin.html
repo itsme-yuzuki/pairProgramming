@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>ログイン</title>
+<title>管理者ログイン</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
@@ -10,7 +10,8 @@
 		<h1>勤怠管理システム</h1>
 	</header>
 	<main>
-		<form action="/login" method="post">
+		<h2>管理者ログイン</h2>
+		<form action="/admin/login" method="post">
 			<input type="text" name="accountId" placeholder="社員番号">
 			<br>
 			<input type="password" name="password" placeholder="パスワード">
@@ -20,9 +21,6 @@
 			<br> <span th:text="${message}" style="color: red"></span>
 		</form>
 		<br>
-		<a href="/login?password=forget">パスワードお忘れの方</a>
-		<br>
-		<a href="/admin/login">管理者ログインはこちら</a>
 	</main>
 </body>
 </html>

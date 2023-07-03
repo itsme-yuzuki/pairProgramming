@@ -3,15 +3,14 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>アカウント一覧</title>
+	<title>申請先上位ユーザー編集</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
 	<header th:replace="header"></header>
-	<hr>
+	<h1>申請先ユーザ一覧</h1>
 	<main>
-		<h1>管理者 - アカウント一覧</h1>
 		<hr>
 		<table border="1">
 			<tr>
@@ -21,26 +20,22 @@
 				<th>パスワード</th>
 				<th>付与済み権限</th>
 			</tr>
-
 			<tr th:each="accounts:${accounts}">
 				<td th:text="${accounts.accountId}"></td>
 				<td th:text="${accounts.name}"></td>
 				<td th:text="${accounts.email}"></td>
 				<td th:text="${accounts.password}"></td>
 				<td th:text="${accounts.authoriseId}"></td>
-				<form th:action="|admin/${accounts.accountId}/edit|" method="get">
-					<td><button>編集</button></td>
-				</form>
+				<td>
+					<form th:action="/supervisor/${accounts.authoriserId}" method="post">
+						<input type="hidden" value="${accounts.accountId}">
+						<button>登録する</button>
+					</form>
+				</td>
 			</tr>
-
 		</table>
-		<br>
-		<form action="admin/add" method="get">
-			<button>アカウント新規追加</button>
-		</form>
 	</main>
-	<hr>
-	<footer th:replace="footer"></footer>
+
 </body>
 
 </html>
