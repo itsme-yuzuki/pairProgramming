@@ -29,7 +29,6 @@ CREATE TABLE authorise_name
    authorise_id Integer PRIMARY KEY,
    authorise_name text
 );
-
 -- 承認状態テーブル（主キー）
 CREATE TABLE approval_status
 (
@@ -43,7 +42,8 @@ CREATE TABLE account
    name TEXT,
    email TEXT,
    password TEXT,
-   authorise_id INTEGER REFERENCES authorise_name (authorise_id)
+   authorise_id INTEGER REFERENCES authorise_name (authorise_id),
+   authoriser_id INTEGER REFERENCES account (account_id)
 );
 -- 休暇日数テーブル
 CREATE TABLE leave_status
@@ -68,6 +68,7 @@ CREATE TABLE attendance
 CREATE TABLE leave
 (
    id SERIAL,
+   apply_date text,
    account_id SERIAL REFERENCES account (account_id),
    authoriser_id SERIAL REFERENCES account (account_id),
    leave_id Integer REFERENCES attendance_type (attendance_id),
