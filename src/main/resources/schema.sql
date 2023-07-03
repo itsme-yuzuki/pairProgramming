@@ -29,12 +29,7 @@ CREATE TABLE authorise_name
    authorise_id Integer PRIMARY KEY,
    authorise_name text
 );
--- 休暇種類テーブル（主キー）
-CREATE TABLE leave_type
-(
-   leave_id Integer PRIMARY KEY,
-   leave_type text
-);
+
 -- 承認状態テーブル（主キー）
 CREATE TABLE approval_status
 (
@@ -75,7 +70,7 @@ CREATE TABLE leave
    id SERIAL,
    account_id SERIAL REFERENCES account (account_id),
    authoriser_id SERIAL REFERENCES account (account_id),
-   leave_id Integer REFERENCES leave_type (leave_id),
+   leave_id Integer REFERENCES attendance_type (attendance_id),
    approval_id Integer REFERENCES approval_status (approval_id),
    message TEXT
 );

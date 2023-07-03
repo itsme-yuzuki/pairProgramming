@@ -17,21 +17,19 @@ INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(1,'出勤');
 INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(2,'退勤');
 INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(3,'遅刻');
 INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(4,'早退');
-INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(5,'交通遅延');
-
---leave_typeテーブル
-INSERT INTO leave_type(leave_id, leave_type) VALUES(1, '全日有給休暇');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(2, '午前有給休暇');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(3, '午後有給休暇');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(4, '全日傷病休暇');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(5, '午前傷病休暇');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(6, '午後傷病休暇');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(7, '休職');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(8, '産休');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(9, '育児休暇');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(10, '介護休暇');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(11, '連続特別休暇');
-INSERT INTO leave_type(leave_id, leave_type) VALUES(12, 'その他休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(6,'交通遅延');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(7, '全日有給休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(8, '午前有給休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(9, '午後有給休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(10, '全日傷病休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(11, '午前傷病休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(12, '午後傷病休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(13, '休職');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(14, '産休');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(15, '育児休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(16, '介護休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(17, '連続特別休暇');
+INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(18, 'その他休暇');
 
 --approval_statusテーブル
 INSERT INTO approval_status(approval_id, approval_status) VALUES(1, '未申請');

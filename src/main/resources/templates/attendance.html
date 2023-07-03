@@ -30,31 +30,56 @@
 				<th>勤務先</th>
 			</tr>
 			<th:block th:each="monthDetail:${monthDetail}">
-				<th:block th:each="attendance:${attendance}">
-					<th:block th:if="${monthDetail.ymd == attendance.date}">
-						<tr>
-							<td><a th:href="|/edit/${monthDetail.ymd}/attendance|">[[${monthDetail.ymd}]]<a></td>
-							<td>[[${monthDetail.weekname}]]</td>
-							<td>[[${attendance.arrivingTime}]]</td>
-							<td>[[${attendance.leftTime}]]</td>
-							<td th:each="a : ${attendanceType}" th:if="${a.attendanceId == attendance.attendanceId1}">
-								[[${a.attendanceType}]]</td>
-							<td th:each="a : ${attendanceType}" th:if="${a.attendanceId == attendance.attendanceId2}">
-								[[${a.attendanceType}]]</td>
-							<td>[[${attendance.telework}]]</td>
-						</tr>
-					</th:block>
-					<th:block th:if="${monthDetail.ymd != attendance.date}">
-						<tr>
-							<td><a th:href="|/edit/${monthDetail.ymd}/attendance|">[[${monthDetail.ymd}]]<a></td>
-							<td>[[${monthDetail.weekname}]]</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-					</th:block>
+				<th:block th:if="${monthDetail.holiday == null}">
+					<tr>
+						<td><a th:href="|/edit/${monthDetail.ymd}/attendance|">[[${monthDetail.ymd}]]<a></td>
+						<td>[[${monthDetail.weekname}]]</td>
+						<td>
+							<!--出勤時間-->
+							<th:block th:each="attendance:${attendance}" th:if="${attendance.date == monthDetail.ymd}">
+								[[${attendance.arrivingTime}]]
+							</th:block>
+						</td>
+						<td>
+							<!--退勤時間-->
+							<th:block th:each="attendance:${attendance}" th:if="${attendance.date == monthDetail.ymd}">
+								[[${attendance.leftTime}]]
+							</th:block>
+						</td>
+						<td>
+							<!--出勤状況-->
+							<th:block th:each="attendance:${attendance}" th:if="${attendance.date == monthDetail.ymd}">
+								<th:block th:each="a : ${attendanceType}"
+									th:if="${a.attendanceId == attendance.attendanceId1}">
+									[[${a.attendanceType}]]</th:block>
+							</th:block>
+						</td>
+						<td>
+							<!--退勤状況-->
+							<th:block th:each="attendance:${attendance}" th:if="${attendance.date == monthDetail.ymd}">
+								<th:block th:each="a : ${attendanceType}"
+									th:if="${a.attendanceId == attendance.attendanceId2}">
+									[[${a.attendanceType}]]</th:block>
+							</th:block>
+						</td>
+						<td>
+							<!--勤務先-->
+							<th:block th:each="attendance:${attendance}" th:if="${attendance.date == monthDetail.ymd}">
+								[[${attendance.telework}]]
+							</th:block>
+						</td>
+					</tr>
+				</th:block>
+				<th:block th:if="${monthDetail.holiday != null}">
+					<tr style="background-color: aquamarine;">
+						<td><a th:href="|/edit/${monthDetail.ymd}/attendance|">[[${monthDetail.ymd}]]<a></td>
+						<td>[[${monthDetail.weekname}]]</td>
+						<td></td>
+						<td></td>
+						<td>[[${monthDetail.holiday}]]</td>
+						<td>[[${monthDetail.holiday}]]</td>
+						<td></td>
+					</tr>
 				</th:block>
 			</th:block>
 		</table>
