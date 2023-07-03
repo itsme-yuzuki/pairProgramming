@@ -251,4 +251,24 @@ public class AttendanceController {
 		return "redirect:/edit/" + date + "/attendance";
 
 	}
+	
+	@PostMapping("/edit")
+	public String newAttendance(
+			@RequestParam("ymd") String ymd,
+			@RequestParam("arrivingTime") Time arrivingTime,
+			@RequestParam("leftTime") Time leftTime,
+			@RequestParam("attendanceId1") Integer attendanceId1,
+			@RequestParam("attendanceId2") Integer attendanceId2,
+			@RequestParam("telework") String telework,
+			Model model) {
+		
+		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString(), leftTime.toString(), attendanceId1, attendanceId2, telework);
+		
+		String newDate = attendance.getDate();
+		
+		attendanceRepository.save(attendance);
+		
+		return "redirect:/edit/" + newDate + "/attendance";
+	}
+	
 }

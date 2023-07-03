@@ -15,4 +15,5 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 	Optional<Attendance> findByDateAndAccountId(String date, Integer accountId);
 
 	Optional<Attendance> findByDateLike(String date);
+
 }
