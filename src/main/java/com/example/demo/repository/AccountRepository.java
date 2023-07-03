@@ -19,6 +19,9 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	List<Account>findAllByOrderByAccountId();
 	
 	Optional<Account>findByAccountId(Integer accountId);
+
+	//SELECT * FROM authorise_id WHERE authorise_id < 2
+	List<Account> findByAuthoriseIdLessThan(Integer authoriseId);
 }
 
 	

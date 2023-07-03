@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,12 +37,12 @@ public class AccountController {
 
 	@Autowired
 	LeaveStatus leaveStatus;
-	
+
 	@Autowired
 	LeaveStatusRepository leaveStatusRepository;
 
 	//	 ログイン画面を表示
-	@GetMapping({ "/", "/logout" })
+	@GetMapping({ "login", "/", "/logout" })
 	public String index(
 			@RequestParam(name = "password", defaultValue = "") String password,
 			Model model) {
@@ -65,7 +66,6 @@ public class AccountController {
 			@RequestParam("password") String password,
 			Model model) {
 
-		//DBからアドレスとパスワードを基に名前と顧客IDを取得する？
 		account = null;
 
 		Optional<Account> record = accountRepository.findByAccountIdAndPassword(accountId, password);
@@ -90,6 +90,7 @@ public class AccountController {
 		return "redirect:/index";
 	}
 
+	//パスワードリセット作業
 	@PostMapping("/passwordReset")
 	public String passwordReset(
 			@RequestParam("accountId") Integer accountId,
@@ -104,7 +105,6 @@ public class AccountController {
 		}
 
 		return "";
-
 	}
 
 	@GetMapping("/accountDetail")
@@ -124,6 +124,7 @@ public class AccountController {
 		return "accountDetail";
 	}
 
+	//パスワード変更作業
 	@PostMapping("/accountDetail")
 	public String accountDetail(
 			@RequestParam("oldPassword") String oldPassword,
@@ -151,5 +152,30 @@ public class AccountController {
 		model.addAttribute("message", "パスワードの変更が成功しました");
 
 		return accountDetail(model);
+	}
+
+	@GetMapping("/supervisor")
+	public String index(Model model) {
+		List<Account> accounts = accountRepository.findByAuthoriseIdLessThan(2);
+		System.err.println(accounts);
+		model.addAttribute("accounts", accounts);
+
+		return "supervisor";
+	}
+	
+	@PostMapping("/supervisor/${id}")
+	public String set(
+			@PathVariable("superId")Integer authoriserId,
+			@RequestParam("id") Integer accountId,
+			Model model
+			) {
+		Optional<Account> record= accountRepository.findById(authoriserId);
+		if (record.get().getAccountId() >= 2) {
+			model.addAttribute("message", "上位ユーザーではありません");
+		}
+		
+		account.setAuthoriserId(authoriserId);
+		
+		return "redirect:/supervisor";
 	}
 }
