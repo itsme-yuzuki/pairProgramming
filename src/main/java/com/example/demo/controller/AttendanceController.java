@@ -250,7 +250,7 @@ public class AttendanceController {
 		return "redirect:/edit/" + date + "/attendance";
 
 	}
-	
+
 	@PostMapping("/edit")
 	public String newAttendance(
 			@RequestParam("ymd") String ymd,
@@ -260,14 +260,24 @@ public class AttendanceController {
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
 			Model model) {
-		
-		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString(), leftTime.toString(), attendanceId1, attendanceId2, telework);
-		
+
+		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString(), leftTime.toString(),
+				attendanceId1, attendanceId2, telework);
+
 		String newDate = attendance.getDate();
-		
+
 		attendanceRepository.save(attendance);
-		
+
 		return "redirect:/edit/" + newDate + "/attendance";
 	}
-	
+
+	@GetMapping("/pending")
+	public String index(
+			Model model) {
+		int accountId = user.getAccountId();
+		//レポジトリでDBから引き出す？
+		
+		
+		return "redirect:/pending";
+	}
 }

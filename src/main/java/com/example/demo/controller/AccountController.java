@@ -42,7 +42,7 @@ public class AccountController {
 	LeaveStatusRepository leaveStatusRepository;
 
 	//	 ログイン画面を表示
-	@GetMapping({ "login", "/", "/logout" })
+	@GetMapping({ "login", "/", "logout" })
 	public String index(
 			@RequestParam(name = "password", defaultValue = "") String password,
 			Model model) {
@@ -156,26 +156,24 @@ public class AccountController {
 
 	@GetMapping("/supervisor")
 	public String index(Model model) {
-		List<Account> accounts = accountRepository.findByAuthoriseIdLessThan(2);
+		List<Account> accounts = accountRepository.findByAuthoriseIdLessThanOrderByAccountId(2);
 		System.err.println(accounts);
 		model.addAttribute("accounts", accounts);
 
+		System.err.println(accounts);
+
 		return "supervisor";
 	}
-	
-	@PostMapping("/supervisor/${id}")
+
+	@PostMapping("/supervisor/{id}")
 	public String set(
-			@PathVariable("superId")Integer authoriserId,
-			@RequestParam("id") Integer accountId,
-			Model model
-			) {
-		Optional<Account> record= accountRepository.findById(authoriserId);
-		if (record.get().getAccountId() >= 2) {
-			model.addAttribute("message", "上位ユーザーではありません");
-		}
-		
-		account.setAuthoriserId(authoriserId);
-		
-		return "redirect:/supervisor";
+			@PathVariable("id") Integer accountId,
+			Model model) {
+		account.setAuthoriserId(accountId);
+		accountRepository.save(account);
+
+		model.addAttribute("message", "登録完了しました");
+
+		return index(model);
 	}
 }

@@ -29,6 +29,9 @@ public class Account {
 	@Column(name = "authorise_id")
 	public Integer authoriseId; // 権限
 
+	@Column(name = "authoriser_id")
+	public Integer authoriserId;
+
 	//コンストラクタ	
 	public Account() {
 
@@ -53,6 +56,10 @@ public class Account {
 		this.email = email;
 		this.password = password;
 		this.authoriseId = authoriseId;
+	}
+
+	public Account(Integer authoriserId) {
+		this.authoriserId= authoriserId;
 	}
 
 }
