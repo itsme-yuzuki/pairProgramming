@@ -21,13 +21,18 @@
 				<th>承認状況</th>
 				<th>備考</th>
 			</tr>
-			<tr th:each="pending:${pendings}">
-				<td>[[${pending.id}]]</td>
-				<td>[[${{pending.applyDate}]]</td>
-				<td>[[${{pending.accountId}]]</td>
-				<td>[[${{pending.leaveId}]]</td>
-				<td>[[${{pending.approvalId}]]</td>
-				<td>[[${{pending.message}]]</td>
+			<tr th:each="pendings:${pendings}">
+				<td>[[${pendings.id}]]</td>
+				<td>[[${pendings.applyDate}]]</td>
+				<td>[[${pendings.accountId}]]</td>
+				<td>
+					<th:block th:each="account:${account}" th:if="${account.accountId == pendings.accountId}">
+						[[${account.name}]]
+					</th:block>
+				</td>
+				<td>[[${pendings.leaveId}]]</td>
+				<td>[[${pendings.approvalId}]]</td>
+				<td>[[${pendings.message}]]</td>
 				<td>
 					<form action="/pending/grant" method="post"></form>
 					<button>承認する</button>

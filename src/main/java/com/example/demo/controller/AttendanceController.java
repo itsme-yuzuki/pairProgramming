@@ -67,7 +67,7 @@ public class AttendanceController {
 	@Autowired
 	LeaveRepository leaveRepository;
 
-	//	 ログイン画面を表示
+	//出退勤入力処理
 	@GetMapping("/attendance")
 	public String attendance(@RequestParam(name = "status") Integer status,
 			Model model) {
@@ -84,6 +84,7 @@ public class AttendanceController {
 
 		Integer attendanceStatus = null;
 
+		//出退勤区分
 		if (status == 1) {
 			if (timeNow.isBefore(time1)) {
 				attendanceStatus = 1;
@@ -121,6 +122,7 @@ public class AttendanceController {
 
 		time = time.substring(0, 8);
 
+		//不正出退勤入力判別/メッセージ表示処理
 		if (status == 1 || status == 3) {
 
 			Optional<Attendance> record = attendanceRepository.findByDateAndAccountId(dateNow.toString(),
@@ -159,6 +161,7 @@ public class AttendanceController {
 		return "homePage";
 	}
 
+	//ヘッダメニュー内容
 	@GetMapping("/index")
 	public String index(
 			@RequestParam(name = "menu", defaultValue = "0") Integer menu,
@@ -168,7 +171,7 @@ public class AttendanceController {
 		case 1:
 			return "redirect:/attendanceDetail";
 		case 2:
-			return "pending";
+			return "redirect:/pending";
 		case 3:
 			return "redirect:/supervisor";
 		case 4:
@@ -329,10 +332,12 @@ public class AttendanceController {
 	public String index(
 			Model model) {
 		List<Leave> pendings = leaveRepository.findByAuthoriserId(user.getAccountId());
+		List<Account> account= accountRepository.findAll();
 		
 		model.addAttribute("pendings",pendings);
+		model.addAttribute("account", account);
 
-		return "redirect:/pending";
+		return "pending";
 	}
 	
 	//申請承認処理
