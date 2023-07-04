@@ -163,7 +163,7 @@ public class AccountController {
 		return "supervisor";
 	}
 	
-	@PostMapping("/supervisor/${id}")
+	@PostMapping("/supervisor/{id}")
 	public String set(
 			@PathVariable("superId")Integer authoriserId,
 			@RequestParam("id") Integer accountId,

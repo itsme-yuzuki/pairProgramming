@@ -61,16 +61,12 @@ public class AttendanceController {
 	@Autowired
 	AttendanceType attendanceType;
 
-<<<<<<< HEAD
 	@Autowired
 	Leave leave;
 
 	@Autowired
 	LeaveRepository leaveRepository;
 
-	//	 ログイン画面を表示
-=======
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
 	@GetMapping("/attendance")
 	public String attendance(@RequestParam(name = "status") Integer status,
 			Model model) {
@@ -304,10 +300,10 @@ public class AttendanceController {
 
 		account = record.get();
 
-		if (account.getAuthoriserId() == null) {
-			model.addAttribute("message", "承認者を設定してください");
-			return leaveRequest(model);
-		}
+//		if (account.getAuthoriserId() == null) {
+//			model.addAttribute("message", "承認者を設定してください");
+//			return leaveRequest(model);
+//		}
 
 		leave = new Leave(date.toString(), user.getAccountId(), 1, leaveType,
 				approvalStatus, message);
@@ -316,14 +312,18 @@ public class AttendanceController {
 		return "leaveRequest";
 	}
 
-	@GetMapping("/leave")
+	@GetMapping("/leaveDetail")
 	public String leaveDetail(Model model) {
 
 		List<Leave> leave = leaveRepository.findByAccountId(user.getAccountId());
 
+		List<Account> account = accountRepository.findAll();
+
+		model.addAttribute("account", account);
+
 		model.addAttribute("leave", leave);
 
-		return "";
+		return "leaveDetail";
 	}
 
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>休暇申請</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+	<header th:replace="header">
+	</header>
+	<h1>休暇申請一覧</h1>
+	<table>
+		<tr>
+			<th>日付</th>
+			<th>承認者ID</th>
+			<th>承認者名前</th>
+			<th>概要</th>
+			<th>承認状況</th>
+		</tr>
+		<tr th:each="leave:${leave}">
+			<td>[[${leave.applyDate}]]</td>
+			<td>[[${leave.authoriserId}]]</td>
+			<td>
+				<th:block th:each="account:${account}" th:if="${account.accountId == leave.authoriserId}">
+					[[${account.name}]]</th:block>
+			</td>
+			<td>[[${leave.leaveId}]]</td>
+			<td>[[${leave.approvalId}]]</td>
+		</tr>
+	</table>
+	<span th:text="${message}" style="color: red;"></span>
+</body>
+
+</html>
