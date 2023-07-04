@@ -384,27 +384,45 @@ public class AttendanceController {
 	@GetMapping("/pending")
 	public String index(
 			Model model) {
-		List<Leave> pendings = leaveRepository.findByAuthoriserId(user.getAccountId());
-		List<Account> account = accountRepository.findAll();
-
-		model.addAttribute("pendings", pendings);
-		model.addAttribute("account", account);
-
+		List<Leave> pendings = leaveRepository.findByAuthoriserIdAndApprovalId(user.getAccountId(),2);
+		List<Account> account= accountRepository.findAll();
+		
+		model.addAttribute("pendings",pendings);
 		return "pending";
 	}
-
-	//申請承認処理
-	@PostMapping("/pending/grant")
-	public String grant() {
-
-		return "";
+	
+	//申請承認/差し戻し処理
+	@PostMapping("/pending/state")
+	public String grant(
+			@RequestParam("id") Integer id,
+			@RequestParam("approvalId") Integer approvalId,
+			Model model) {
+		Optional<Leave> record = leaveRepository.findById(id);
+		
+		leave = record.get();
+		
+		leave.setApprovalId(approvalId);
+		
+		leaveRepository.save(leave);
+		
+		model.addAttribute("message", "承認しました");
+		
+		return index(model);
 	}
-
-	//申請差し戻し処理
-	@PostMapping("/pending/decline")
-	public String decline() {
-
-		return "";
-
-	}
+	
+//	//申請差し戻し処理
+//	@PostMapping("/pending/decline")
+//	public String decline(
+//			@RequestParam("id") Integer id,
+//			@RequestParam("leaveId") Integer leaveId,
+//			Model model) {
+//		Leave leave= new Leave(id,leaveId);
+//		leaveRepository.save(leave);
+//		
+//		System.err.println(leave);
+//		model.addAttribute("message", "差し戻ししました");
+//		
+//		return "redirect:/pending";
+//		
+//	}
 }

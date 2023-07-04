@@ -18,26 +18,18 @@
 				<th>社員番号</th>
 				<th>氏名</th>
 				<th>メールアドレス</th>
-				<th>パスワード</th>
-				<th>付与済み権限</th>
 			</tr>
 			<tr th:each="accounts:${accounts}">
 				<td th:text="${accounts.accountId}"></td>
 				<td th:text="${accounts.name}"></td>
 				<td th:text="${accounts.email}"></td>
-				<td th:text="${accounts.password}"></td>
-				<td th:text="${accounts.authoriseId}"></td>
-				
 				<td>
 					<form th:action="|/supervisor/${accounts.accountId}|" method="post">
 						<button>登録する</button>
 					</form>
 				</td>
-			
 		</table>
-		
 	</main>
-
 </body>
 
 </html>
