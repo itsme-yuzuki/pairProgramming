@@ -21,6 +21,12 @@ header h1 {
 	font-size: 20pt;
 	margin: 10px auto;
 }
+/*ヘッダ情報横並び*/
+header div span{
+	display: inline-block;
+	padding: 20px;
+	margin-block-end: 0%;
+}
 /* 仕切り線 */
 hr {
 	border-top: 2px dashed #7d8bae;
