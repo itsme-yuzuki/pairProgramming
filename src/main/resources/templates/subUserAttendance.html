@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>勤怠一覧表</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+	<header th:replace="header"></header>
+	<main>
+		<h1>被承認者一覧</h1>
+		<th:block th:if="${account != null}" th:each="account:${account}">
+		<a href="#"><span th:text="${account.name}"></span></a>
+		</th:block>
+		<th:block th:if="${account == null}">
+			<h3 style="color: blue;">承認者として指定されていません</h3>
+		</th:block>
+	</main>
+</body>
+
+</html>

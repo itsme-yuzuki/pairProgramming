@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -178,18 +179,16 @@ public class AttendanceController {
 		case 1:
 			return "redirect:/attendanceDetail";
 		case 2:
-			return "redirect:/pending";
+			return "redirect:/subAttendanceDetail";
 		case 3:
-			return "redirect:/supervisor";
+			return "redirect:/pending";
 		case 4:
-			return "redirect:/leaveDetail";
+			return "redirect:/supervisor";
 		case 5:
-			return "redirect:/leaveRequest";
+			return "redirect:/leaveDetail";
 		case 6:
-			return "alternate";
+			return "redirect:/leaveRequest";
 		case 7:
-			return "alternateRequest";
-		case 8:
 			return "redirect:/accountDetail";
 		}
 		return "homePage";
@@ -214,6 +213,19 @@ public class AttendanceController {
 		model.addAttribute("monthDetail", monthDetail);
 		model.addAttribute("attendance", attendance);
 		return "attendance";
+	}
+
+	@GetMapping("/subAttendanceDetail")
+	public String subAttendanceDetail(Model model) {
+
+		List<Account> account = accountRepository.findByAuthoriserId(user.getAccountId());
+		
+		if (account.size() > 0) {
+			model.addAttribute("account", account);
+		}
+		System.err.println(account);
+
+		return "subUserAttendance";
 	}
 
 	@GetMapping("/edit/{id}/attendance")
@@ -246,8 +258,8 @@ public class AttendanceController {
 	@PostMapping("/edit/{idd}")
 	public String submitAttendance(
 			@PathVariable("idd") Integer id,
-			@RequestParam("arrivingTime") Time arrivingTime,
-			@RequestParam("leftTime") Time leftTime,
+			@RequestParam(name = "arrivingTime", required = false) Time arrivingTime,
+			@RequestParam(name = "leftTime", required = false) Time leftTime,
 			@RequestParam("attendanceId1") Integer attendanceId1,
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
@@ -256,6 +268,17 @@ public class AttendanceController {
 		Optional<Attendance> record = attendanceRepository.findById(id);
 
 		attendance = record.get();
+
+		List<String> errorMessage = new ArrayList<String>();
+
+		if (arrivingTime.after(leftTime)) {
+			errorMessage.add("時間設定が間違っています");
+		}
+		if (errorMessage.size() > 0) {
+			model.addAttribute("errorMessage", errorMessage);
+			return editAttendance(attendance.getDate(), model);
+		}
+
 		attendance.setArrivingTime(arrivingTime.toString());
 		attendance.setLeftTime(leftTime.toString());
 		attendance.setAttendanceId1(attendanceId1);
@@ -279,6 +302,16 @@ public class AttendanceController {
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
 			Model model) {
+
+		List<String> errorMessage = new ArrayList<String>();
+
+		if (arrivingTime.after(leftTime)) {
+			errorMessage.add("時間設定が間違っています");
+		}
+		if (errorMessage.size() > 0) {
+			model.addAttribute("errorMessage", errorMessage);
+			return editAttendance(ymd, model);
+		}
 
 		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString(), leftTime.toString(),
 				attendanceId1, attendanceId2, telework);
@@ -367,7 +400,7 @@ public class AttendanceController {
 
 		return leaveDetail(model);
 	}
-	
+
 	@PostMapping("/leave/{id}/apply")
 	public String leaveApply(@PathVariable("id") Integer id, Model model) {
 

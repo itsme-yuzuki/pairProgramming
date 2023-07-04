@@ -26,26 +26,29 @@
 						<th>勤務先</th>
 					</tr>
 					<tr>
-						<td><span th:text="${attendance.date}"></span></td>
+						<td><span th:text="${date.ymd}"></span></td>
 						<td><span th:text="${date.weekname}"></td>
 						<td><input type="time" name="arrivingTime" th:value="${attendance.arrivingTime}"></td>
 						<td><input type="time" name="leftTime" th:value="${attendance.leftTime}"></td>
 						<td>
 							<select name="attendanceId1">
 								<option th:each="attendanceType:${attendanceType}"
-									th:value="${attendanceType.attendanceId}"
-									th:selected="${attendanceType.attendanceId == attendance.attendanceId1}">
+									th:value="${attendanceType.attendanceId}" th:if="${attendanceType.attendanceId == 1 || 
+									attendanceType.attendanceId == 3 || 
+									attendanceType.attendanceId == 5}">
 									[[${attendanceType.attendanceType}]]
 								</option>
 							</select>
 						</td>
-						<td><select name="attendanceId2">
+						<td>
+							<select name="attendanceId2">
 								<option th:each="attendanceType:${attendanceType}"
-									th:value="${attendanceType.attendanceId}"
-									th:selected="${attendanceType.attendanceId == attendance.attendanceId2}">
+									th:value="${attendanceType.attendanceId}" th:if="${attendanceType.attendanceId == 2 || 
+									attendanceType.attendanceId == 4}">
 									[[${attendanceType.attendanceType}]]
 								</option>
-							</select></td>
+							</select>
+						</td>
 						<td><select name="telework" th:value="${attendance.telework}">
 								<option value="出社">出社</option>
 								<option value="テレワーク">テレワーク</option>
@@ -58,7 +61,7 @@
 		</th:block>
 
 		<!--attendance情報がないとき-->
-		<th:bolck th:if="${attendance == null}">
+		<th:bolck th:if="${attendance == null && date.holiday == null}">
 			<form action="/edit" method="post">
 				<table border="1">
 					<tr>
@@ -71,24 +74,29 @@
 						<th>勤務先</th>
 					</tr>
 					<tr>
-						<td><input type="date" name="ymd" th:value="${date.ymd}"></input></td>
+						<td><span th:text="${date.ymd}"></span></td>
 						<td><span th:text="${date.weekname}"></span></td>
-						<td><input type="time" step="1" name="arrivingTime"></td>
-						<td><input type="time" step="1" name="leftTime"></td>
+						<td><input type="time" value="00:00:00" step="1" name="arrivingTime"></td>
+						<td><input type="time" value="00:00:00" step="1" name="leftTime"></td>
 						<td>
 							<select name="attendanceId1">
 								<option th:each="attendanceType:${attendanceType}"
-									th:value="${attendanceType.attendanceId}">
+									th:value="${attendanceType.attendanceId}" th:if="${attendanceType.attendanceId == 1 || 
+									attendanceType.attendanceId == 3 || 
+									attendanceType.attendanceId == 5}">
 									[[${attendanceType.attendanceType}]]
 								</option>
 							</select>
 						</td>
-						<td><select name="attendanceId2">
+						<td>
+							<select name="attendanceId2">
 								<option th:each="attendanceType:${attendanceType}"
-									th:value="${attendanceType.attendanceId}">
+									th:value="${attendanceType.attendanceId}" th:if="${attendanceType.attendanceId == 2 || 
+									attendanceType.attendanceId == 4}">
 									[[${attendanceType.attendanceType}]]
 								</option>
-							</select></td>
+							</select>
+						</td>
 						<td><select name="telework">
 								<option value="出社">出社</option>
 								<option value="テレワーク">テレワーク</option>
@@ -96,9 +104,38 @@
 							</select></td>
 					</tr>
 				</table>
+				<input type="hidden" name="ymd" th:value="${date.ymd}">
 				<button>更新</button>
 			</form>
 		</th:bolck>
+		<!--休日-->
+		<th:bolck th:if="${attendance == null && date.holiday != null}">
+			<form action="/edit" method="post">
+				<table border="1">
+					<tr>
+						<th>日付</th>
+						<th>曜日</th>
+						<th>出勤時間</th>
+						<th>退勤時間</th>
+						<th>出勤状況</th>
+						<th>退勤状況</th>
+						<th>勤務先</th>
+					</tr>
+					<tr>
+						<td><span th:text="${date.ymd}"></span></td>
+						<td><span th:text="${date.weekname}"></span></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></tr>
+				</table>
+				<span style="color: blue;">[[${date.holiday}]]</span>
+			</form>
+		</th:bolck>
+		<th:block th:if="${errorMessage != null}" th:each="errorMessage:${errorMessage}">
+			<span style="color: red;">[[${errorMessage}]]</span>
+		</th:block>
 	</main>
 </body>
 

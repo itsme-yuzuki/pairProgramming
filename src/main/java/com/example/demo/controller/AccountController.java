@@ -1,14 +1,11 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -42,13 +39,18 @@ public class AccountController {
 	LeaveStatusRepository leaveStatusRepository;
 
 	//	 ログイン画面を表示
-	@GetMapping({ "login", "/", "logout" })
+	@GetMapping({ "/login", "/", "/logout" })
 	public String index(
 			@RequestParam(name = "password", defaultValue = "") String password,
+			@RequestParam(name = "error", defaultValue = "") String error,
 			Model model) {
 		// セッション情報を全てクリアする
 		session.invalidate();
 
+		if(error.equals("notLoggedIn")) {
+			model.addAttribute("message", "ログインしてください");
+		}
+		
 		// エラーパラメータのチェック
 		if (password.equals("forget")) {
 			return "passwordReset";
@@ -107,71 +109,5 @@ public class AccountController {
 		return "";
 	}
 
-	@GetMapping("/accountDetail")
-	public String accountDetail(Model model) {
-
-		account = null;
-
-		Optional<Account> record = accountRepository.findById(user.getAccountId());
-		//		Optional<Account> record = accountRepository.findById(1);
-
-		if (record.isEmpty() == false) {
-			account = record.get();
-		}
-
-		model.addAttribute("account", account);
-
-		return "accountDetail";
-	}
-
-	//パスワード変更作業
-	@PostMapping("/accountDetail")
-	public String accountDetail(
-			@RequestParam("oldPassword") String oldPassword,
-			@RequestParam("newPassword") String newPassword,
-			Model model) {
-		Optional<Account> record = accountRepository.findById(user.getAccountId());
-		//		Optional<Account> record = accountRepository.findById(1);
-
-		account = record.get();
-
-		List<String> errormessage = new ArrayList<String>();
-
-		if (account.getPassword().equals(oldPassword) == false) {
-			errormessage.add("パスワードが不一致");
-		}
-		if (errormessage.size() > 0) {
-			model.addAttribute("errormessage", errormessage);
-			return accountDetail(model);
-		}
-
-		account.setPassword(newPassword);
-
-		accountRepository.save(account);
-
-		model.addAttribute("message", "パスワードの変更が成功しました");
-
-		return accountDetail(model);
-	}
-
-	@GetMapping("/supervisor")
-	public String index(Model model) {
-		List<Account> accounts = accountRepository.findByAuthoriseIdLessThanOrderByAccountId(2);
-		
-		model.addAttribute("accounts", accounts);
-
-		return "supervisor";
-	}
-
-	@PostMapping("/supervisor/{id}")
-	public String set(
-			@PathVariable("id") Integer accountId,
-			Model model) {
-		account.setAuthoriserId(accountId);
-		accountRepository.save(account);
-
-		model.addAttribute("message", "登録完了しました");
-
-		return index(model);
-	}
+	
 }
