@@ -49,10 +49,10 @@ public class Leave {
 
 	public Leave() {
 	}
-	
+
 	public Leave(Integer id, Integer leaveId) {
-		this.id= id;
-		this.leaveId= leaveId;
+		this.id = id;
+		this.leaveId = leaveId;
 	}
 
 }

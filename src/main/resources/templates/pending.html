@@ -36,14 +36,14 @@
 				<td>[[${pendings.message}]]</td>
 				<td>
 					<form action="/pending/state" method="post">
-					<input type="hidden" name="id" th:value="${pendings.id}">
-					<button value="4" name="approvalId">承認する</button>
+						<input type="hidden" name="id" th:value="${pendings.id}">
+						<button value="4" name="approvalId">承認する</button>
 					</form>
 				</td>
 				<td>
 					<form action="/pending/state" method="post">
-					<input type="hidden" name="id" th:value="${pendings.id}">
-					<button value="3" name="approvalId">差し戻す</button>
+						<input type="hidden" name="id" th:value="${pendings.id}">
+						<button value="3" name="approvalId">差し戻す</button>
 					</form>
 				</td>
 			</tr>

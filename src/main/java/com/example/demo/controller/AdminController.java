@@ -24,14 +24,14 @@ public class AdminController {
 
 	@Autowired
 	Account account;
-	
+
 	@Autowired
 	User user;
 
 	@Autowired
 	AccountRepository accountRepository;
 
-//	 ログイン画面を表示
+	//	 ログイン画面を表示
 	@GetMapping({ "admin/login", "admin/logout" })
 	public String index(
 			@RequestParam(name = "password", defaultValue = "") String password,
@@ -41,7 +41,7 @@ public class AdminController {
 
 		return "adminLogin";
 	}
-	
+
 	// ログインを実行
 	@PostMapping("/admin/login")
 	public String login(
@@ -56,8 +56,8 @@ public class AdminController {
 		if (record.isEmpty() == false && record.get().getAuthoriseId() == 0) {
 			account = record.get();
 		}
-		
-		if (record.isEmpty() == false && record.get().getAuthoriseId()  !=0) {
+
+		if (record.isEmpty() == false && record.get().getAuthoriseId() != 0) {
 			model.addAttribute("message", "管理者権限がありません");
 			return "login";
 		}
@@ -67,10 +67,10 @@ public class AdminController {
 			return "login";
 		}
 
-//		leaveStatus = leaveStatusRepository.findById(accountId).get();
+		//		leaveStatus = leaveStatusRepository.findById(accountId).get();
 
 		// セッション管理されたアカウント情報に名前をセット
-//		user.setLeaveRemain(leaveStatus.getLeaveRemain());
+		//		user.setLeaveRemain(leaveStatus.getLeaveRemain());
 		user.setName(account.getName());
 		user.setAccountId(account.getAccountId());
 		user.setAuthorise(account.getAuthoriseId());

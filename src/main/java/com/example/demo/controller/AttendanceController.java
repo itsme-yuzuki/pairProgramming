@@ -367,7 +367,7 @@ public class AttendanceController {
 
 		return leaveDetail(model);
 	}
-	
+
 	@PostMapping("/leave/{id}/apply")
 	public String leaveApply(@PathVariable("id") Integer id, Model model) {
 
@@ -384,13 +384,13 @@ public class AttendanceController {
 	@GetMapping("/pending")
 	public String index(
 			Model model) {
-		List<Leave> pendings = leaveRepository.findByAuthoriserIdAndApprovalId(user.getAccountId(),2);
-		List<Account> account= accountRepository.findAll();
-		
-		model.addAttribute("pendings",pendings);
+		List<Leave> pendings = leaveRepository.findByAuthoriserIdAndApprovalId(user.getAccountId(), 2);
+		List<Account> account = accountRepository.findAll();
+
+		model.addAttribute("pendings", pendings);
 		return "pending";
 	}
-	
+
 	//申請承認/差し戻し処理
 	@PostMapping("/pending/state")
 	public String grant(
@@ -398,31 +398,31 @@ public class AttendanceController {
 			@RequestParam("approvalId") Integer approvalId,
 			Model model) {
 		Optional<Leave> record = leaveRepository.findById(id);
-		
+
 		leave = record.get();
-		
+
 		leave.setApprovalId(approvalId);
-		
+
 		leaveRepository.save(leave);
-		
+
 		model.addAttribute("message", "承認しました");
-		
+
 		return index(model);
 	}
-	
-//	//申請差し戻し処理
-//	@PostMapping("/pending/decline")
-//	public String decline(
-//			@RequestParam("id") Integer id,
-//			@RequestParam("leaveId") Integer leaveId,
-//			Model model) {
-//		Leave leave= new Leave(id,leaveId);
-//		leaveRepository.save(leave);
-//		
-//		System.err.println(leave);
-//		model.addAttribute("message", "差し戻ししました");
-//		
-//		return "redirect:/pending";
-//		
-//	}
+
+	//	//申請差し戻し処理
+	//	@PostMapping("/pending/decline")
+	//	public String decline(
+	//			@RequestParam("id") Integer id,
+	//			@RequestParam("leaveId") Integer leaveId,
+	//			Model model) {
+	//		Leave leave= new Leave(id,leaveId);
+	//		leaveRepository.save(leave);
+	//		
+	//		System.err.println(leave);
+	//		model.addAttribute("message", "差し戻ししました");
+	//		
+	//		return "redirect:/pending";
+	//		
+	//	}
 }

@@ -30,7 +30,7 @@ public class Attendance {
 
 	@Column(name = "left_time")
 	private String leftTime; // 時間
-	
+
 	@Column(name = "attendance_id1")
 	private Integer attendanceId1; // 出勤状況
 
@@ -68,6 +68,5 @@ public class Attendance {
 		this.attendanceId2 = attendanceId2;
 		this.telework = telework;
 	}
-
 
 }

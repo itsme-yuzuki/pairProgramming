@@ -49,6 +49,9 @@ public class AccountController {
 		// セッション情報を全てクリアする
 		session.invalidate();
 
+		//		Exception e;
+		//		if (e==)
+
 		// エラーパラメータのチェック
 		if (password.equals("forget")) {
 			return "passwordReset";
@@ -157,7 +160,7 @@ public class AccountController {
 	@GetMapping("/supervisor")
 	public String index(Model model) {
 		List<Account> accounts = accountRepository.findByAuthoriseIdLessThanOrderByAccountId(2);
-		
+
 		model.addAttribute("accounts", accounts);
 
 		return "supervisor";

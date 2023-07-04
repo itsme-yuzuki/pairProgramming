@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>CustomerInfo</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<meta charset="UTF-8">
+	<title>CustomerInfo</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
+
 <body>
 	<header th:replace="header"></header>
 	<hr>
@@ -12,7 +14,7 @@
 		<h1>管理者 - アカウント編集</h1>
 		<hr>
 		<form action="/admin/edit" method="post">
-		<table border="1">
+			<table border="1">
 				<tr>
 					<th>社員番号</th>
 					<th>氏名</th>
@@ -35,4 +37,5 @@
 	<hr>
 	<footer th:replace="footer"></footer>
 </body>
+
 </html>

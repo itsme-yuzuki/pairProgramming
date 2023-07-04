@@ -17,7 +17,7 @@ public class User {
 
 	//コンストラクタ
 	public User() {
-		
+
 	}
 
-} 
+}

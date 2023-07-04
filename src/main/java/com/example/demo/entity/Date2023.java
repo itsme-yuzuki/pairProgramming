@@ -15,24 +15,23 @@ import lombok.Data;
 @Entity
 @Table(name = "date2023")
 public class Date2023 {
-	
+
 	@Id
 	@Column(name = "date_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer dateId; 
-	
+	private Integer dateId;
+
 	private String ymd;
-	
+
 	private Integer month;
-	
+
 	private String weekname;
-	
+
 	private String holiday;
 
 	//コンストラクタ	
 	public Date2023() {
 
 	}
-
 
 }
