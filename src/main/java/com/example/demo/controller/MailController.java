@@ -21,9 +21,15 @@ public class MailController {
 		mailMessage.setFrom("suzuki1abc1010@gmail.com");
 		mailMessage.setSubject("仮パスワード設定のお知らせ");
 		mailMessage.setText("勤怠管理システムからのお知らせです。"
+				+ "\r\n"
 				+ "パスワード忘れによる仮パスワード発行を受け付けました。"
-				+ "再発行された仮パスワードは下記のとおりです。"
+				+ "\r\n"
+				+"再発行された仮パスワードは下記のとおりです。"
+				+ "\r\n"
+				+ "\r\n"
 				+ password
+				+ "\r\n"
+				+ "\r\n"
 				+ "現在は仮パスワードに変更されていますのでこちらでログイン後パスワードの変更を強く推奨いたします。");
 		javaMailSender.send(mailMessage);
 	}

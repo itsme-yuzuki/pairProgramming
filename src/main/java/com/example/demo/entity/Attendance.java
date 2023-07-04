@@ -69,4 +69,10 @@ public class Attendance {
 		this.telework = telework;
 	}
 
+	public Attendance(String date, Integer accountId, Integer attendanceId1, Integer attendanceId2) {
+		this.date = date;
+		this.accountId = accountId;
+		this.attendanceId1 = attendanceId1;
+		this.attendanceId2 = attendanceId2;
+	}
 }

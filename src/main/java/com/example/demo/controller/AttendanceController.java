@@ -186,10 +186,6 @@ public class AttendanceController {
 		case 5:
 			return "redirect:/leaveRequest";
 		case 6:
-			return "alternate";
-		case 7:
-			return "alternateRequest";
-		case 8:
 			return "redirect:/accountDetail";
 		}
 		return "homePage";
@@ -405,8 +401,20 @@ public class AttendanceController {
 
 		leaveRepository.save(leave);
 
-		model.addAttribute("message", "承認しました");
+		//日付、アカウントID、attendance ID
+		Integer accountId = leave.getAccountId();
+		String date = leave.getApplyDate();
+		Integer leaveId = leave.getLeaveId();
+		Attendance attendance = new Attendance(date, accountId, leaveId, leaveId);
+		attendanceRepository.save(attendance);
 
+		if (id == 4) {
+			model.addAttribute("message", "承認しました");
+		}
+		if(id == 3) {
+			model.addAttribute("message", "差し戻ししました");
+		}
+		
 		return index(model);
 	}
 
