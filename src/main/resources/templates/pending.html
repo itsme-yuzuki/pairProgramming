@@ -3,16 +3,49 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>承認待ち一覧</title>
+	<title>承認待ち申請</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
-	<header>
-		<h1></h1>
-	</header>
+	<header th:replace="header"></header>
 	<main>
-		
+		<h1>承認待ち申請一覧</h1>
+		<table border="1">
+			<tr>
+				<th>申請No</th>
+				<th>変更希望日時</th>
+				<th>社員番号</th>
+				<th>氏名</th>
+				<th>申請内容</th>
+				<th>承認状況</th>
+				<th>備考</th>
+			</tr>
+			<tr th:each="pendings:${pendings}">
+				<td>[[${pendings.id}]]</td>
+				<td>[[${pendings.applyDate}]]</td>
+				<td>[[${pendings.accountId}]]</td>
+				<td>
+					<th:block th:each="account:${account}" th:if="${account.accountId == pendings.accountId}">
+						[[${account.name}]]
+					</th:block>
+				</td>
+				<td>[[${pendings.leaveId}]]</td>
+				<td>[[${pendings.approvalId}]]</td>
+				<td>[[${pendings.message}]]</td>
+				<td>
+					<form action="/pending/grant" method="post"></form>
+					<button>承認する</button>
+				</td>
+				<td>
+					<form action="/pending/decline" method="post"></form>
+					<button>差し戻す</button>
+				</td>
+			</tr>
+		</table>
+	</main>
+
+
 </body>
 
 </html>

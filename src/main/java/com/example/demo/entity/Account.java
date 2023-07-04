@@ -58,4 +58,8 @@ public class Account {
 		this.authoriseId = authoriseId;
 	}
 
+	public Account(Integer authoriserId) {
+		this.authoriserId= authoriserId;
+	}
+
 }
