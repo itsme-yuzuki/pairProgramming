@@ -36,7 +36,7 @@ public class PasswordResetGenerator {
 
 		// output 
 		return (getRandomString(i));
-		
-//		System.out.println(getRandomString(i));
+
+		//		System.out.println(getRandomString(i));
 	}
 }

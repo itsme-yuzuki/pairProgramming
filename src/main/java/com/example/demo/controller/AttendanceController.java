@@ -417,27 +417,42 @@ public class AttendanceController {
 	@GetMapping("/pending")
 	public String index(
 			Model model) {
-		List<Leave> pendings = leaveRepository.findByAuthoriserId(user.getAccountId());
+		List<Leave> pendings = leaveRepository.findByAuthoriserIdAndApprovalId(user.getAccountId(), 2);
 		List<Account> account = accountRepository.findAll();
 
 		model.addAttribute("pendings", pendings);
-		model.addAttribute("account", account);
-
 		return "pending";
 	}
 
-	//申請承認処理
-	@PostMapping("/pending/grant")
-	public String grant() {
+	//申請承認/差し戻し処理
+	@PostMapping("/pending/state")
+	public String grant(
+			@RequestParam("id") Integer id,
+			@RequestParam("approvalId") Integer approvalId,
+			Model model) {
+		Optional<Leave> record = leaveRepository.findById(id);
 
-		return "";
+		leave = record.get();
+
+		leave.setApprovalId(approvalId);
+
+		leaveRepository.save(leave);
+
+		//日付、アカウントID、attendance ID
+		Integer accountId = leave.getAccountId();
+		String date = leave.getApplyDate();
+		Integer leaveId = leave.getLeaveId();
+		Attendance attendance = new Attendance(date, accountId, leaveId, leaveId);
+		attendanceRepository.save(attendance);
+
+		if (id == 4) {
+			model.addAttribute("message", "承認しました");
+		}
+		if(id == 3) {
+			model.addAttribute("message", "差し戻ししました");
+		}
+		
+		return index(model);
 	}
-
-	//申請差し戻し処理
-	@PostMapping("/pending/decline")
-	public String decline() {
-
-		return "";
-
-	}
+	
 }
