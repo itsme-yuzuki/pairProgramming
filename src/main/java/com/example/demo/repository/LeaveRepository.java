@@ -10,5 +10,6 @@ public interface LeaveRepository extends JpaRepository<Leave, Integer> {
 	
 	List<Leave> findByAccountId(Integer accountId);
 	
-	List<Leave> findByAuthoriserId(Integer accountId);
+	List<Leave> findByAuthoriserIdAndApprovalId(Integer accountId, Integer ApprovalId);
+
 }

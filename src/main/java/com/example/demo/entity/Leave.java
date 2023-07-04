@@ -50,5 +50,10 @@ public class Leave {
 	public Leave() {
 		super();
 	}
+	
+	public Leave(Integer id, Integer leaveId) {
+		this.id= id;
+		this.leaveId= leaveId;
+	}
 
 }

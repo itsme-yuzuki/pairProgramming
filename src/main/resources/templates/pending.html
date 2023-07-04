@@ -11,6 +11,7 @@
 	<header th:replace="header"></header>
 	<main>
 		<h1>承認待ち申請一覧</h1>
+		<span th:text="${message}" style="color:mediumslateblue"></span>
 		<table border="1">
 			<tr>
 				<th>申請No</th>
@@ -34,12 +35,16 @@
 				<td>[[${pendings.approvalId}]]</td>
 				<td>[[${pendings.message}]]</td>
 				<td>
-					<form action="/pending/grant" method="post"></form>
-					<button>承認する</button>
+					<form action="/pending/state" method="post">
+					<input type="hidden" name="id" th:value="${pendings.id}">
+					<button value="4" name="approvalId">承認する</button>
+					</form>
 				</td>
 				<td>
-					<form action="/pending/decline" method="post"></form>
-					<button>差し戻す</button>
+					<form action="/pending/state" method="post">
+					<input type="hidden" name="id" th:value="${pendings.id}">
+					<button value="3" name="approvalId">差し戻す</button>
+					</form>
 				</td>
 			</tr>
 		</table>

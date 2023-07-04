@@ -160,8 +160,6 @@ public class AccountController {
 		System.err.println(accounts);
 		model.addAttribute("accounts", accounts);
 
-		System.err.println(accounts);
-
 		return "supervisor";
 	}
 
