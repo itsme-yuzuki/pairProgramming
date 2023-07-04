@@ -313,6 +313,7 @@ public class AttendanceController {
 		return "leaveRequest";
 	}
 
+	//
 	@GetMapping("/leave")
 	public String leaveDetail(Model model) {
 
@@ -323,7 +324,7 @@ public class AttendanceController {
 		return "";
 	}
 
-	//アカウントに紐づいている承認申請を一覧表示
+	//アカウントに紐づいている承認申請を一覧表示処理
 	@GetMapping("/pending")
 	public String index(
 			Model model) {
@@ -332,5 +333,21 @@ public class AttendanceController {
 		model.addAttribute("pendings",pendings);
 
 		return "redirect:/pending";
+	}
+	
+	//申請承認処理
+	@PostMapping("/pending/grant")
+	public String grant() {
+		
+		
+		return "";
+	}
+	
+	//申請差し戻し処理
+	@PostMapping("/pending/decline")
+	public String decline() {
+		
+		return "";
+		
 	}
 }

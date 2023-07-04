@@ -13,23 +13,33 @@
 		<h1>承認待ち申請一覧</h1>
 		<table border="1">
 			<tr>
+				<th>申請No</th>
+				<th>変更希望日時</th>
 				<th>社員番号</th>
 				<th>氏名</th>
 				<th>申請内容</th>
 				<th>承認状況</th>
 				<th>備考</th>
 			</tr>
-			<th:block th:each="">
-				<tr>
-					<td>[[${{}]]</td>
-					<td>[[${{}]]</td>
-					<td>[[${{}]]</td>
-					<td>[[${{}]]</td>
-					<td>[[${{}]]</td>
-				</tr>
-				</th>
+			<tr th:each="pending:${pendings}">
+				<td>[[${pending.id}]]</td>
+				<td>[[${{pending.applyDate}]]</td>
+				<td>[[${{pending.accountId}]]</td>
+				<td>[[${{pending.leaveId}]]</td>
+				<td>[[${{pending.approvalId}]]</td>
+				<td>[[${{pending.message}]]</td>
+				<td>
+					<form action="/pending/grant" method="post"></form>
+					<button>承認する</button>
+				</td>
+				<td>
+					<form action="/pending/decline" method="post"></form>
+					<button>差し戻す</button>
+				</td>
+			</tr>
 		</table>
 	</main>
+
 
 </body>
 

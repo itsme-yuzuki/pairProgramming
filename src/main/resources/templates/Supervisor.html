@@ -27,12 +27,13 @@
 				<td th:text="${accounts.email}"></td>
 				<td th:text="${accounts.password}"></td>
 				<td th:text="${accounts.authoriseId}"></td>
+				
 				<td>
 					<form th:action="|/supervisor/${accounts.accountId}|" method="post">
 						<button>登録する</button>
 					</form>
 				</td>
-			</tr>
+			
 		</table>
 		
 	</main>
