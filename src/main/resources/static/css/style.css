@@ -7,7 +7,8 @@ body {
 header{
     margin-bottom: 10em;
     position: relative;
-    width: 100%;
+    width: auto;
+	min-height: 50px;
     background-color: #45496a; /* 背景色 */
     color: #ffffff; /* 文字色 */
 }
@@ -19,7 +20,11 @@ header a, nav a {
 /* ヘッダー内見出し */
 header h1 {
 	font-size: 20pt;
-	margin: 10px auto;
+	display: flex;
+	justify-content: center;
+	margin: auto;
+	width: auto;
+	min-height: 140px;
 }
 /*ヘッダ情報横並び*/
 header div span{
