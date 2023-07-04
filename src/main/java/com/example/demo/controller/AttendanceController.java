@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.ApprovalStatus;
 import com.example.demo.entity.Attendance;
 import com.example.demo.entity.AttendanceType;
 import com.example.demo.entity.Date2023;
 import com.example.demo.entity.Leave;
 import com.example.demo.model.User;
 import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.ApprovalStatusRepository;
 import com.example.demo.repository.AttendanceRepository;
 import com.example.demo.repository.AttendanceTypeRepository;
 import com.example.demo.repository.Date2023Repository;
@@ -66,6 +68,12 @@ public class AttendanceController {
 
 	@Autowired
 	LeaveRepository leaveRepository;
+
+	@Autowired
+	ApprovalStatus approvalStatus;
+
+	@Autowired
+	ApprovalStatusRepository approvalStatusRepository;
 
 	@GetMapping("/attendance")
 	public String attendance(@RequestParam(name = "status") Integer status,
@@ -174,7 +182,7 @@ public class AttendanceController {
 		case 3:
 			return "redirect:/supervisor";
 		case 4:
-			return "redirect:/leave";
+			return "redirect:/leaveDetail";
 		case 5:
 			return "redirect:/leaveRequest";
 		case 6:
@@ -282,6 +290,7 @@ public class AttendanceController {
 		return "redirect:/edit/" + newDate + "/attendance";
 	}
 
+	//新規休暇申請画面表示
 	@GetMapping("/leaveRequest")
 	public String leaveRequest(Model model) {
 
@@ -292,6 +301,7 @@ public class AttendanceController {
 		return "leaveRequest";
 	}
 
+	//新規休暇休暇申請処理
 	@PostMapping("/leaveRequest")
 	public String createLeave(@RequestParam(name = "date") LocalDate date,
 			@RequestParam(name = "leaveType") Integer leaveType,
@@ -303,18 +313,23 @@ public class AttendanceController {
 
 		account = record.get();
 
-//		if (account.getAuthoriserId() == null) {
-//			model.addAttribute("message", "承認者を設定してください");
-//			return leaveRequest(model);
-//		}
+		if (account.getAuthoriserId() == null) {
+			model.addAttribute("message", "承認者を設定してください");
+			return leaveRequest(model);
+		}
 
-		leave = new Leave(date.toString(), user.getAccountId(), 1, leaveType,
+		leave = new Leave(date.toString(), user.getAccountId(), account.getAuthoriserId(), leaveType,
 				approvalStatus, message);
 		leaveRepository.save(leave);
 
-		return "leaveRequest";
-	}
+		if (approvalStatus == 2) {
+			model.addAttribute("message", "休暇申請が完了いたしました");
+		} else if (approvalStatus == 1) {
+			model.addAttribute("message", "休暇申請を下書きにいたしました");
+		}
 
+		return leaveRequest(model);
+	}
 
 	@GetMapping("/leaveDetail")
 	public String leaveDetail(Model model) {
@@ -323,11 +338,46 @@ public class AttendanceController {
 
 		List<Account> account = accountRepository.findAll();
 
+		List<ApprovalStatus> approvalStatus = approvalStatusRepository.findAll();
+
+		List<AttendanceType> attendanceType = attendanceTypeRepository.findAll();
+
 		model.addAttribute("account", account);
+
+		model.addAttribute("attendanceType", attendanceType);
+
+		model.addAttribute("approvalStatus", approvalStatus);
 
 		model.addAttribute("leave", leave);
 
 		return "leaveDetail";
+	}
+
+	@PostMapping("/leave/{id}/delete")
+	public String leaveDelete(@PathVariable("id") Integer id, Model model) {
+
+		leave = leaveRepository.findById(id).get();
+
+		if (leave.getApprovalId() > 2) {
+			model.addAttribute("message", "承認済みの休暇申請は削除できません");
+			return leaveDetail(model);
+		}
+
+		leaveRepository.deleteById(id);
+
+		return leaveDetail(model);
+	}
+	
+	@PostMapping("/leave/{id}/apply")
+	public String leaveApply(@PathVariable("id") Integer id, Model model) {
+
+		leave = leaveRepository.findById(id).get();
+
+		leave.setApprovalId(2);
+
+		leaveRepository.save(leave);
+
+		return leaveDetail(model);
 	}
 
 	//アカウントに紐づいている承認申請を一覧表示処理
@@ -335,27 +385,26 @@ public class AttendanceController {
 	public String index(
 			Model model) {
 		List<Leave> pendings = leaveRepository.findByAuthoriserId(user.getAccountId());
-		List<Account> account= accountRepository.findAll();
-		
-		model.addAttribute("pendings",pendings);
+		List<Account> account = accountRepository.findAll();
+
+		model.addAttribute("pendings", pendings);
 		model.addAttribute("account", account);
 
 		return "pending";
 	}
-	
+
 	//申請承認処理
 	@PostMapping("/pending/grant")
 	public String grant() {
-		
-		
+
 		return "";
 	}
-	
+
 	//申請差し戻し処理
 	@PostMapping("/pending/decline")
 	public String decline() {
-		
+
 		return "";
-		
+
 	}
 }

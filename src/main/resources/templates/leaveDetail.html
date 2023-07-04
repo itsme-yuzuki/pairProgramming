@@ -18,6 +18,8 @@
 			<th>承認者名前</th>
 			<th>概要</th>
 			<th>承認状況</th>
+			<th>削除</th>
+			<th>申請</th>
 		</tr>
 		<tr th:each="leave:${leave}">
 			<td>[[${leave.applyDate}]]</td>
@@ -26,8 +28,33 @@
 				<th:block th:each="account:${account}" th:if="${account.accountId == leave.authoriserId}">
 					[[${account.name}]]</th:block>
 			</td>
-			<td>[[${leave.leaveId}]]</td>
-			<td>[[${leave.approvalId}]]</td>
+			<td>
+				<th:block th:each="attendanceType:${attendanceType}"
+					th:if="${attendanceType.attendanceId == leave.leaveId}">
+					[[${attendanceType.attendanceType}]]</th:block>
+			</td>
+			<td>
+				<th:block th:each="approvalStatus:${approvalStatus}"
+					th:if="${approvalStatus.approvalId == leave.approvalId}">
+					[[${approvalStatus.approvalStatus}]]</th:block>
+			</td>
+			<td>
+				<form th:action="|/leave/${leave.id}/delete|" method="post">
+					<input type="hidden" th:value="${leave.id}">
+					<button>削除</button>
+				</form>
+			</td>
+			<td>
+				<th:block th:if="${leave.approvalId == 1}">
+					<form th:action="|/leave/${leave.id}/apply|" method="post">
+						<input type="hidden" th:value="${leave.id}">
+						<button>申請</button>
+					</form>
+				</th:block>
+				<th:block th:if="${leave.approvalId != 1}">
+					申請済み
+				</th:block>
+			</td>
 		</tr>
 	</table>
 	<span th:text="${message}" style="color: red;"></span>

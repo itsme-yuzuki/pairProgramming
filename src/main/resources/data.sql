@@ -4,18 +4,11 @@ INSERT INTO authorise_name(authorise_id,authorise_name) VALUES(1,'上位');
 INSERT INTO authorise_name(authorise_id,authorise_name) VALUES(2, '下位');
 
 -- accountテーブルデータ
-<<<<<<< HEAD
 INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木一郎', 'suzuki1abc1010@gmail.com','Suzuki1010@', 1);
-=======
-INSERT INTO account(name, email, password, authorise_id ) VALUES('鈴木一郎', 'suzuki1abc1010@gmail.com','Suzuki1010@', 1);
->>>>>>> branch 'master' of https://github.com/itsme-yuzuki/pairProgramming.git
 INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木二郎', 'suzuki2abc1010@gmail.com','Suzuki1010@', 2);
 INSERT INTO account(name, email, password, authorise_id) VALUES('鈴木三郎', 'suzuki3@abc.com','suzuki3030', 1);
 INSERT INTO account(name, email, password, authorise_id) VALUES('佐藤二朗', 'sato2@abc.com','sato2020', 0);
 
--- アテンダンステーブルデータ
---INSERT INTO attendance(submit_date, attendance_id) VALUES(date, 1);
---INSERT INTO attendance(submit_date, attendance_id) VALUES(date, 2); 
 
 --アテンダンスタイプテーブル
 INSERT INTO attendance_type(attendance_id, attendance_type) VALUES(1,'出勤');

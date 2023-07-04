@@ -157,10 +157,8 @@ public class AccountController {
 	@GetMapping("/supervisor")
 	public String index(Model model) {
 		List<Account> accounts = accountRepository.findByAuthoriseIdLessThanOrderByAccountId(2);
-		System.err.println(accounts);
+		
 		model.addAttribute("accounts", accounts);
-
-		System.err.println(accounts);
 
 		return "supervisor";
 	}

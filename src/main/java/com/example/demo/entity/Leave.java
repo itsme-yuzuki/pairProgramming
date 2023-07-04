@@ -48,7 +48,6 @@ public class Leave {
 	}
 
 	public Leave() {
-		super();
 	}
 
 }
