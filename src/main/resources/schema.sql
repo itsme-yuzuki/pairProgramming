@@ -1,5 +1,6 @@
 -- テーブル削除
 DROP TABLE IF EXISTS attendance;
+DROP TABLE IF EXISTS attendance_edit;
 DROP TABLE IF EXISTS leave;
 DROP TABLE IF EXISTS leave_status;
 DROP TABLE IF EXISTS account;
@@ -56,6 +57,20 @@ CREATE TABLE leave_status
 CREATE TABLE attendance
 (
    id SERIAL,
+   account_id SERIAL REFERENCES account (account_id),
+   submit_date text,
+   arriving_time text,
+   left_time text,
+   attendance_id1 INTEGER REFERENCES attendance_type (attendance_id),
+   attendance_id2 INTEGER REFERENCES attendance_type (attendance_id),
+   telework Text
+);
+-- 勤怠参照テーブル
+CREATE TABLE attendance_edit
+(
+   id SERIAL,
+   edit_date text,
+   edit_time text,
    account_id SERIAL REFERENCES account (account_id),
    submit_date text,
    arriving_time text,

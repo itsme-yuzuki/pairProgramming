@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.ApprovalStatus;
 import com.example.demo.entity.Attendance;
+import com.example.demo.entity.AttendanceEdit;
 import com.example.demo.entity.AttendanceType;
 import com.example.demo.entity.Date2023;
 import com.example.demo.entity.Leave;
 import com.example.demo.model.User;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.ApprovalStatusRepository;
+import com.example.demo.repository.AttendanceEditRepository;
 import com.example.demo.repository.AttendanceRepository;
 import com.example.demo.repository.AttendanceTypeRepository;
 import com.example.demo.repository.Date2023Repository;
@@ -75,6 +77,12 @@ public class AttendanceController {
 
 	@Autowired
 	ApprovalStatusRepository approvalStatusRepository;
+
+	@Autowired
+	AttendanceEdit attendanceEdit;
+
+	@Autowired
+	AttendanceEditRepository attendanceEditRepository;
 
 	@GetMapping("/attendance")
 	public String attendance(@RequestParam(name = "status") Integer status,
@@ -198,8 +206,6 @@ public class AttendanceController {
 	public String attendanceDetail(@RequestParam(name = "month", defaultValue = "") Integer month,
 			Model model) {
 
-		int accountId = user.getAccountId();
-
 		List<AttendanceType> attendanceType = attendanceTypeRepository.findAll();
 
 		if (month == null) {
@@ -207,7 +213,7 @@ public class AttendanceController {
 		}
 
 		List<Date2023> monthDetail = date2023Repository.findByMonthOrderByDateId(month);
-		List<Attendance> attendance = attendanceRepository.findByAccountIdOrderByDate(accountId);
+		List<Attendance> attendance = attendanceRepository.findByAccountIdOrderByDate(user.getAccountId());
 		model.addAttribute("month", month);
 		model.addAttribute("attendanceType", attendanceType);
 		model.addAttribute("monthDetail", monthDetail);
@@ -216,16 +222,69 @@ public class AttendanceController {
 	}
 
 	@GetMapping("/subAttendanceDetail")
-	public String subAttendanceDetail(Model model) {
+	public String subAttendanceDetail(@RequestParam(name = "accountId", defaultValue = "0") Integer accountId,
+			@RequestParam(name = "month", defaultValue = "") Integer month,
+			Model model) {
 
 		List<Account> account = accountRepository.findByAuthoriserId(user.getAccountId());
-		
+
 		if (account.size() > 0) {
 			model.addAttribute("account", account);
 		}
-		System.err.println(account);
 
+		if (accountId != 0) {
+
+			Account subAccount = accountRepository.findByAccountId(accountId).get();
+
+			model.addAttribute("subAccount", subAccount);
+
+			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountId(accountId);
+
+			model.addAttribute("attendanceEdit", attendanceEdit);
+
+			if (month == null) {
+				month = LocalDate.now().getMonthValue();
+			}
+
+			List<AttendanceType> attendanceType = attendanceTypeRepository.findAll();
+			List<Date2023> monthDetail = date2023Repository.findByMonthOrderByDateId(month);
+			List<Attendance> attendance = attendanceRepository.findByAccountIdOrderByDate(accountId);
+			model.addAttribute("month", month);
+			model.addAttribute("attendanceType", attendanceType);
+			model.addAttribute("monthDetail", monthDetail);
+			model.addAttribute("attendance", attendance);
+
+		}
 		return "subUserAttendance";
+	}
+
+	@GetMapping("/sub/{id}/attendance")
+	public String subAttendanceDetail(@PathVariable("id") String id,
+			@RequestParam("accountId") Integer accountId, Model model) {
+
+		account = accountRepository.findByAccountId(accountId).get();
+
+		List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountIdAndDate(accountId, id);
+
+		date2023 = date2023Repository.findByYmd(id).get();
+
+		if (attendanceEdit.size() > 0) {
+			attendance = attendanceRepository.findByAccountIdAndDate(accountId, id).get();
+
+			model.addAttribute("attendance", attendance);
+
+			model.addAttribute("attendanceEdit", attendanceEdit);
+		}
+
+		List<AttendanceType> attendanceType = attendanceTypeRepository.findAll();
+
+		model.addAttribute("date", date2023);
+
+		model.addAttribute("attendanceType", attendanceType);
+
+		model.addAttribute("account", account);
+
+		return "subAttendanceDetail";
 	}
 
 	@GetMapping("/edit/{id}/attendance")
@@ -239,7 +298,7 @@ public class AttendanceController {
 
 		date2023 = record2.get();
 
-		record = attendanceRepository.findByDateLike(id);
+		record = attendanceRepository.findByDateLikeAndAccountId(id, user.getAccountId());
 
 		if (record.isEmpty() == false) {
 			attendance = record.get();
@@ -269,6 +328,14 @@ public class AttendanceController {
 
 		attendance = record.get();
 
+		attendanceEdit = new AttendanceEdit(LocalDate.now().toString(), LocalTime.now().toString().substring(0, 8),
+				user.getAccountId(),
+				attendance.getDate(), attendance.getArrivingTime(),
+				attendance.getLeftTime(), attendance.getAttendanceId1(), attendance.getAttendanceId2(),
+				attendance.getTelework());
+
+		attendanceEditRepository.save(attendanceEdit);
+
 		List<String> errorMessage = new ArrayList<String>();
 
 		if (arrivingTime.after(leftTime)) {
@@ -289,8 +356,9 @@ public class AttendanceController {
 
 		attendanceRepository.save(attendance);
 
-		return "redirect:/edit/" + date + "/attendance";
+		model.addAttribute("message", "勤怠情報が変更されました");
 
+		return editAttendance(date, model);
 	}
 
 	@PostMapping("/edit")
@@ -313,21 +381,28 @@ public class AttendanceController {
 			return editAttendance(ymd, model);
 		}
 
+		attendanceEdit = new AttendanceEdit(LocalDate.now().toString(), LocalTime.now().toString().substring(0, 8),
+				user.getAccountId(), ymd, null, null, null, null, null);
+
+		attendanceEditRepository.save(attendanceEdit);
+
 		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString(), leftTime.toString(),
 				attendanceId1, attendanceId2, telework);
 
-		String newDate = attendance.getDate();
+		String date = attendance.getDate();
 
 		attendanceRepository.save(attendance);
 
-		return "redirect:/edit/" + newDate + "/attendance";
+		model.addAttribute("message", "勤怠情報が変更されました");
+
+		return editAttendance(date, model);
 	}
 
 	//新規休暇申請画面表示
 	@GetMapping("/leaveRequest")
 	public String leaveRequest(Model model) {
 
-		List<AttendanceType> attendanceType = attendanceTypeRepository.findByAttendanceIdGreaterThan(6);
+		List<AttendanceType> attendanceType = attendanceTypeRepository.findByAttendanceIdGreaterThan(5);
 
 		model.addAttribute("attendanceType", attendanceType);
 
@@ -448,11 +523,11 @@ public class AttendanceController {
 		if (id == 4) {
 			model.addAttribute("message", "承認しました");
 		}
-		if(id == 3) {
+		if (id == 3) {
 			model.addAttribute("message", "差し戻ししました");
 		}
-		
+
 		return index(model);
 	}
-	
+
 }

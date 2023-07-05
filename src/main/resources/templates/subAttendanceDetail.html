@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>勤怠一覧表</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+	<header th:replace="header"></header>
+	<main>
+		<h1>[[${account.name}]] [[${date.ymd}]] [[${date.weekname}]]</h1>
+		<hr>
+		<th:block th:if="${attendance == null}">
+			<h3 style="color: blue;">変更なし</h3>
+		</th:block>
+
+		<th:block th:if="${attendance != null}">
+			<h1>現在状況</h1>
+			<hr>
+			<table border="1">
+				<tr>
+					<th>出勤時間</th>
+					<th>退勤時間</th>
+					<th>出勤状況</th>
+					<th>退勤状況</th>
+					<th>勤務先</th>
+				</tr>
+				<tr th:each="attendance:${attendance}">
+					<td>[[${attendance.arrivingTime}]]</td>
+					<td>[[${attendance.leftTime}]]</td>
+					<td>[[${attendance.attendanceId1}]]</td>
+					<td>[[${attendance.attendanceId2}]]</td>
+					<td>[[${attendance.telework}]]</td>
+				</tr>
+			</table>
+			<h1>変更履歴</h1>
+			<hr>
+			<table border="1">
+				<tr>
+					<th>編集日</th>
+					<th>編集時間</th>
+					<th>出勤時間</th>
+					<th>退勤時間</th>
+					<th>出勤状況</th>
+					<th>退勤状況</th>
+					<th>勤務先</th>
+				</tr>
+				<tr th:each="attendanceEdit:${attendanceEdit}">
+					<td>[[${attendanceEdit.editDate}]]</td>
+					<td>[[${attendanceEdit.editTime}]]</td>
+					<td>[[${attendanceEdit.arrivingTime}]]</td>
+					<td>[[${attendanceEdit.leftTime}]]</td>
+					<td>
+						<th:block th:each="a : ${attendanceType}"
+							th:if="${a.attendanceId == attendanceEdit.attendanceId1}">
+							[[${a.attendanceType}]]
+						</th:block>
+					</td>
+					<td>
+						<th:block th:each="a : ${attendanceType}"
+							th:if="${a.attendanceId == attendanceEdit.attendanceId2}">
+							[[${a.attendanceType}]]
+						</th:block>
+					</td>
+					<td>[[${attendanceEdit.telework}]]</td>
+				</tr>
+			</table>
+		</th:block>
+	</main>
+</body>
+
+</html>

@@ -11,11 +11,112 @@
 	<header th:replace="header"></header>
 	<main>
 		<h1>被承認者一覧</h1>
+
+		<!--被承認者あり-->
 		<th:block th:if="${account != null}" th:each="account:${account}">
-		<a href="#"><span th:text="${account.name}"></span></a>
+			<a th:href="|/subAttendanceDetail?accountId=${account.accountId}|"><span
+					th:text="${account.name}"></span></a>
 		</th:block>
+
+		<!--被承認者なし-->
 		<th:block th:if="${account == null}">
 			<h3 style="color: blue;">承認者として指定されていません</h3>
+		</th:block>
+
+		<th:block th:if="${subAccount != null}">
+			<h1>[[${subAccount.name}]]さんの[[${month}]]月勤怠一覧表</h1>
+			<form action="/attendanceDetail" method="get">
+				<select name="month">
+					<option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}+ '月'"
+						th:selected="${month == i}">
+						[[${i}]]</option>
+				</select>
+				<input type="submit" value="検索">
+			</form>
+			<table border="1">
+				<tr>
+					<th>日付</th>
+					<th>曜日</th>
+					<th>出勤時間</th>
+					<th>退勤時間</th>
+					<th>出勤状況</th>
+					<th>退勤状況</th>
+					<th>勤務先</th>
+					<th>変更</th>
+				</tr>
+				<th:block th:each="monthDetail:${monthDetail}">
+					<!--平日-->
+					<th:block th:if="${monthDetail.holiday == null}">
+						<tr>
+							<td><a th:href="|/sub/${monthDetail.ymd}/attendance?accountId=${subAccount.accountId}|">[[${monthDetail.ymd}]]<a>
+							</td>
+							<td>[[${monthDetail.weekname}]]</td>
+							<td>
+								<!--出勤時間-->
+								<th:block th:each="attendance:${attendance}"
+									th:if="${attendance.date == monthDetail.ymd}">
+									[[${attendance.arrivingTime}]]
+								</th:block>
+							</td>
+							<td>
+								<!--退勤時間-->
+								<th:block th:each="attendance:${attendance}"
+									th:if="${attendance.date == monthDetail.ymd}">
+									[[${attendance.leftTime}]]
+								</th:block>
+							</td>
+							<td>
+								<!--出勤状況-->
+								<th:block th:each="attendance:${attendance}"
+									th:if="${attendance.date == monthDetail.ymd}">
+									<th:block th:each="a : ${attendanceType}"
+										th:if="${a.attendanceId == attendance.attendanceId1}">
+										[[${a.attendanceType}]]</th:block>
+								</th:block>
+							</td>
+							<td>
+								<!--退勤状況-->
+								<th:block th:each="attendance:${attendance}"
+									th:if="${attendance.date == monthDetail.ymd}">
+									<th:block th:each="a : ${attendanceType}"
+										th:if="${a.attendanceId == attendance.attendanceId2}">
+										[[${a.attendanceType}]]</th:block>
+								</th:block>
+							</td>
+							<td>
+								<!--勤務先-->
+								<th:block th:each="attendance:${attendance}"
+									th:if="${attendance.date == monthDetail.ymd}">
+									[[${attendance.telework}]]
+								</th:block>
+							</td>
+							<td>
+								<th:block th:each="attendance:${attendance}" 
+								th:if="${attendance.date == monthDetail.ymd}">
+									<th:block th:each="attendanceEdit:${attendanceEdit}" 
+									th:if="${attendance.date == attendanceEdit.date}">
+											<span>有</span>
+										</th:block>
+									</th:block>
+							</td>
+						</tr>
+					</th:block>
+					<!--休日・祝日-->
+					<th:block th:if="${monthDetail.holiday != null}">
+						<tr style="background-color: aquamarine;">
+							<td><a th:href="|/sub/${monthDetail.ymd}/attendance?accountId=${subAccount.accountId}|">[[${monthDetail.ymd}]]<a>
+							</td>
+							<td>[[${monthDetail.weekname}]]</td>
+							<td></td>
+							<td></td>
+							<td>[[${monthDetail.holiday}]]</td>
+							<td>[[${monthDetail.holiday}]]</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</th:block>
+				</th:block>
+			</table>
 		</th:block>
 	</main>
 </body>

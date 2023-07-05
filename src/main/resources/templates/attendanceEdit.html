@@ -136,6 +136,9 @@
 		<th:block th:if="${errorMessage != null}" th:each="errorMessage:${errorMessage}">
 			<span style="color: red;">[[${errorMessage}]]</span>
 		</th:block>
+		<th:block th:if="${message != null}">
+			<span style="color: blue;">[[${message}]]</span>
+		</th:block>
 	</main>
 </body>
 
