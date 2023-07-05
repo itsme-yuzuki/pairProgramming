@@ -64,9 +64,15 @@ public class AccountController {
 	// ログインを実行
 	@PostMapping("/login")
 	public String login(
-			@RequestParam("accountId") Integer accountId,
+			@RequestParam(name="accountId", defaultValue="") Integer accountId,
 			@RequestParam("password") String password,
 			Model model) {
+		
+		//社員番号のデータ型チェック
+		if(accountId instanceof Integer == false) {
+			model.addAttribute("message", "社員番号は数字で入力して下さい");
+			return "login";
+		}
 
 		account = null;
 
