@@ -45,13 +45,21 @@ public class AdminController {
 	// ログインを実行
 	@PostMapping("/admin/login")
 	public String login(
-			@RequestParam("accountId") Integer accountId,
+			@RequestParam(name = "accountId", defaultValue = "") String accountId,
 			@RequestParam("password") String password,
 			Model model) {
 
+		Integer id;
+		try {
+			id = Integer.parseInt(accountId);
+		} catch (Exception e) {
+			model.addAttribute("message", "社員番号は数字で入力してください");
+			return "login";
+		}
+
 		account = null;
 
-		Optional<Account> record = accountRepository.findByAccountIdAndPassword(accountId, password);
+		Optional<Account> record = accountRepository.findByAccountIdAndPassword(id, password);
 
 		if (record.isEmpty() == false && record.get().getAuthoriseId() == 0) {
 			account = record.get();
