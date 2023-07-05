@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.LeaveStatus;
 import com.example.demo.model.User;
 import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.LeaveStatusRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +32,12 @@ public class AdminController {
 
 	@Autowired
 	AccountRepository accountRepository;
+	
+	@Autowired
+	LeaveStatus leaveStatus;
+	
+	@Autowired
+	LeaveStatusRepository leaveStatusRepository;
 
 	//	 ログイン画面を表示
 	@GetMapping({ "admin/login", "admin/logout" })
@@ -45,13 +53,21 @@ public class AdminController {
 	// ログインを実行
 	@PostMapping("/admin/login")
 	public String login(
-			@RequestParam("accountId") Integer accountId,
+			@RequestParam(name = "accountId", defaultValue = "") String accountId,
 			@RequestParam("password") String password,
 			Model model) {
 
+		Integer id;
+		try {
+			id = Integer.parseInt(accountId);
+		} catch (Exception e) {
+			model.addAttribute("message", "社員番号は数字で入力してください");
+			return "login";
+		}
+
 		account = null;
 
-		Optional<Account> record = accountRepository.findByAccountIdAndPassword(accountId, password);
+		Optional<Account> record = accountRepository.findByAccountIdAndPassword(id, password);
 
 		if (record.isEmpty() == false && record.get().getAuthoriseId() == 0) {
 			account = record.get();
@@ -67,10 +83,10 @@ public class AdminController {
 			return "login";
 		}
 
-		//		leaveStatus = leaveStatusRepository.findById(accountId).get();
+		leaveStatus = leaveStatusRepository.findById(id).get();
 
 		// セッション管理されたアカウント情報に名前をセット
-		//		user.setLeaveRemain(leaveStatus.getLeaveRemain());
+		user.setLeaveRemain(leaveStatus.getLeaveRemain());
 		user.setName(account.getName());
 		user.setAccountId(account.getAccountId());
 		user.setAuthorise(account.getAuthoriseId());

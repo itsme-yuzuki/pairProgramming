@@ -47,10 +47,10 @@ public class AccountController {
 		// セッション情報を全てクリアする
 		session.invalidate();
 
-		if(error.equals("notLoggedIn")) {
+		if (error.equals("notLoggedIn")) {
 			model.addAttribute("message", "ログインしてください");
 		}
-		
+
 		// エラーパラメータのチェック
 		if (password.equals("forget")) {
 			return "passwordReset";
@@ -64,13 +64,20 @@ public class AccountController {
 	// ログインを実行
 	@PostMapping("/login")
 	public String login(
-			@RequestParam("accountId") Integer accountId,
+			@RequestParam(name = "accountId", defaultValue = "") String accountId,
 			@RequestParam("password") String password,
 			Model model) {
+		Integer id;
+		try {
+			id = Integer.parseInt(accountId);
+		} catch (Exception e) {
+			model.addAttribute("message", "社員番号は数字で入力してください");
+			return "login";
+		}
 
 		account = null;
 
-		Optional<Account> record = accountRepository.findByAccountIdAndPassword(accountId, password);
+		Optional<Account> record = accountRepository.findByAccountIdAndPassword(id, password);
 
 		if (record.isEmpty() == false) {
 			account = record.get();
@@ -81,7 +88,7 @@ public class AccountController {
 			return "login";
 		}
 
-		leaveStatus = leaveStatusRepository.findById(accountId).get();
+		leaveStatus = leaveStatusRepository.findById(id).get();
 
 		// セッション管理されたアカウント情報に名前をセット
 		user.setLeaveRemain(leaveStatus.getLeaveRemain());
@@ -108,5 +115,5 @@ public class AccountController {
 
 		return "";
 	}
-	
+
 }

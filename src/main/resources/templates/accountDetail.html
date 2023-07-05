@@ -22,7 +22,11 @@
 				<td>[[${account.accountId}]]</td>
 				<td>[[${account.name}]]</td>
 				<td>[[${account.email}]]</td>
-				<td>[[${account.authoriseId}]]</td>
+				<td>
+					<th:block th:if="${account.authoriseId == 0}">管理者</th:block>
+					<th:block th:if="${account.authoriseId == 1}">上位</th:block>
+					<th:block th:if="${account.authoriseId == 2}">下位ユーザ</th:block>
+				</td>
 			</tr>
 		</table>
 		<form action="/accountDetail" method="post">

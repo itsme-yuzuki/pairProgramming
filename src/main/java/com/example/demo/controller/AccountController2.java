@@ -47,11 +47,13 @@ public class AccountController2 {
 		account = null;
 
 		Optional<Account> record = accountRepository.findById(user.getAccountId());
+		//		List<AuthoriseName> authoriseName = authoriseNameRepository.findAll();
 
 		if (record.isEmpty() == false) {
 			account = record.get();
 		}
 
+		//		model.addAttribute("authoriseName", authoriseName);
 		model.addAttribute("account", account);
 
 		return "accountDetail";

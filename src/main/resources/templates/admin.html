@@ -20,6 +20,7 @@
 				<th>メールアドレス</th>
 				<th>パスワード</th>
 				<th>付与済み権限</th>
+				<th></th>
 			</tr>
 
 			<tr th:each="accounts:${accounts}">
@@ -27,7 +28,11 @@
 				<td th:text="${accounts.name}"></td>
 				<td th:text="${accounts.email}"></td>
 				<td th:text="${accounts.password}"></td>
-				<td th:text="${accounts.authoriseId}"></td>
+				<td>
+					<th:block th:if="${accounts.authoriseId == 0}">管理者</th:block>
+					<th:block th:if="${accounts.authoriseId == 1}">上位</th:block>
+					<th:block th:if="${accounts.authoriseId == 2}">下位ユーザ</th:block>
+				</td>
 				<form th:action="|admin/${accounts.accountId}/edit|" method="get">
 					<td><button>編集</button></td>
 				</form>
