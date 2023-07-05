@@ -41,7 +41,6 @@ public class AccountController2 {
 	@Autowired
 	LeaveStatusRepository leaveStatusRepository;
 
-	
 	@GetMapping("/accountDetail")
 	public String accountDetail(Model model) {
 
@@ -61,19 +60,26 @@ public class AccountController2 {
 	//パスワード変更作業
 	@PostMapping("/accountDetail")
 	public String accountDetail(
-			@RequestParam("oldPassword") String oldPassword,
-			@RequestParam("newPassword") String newPassword,
+			@RequestParam(name = "oldPassword") String oldPassword,
+			@RequestParam(name = "newPassword", defaultValue = "") String newPassword,
 			Model model) {
 		Optional<Account> record = accountRepository.findById(user.getAccountId());
 		//		Optional<Account> record = accountRepository.findById(1);
 
 		account = record.get();
 
+		
 		List<String> errormessage = new ArrayList<String>();
+
 
 		if (account.getPassword().equals(oldPassword) == false) {
 			errormessage.add("パスワードが不一致");
 		}
+		
+		if (newPassword.equals("")) {
+			errormessage.add("新しいパスワードを入力してください");
+		}
+		
 		if (errormessage.size() > 0) {
 			model.addAttribute("errormessage", errormessage);
 			return accountDetail(model);
@@ -101,11 +107,11 @@ public class AccountController2 {
 	public String set(
 			@PathVariable("id") Integer accountId,
 			Model model) {
-		
+
 		account = accountRepository.findByAccountId(user.getAccountId()).get();
-		
+
 		account.setAuthoriserId(accountId);
-		
+
 		accountRepository.save(account);
 
 		model.addAttribute("message", "登録完了しました");

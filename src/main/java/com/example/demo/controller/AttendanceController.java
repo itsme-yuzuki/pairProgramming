@@ -411,11 +411,17 @@ public class AttendanceController {
 
 	//新規休暇休暇申請処理
 	@PostMapping("/leaveRequest")
-	public String createLeave(@RequestParam(name = "date") LocalDate date,
+	public String createLeave(
+			@RequestParam(name = "date", required = false) LocalDate date,
 			@RequestParam(name = "leaveType") Integer leaveType,
 			@RequestParam(name = "message") String message,
 			@RequestParam(name = "approvalStatus") Integer approvalStatus,
 			Model model) {
+
+		if (date == null) {
+			model.addAttribute("message", "入力されていません");
+			return leaveRequest(model);
+		}
 
 		Optional<Account> record = accountRepository.findByAccountId(user.getAccountId());
 
@@ -496,6 +502,7 @@ public class AttendanceController {
 		List<Account> account = accountRepository.findAll();
 
 		model.addAttribute("pendings", pendings);
+		model.addAttribute("account", account);
 		return "pending";
 	}
 
