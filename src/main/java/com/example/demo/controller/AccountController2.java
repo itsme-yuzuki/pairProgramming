@@ -47,14 +47,13 @@ public class AccountController2 {
 		account = null;
 
 		Optional<Account> record = accountRepository.findById(user.getAccountId());
-//		List<AuthoriseName> authoriseName = authoriseNameRepository.findAll();
-		
+		//		List<AuthoriseName> authoriseName = authoriseNameRepository.findAll();
+
 		if (record.isEmpty() == false) {
 			account = record.get();
 		}
-		
 
-//		model.addAttribute("authoriseName", authoriseName);
+		//		model.addAttribute("authoriseName", authoriseName);
 		model.addAttribute("account", account);
 
 		return "accountDetail";
@@ -71,7 +70,6 @@ public class AccountController2 {
 
 		account = record.get();
 
-		
 		List<String> errormessage = new ArrayList<String>();
 
 		if (account.getPassword().equals(oldPassword) == false) {

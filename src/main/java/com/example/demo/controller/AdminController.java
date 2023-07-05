@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.LeaveStatus;
 import com.example.demo.model.User;
 import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.LeaveStatusRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +32,12 @@ public class AdminController {
 
 	@Autowired
 	AccountRepository accountRepository;
+	
+	@Autowired
+	LeaveStatus leaveStatus;
+	
+	@Autowired
+	LeaveStatusRepository leaveStatusRepository;
 
 	//	 ログイン画面を表示
 	@GetMapping({ "admin/login", "admin/logout" })
@@ -75,10 +83,10 @@ public class AdminController {
 			return "login";
 		}
 
-		//		leaveStatus = leaveStatusRepository.findById(accountId).get();
+		leaveStatus = leaveStatusRepository.findById(id).get();
 
 		// セッション管理されたアカウント情報に名前をセット
-		//		user.setLeaveRemain(leaveStatus.getLeaveRemain());
+		user.setLeaveRemain(leaveStatus.getLeaveRemain());
 		user.setName(account.getName());
 		user.setAccountId(account.getAccountId());
 		user.setAuthorise(account.getAuthoriseId());
