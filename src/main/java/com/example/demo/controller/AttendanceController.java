@@ -219,7 +219,7 @@ public class AttendanceController {
 	public String subAttendanceDetail(Model model) {
 
 		List<Account> account = accountRepository.findByAuthoriserId(user.getAccountId());
-		
+
 		if (account.size() > 0) {
 			model.addAttribute("account", account);
 		}
@@ -327,7 +327,7 @@ public class AttendanceController {
 	@GetMapping("/leaveRequest")
 	public String leaveRequest(Model model) {
 
-		List<AttendanceType> attendanceType = attendanceTypeRepository.findByAttendanceIdGreaterThan(6);
+		List<AttendanceType> attendanceType = attendanceTypeRepository.findByAttendanceIdGreaterThan(5);
 
 		model.addAttribute("attendanceType", attendanceType);
 
@@ -336,11 +336,17 @@ public class AttendanceController {
 
 	//新規休暇休暇申請処理
 	@PostMapping("/leaveRequest")
-	public String createLeave(@RequestParam(name = "date") LocalDate date,
+	public String createLeave(
+			@RequestParam(name = "date", required = false) LocalDate date,
 			@RequestParam(name = "leaveType") Integer leaveType,
 			@RequestParam(name = "message") String message,
 			@RequestParam(name = "approvalStatus") Integer approvalStatus,
 			Model model) {
+
+		if (date == null) {
+			model.addAttribute("message", "入力されていません");
+			return leaveRequest(model);
+		}
 
 		Optional<Account> record = accountRepository.findByAccountId(user.getAccountId());
 
@@ -421,6 +427,7 @@ public class AttendanceController {
 		List<Account> account = accountRepository.findAll();
 
 		model.addAttribute("pendings", pendings);
+		model.addAttribute("account", account);
 		return "pending";
 	}
 
@@ -448,11 +455,11 @@ public class AttendanceController {
 		if (id == 4) {
 			model.addAttribute("message", "承認しました");
 		}
-		if(id == 3) {
+		if (id == 3) {
 			model.addAttribute("message", "差し戻ししました");
 		}
-		
+
 		return index(model);
 	}
-	
+
 }
