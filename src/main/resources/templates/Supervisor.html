@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>申請先上位ユーザー編集</title>
+	<title>申請先編集</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
@@ -15,12 +15,14 @@
 		<hr>
 		<table border="1">
 			<tr>
+				<th>現在登録中</th>
 				<th>社員番号</th>
 				<th>氏名</th>
 				<th>メールアドレス</th>
 				<th></th>
 			</tr>
-			<tr th:each="accounts:${accounts}">
+			<tr th:each="accounts:${accounts}" th:if="${account.accountId != accounts.accountId}">
+				<td><th:block th:if="${accounts.accountId == account.authoriserId}"><span>※</span></th:block></td>
 				<td th:text="${accounts.accountId}"></td>
 				<td th:text="${accounts.name}"></td>
 				<td th:text="${accounts.email}"></td>

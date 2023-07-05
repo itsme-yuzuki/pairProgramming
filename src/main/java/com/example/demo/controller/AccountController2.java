@@ -68,18 +68,16 @@ public class AccountController2 {
 
 		account = record.get();
 
-		
 		List<String> errormessage = new ArrayList<String>();
-
 
 		if (account.getPassword().equals(oldPassword) == false) {
 			errormessage.add("パスワードが不一致");
 		}
-		
+
 		if (newPassword.equals("")) {
 			errormessage.add("新しいパスワードを入力してください");
 		}
-		
+
 		if (errormessage.size() > 0) {
 			model.addAttribute("errormessage", errormessage);
 			return accountDetail(model);
@@ -98,6 +96,9 @@ public class AccountController2 {
 	public String index(Model model) {
 		List<Account> accounts = accountRepository.findByAuthoriseIdLessThanOrderByAccountId(2);
 
+		account = accountRepository.findByAccountId(user.getAccountId()).get();
+
+		model.addAttribute("account", account);
 		model.addAttribute("accounts", accounts);
 
 		return "supervisor";

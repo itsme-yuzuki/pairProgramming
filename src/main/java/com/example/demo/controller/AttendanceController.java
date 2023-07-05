@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -136,7 +135,7 @@ public class AttendanceController {
 
 		String time = timeNow.toString();
 
-		time = time.substring(0, 8);
+		time = time.substring(0, 5);
 
 		//不正出退勤入力判別/メッセージ表示処理
 		if (status == 1 || status == 3) {
@@ -238,8 +237,10 @@ public class AttendanceController {
 
 			model.addAttribute("subAccount", subAccount);
 
-			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountId(accountId);
+			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountIdDistinctByDate(accountId);
 
+//			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountId(accountId);
+			
 			model.addAttribute("attendanceEdit", attendanceEdit);
 
 			if (month == null) {
@@ -317,8 +318,8 @@ public class AttendanceController {
 	@PostMapping("/edit/{idd}")
 	public String submitAttendance(
 			@PathVariable("idd") Integer id,
-			@RequestParam(name = "arrivingTime", required = false) Time arrivingTime,
-			@RequestParam(name = "leftTime", required = false) Time leftTime,
+			@RequestParam(name = "arrivingTime") LocalTime arrivingTime,
+			@RequestParam(name = "leftTime") LocalTime leftTime,
 			@RequestParam("attendanceId1") Integer attendanceId1,
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
@@ -328,7 +329,7 @@ public class AttendanceController {
 
 		attendance = record.get();
 
-		attendanceEdit = new AttendanceEdit(LocalDate.now().toString(), LocalTime.now().toString().substring(0, 8),
+		attendanceEdit = new AttendanceEdit(LocalDate.now().toString(), LocalTime.now().toString().substring(0, 5),
 				user.getAccountId(),
 				attendance.getDate(), attendance.getArrivingTime(),
 				attendance.getLeftTime(), attendance.getAttendanceId1(), attendance.getAttendanceId2(),
@@ -338,7 +339,7 @@ public class AttendanceController {
 
 		List<String> errorMessage = new ArrayList<String>();
 
-		if (arrivingTime.after(leftTime)) {
+		if (arrivingTime.isAfter(leftTime)) {
 			errorMessage.add("時間設定が間違っています");
 		}
 		if (errorMessage.size() > 0) {
@@ -346,8 +347,8 @@ public class AttendanceController {
 			return editAttendance(attendance.getDate(), model);
 		}
 
-		attendance.setArrivingTime(arrivingTime.toString());
-		attendance.setLeftTime(leftTime.toString());
+		attendance.setArrivingTime(arrivingTime.toString().substring(0, 5));
+		attendance.setLeftTime(leftTime.toString().substring(0, 5));
 		attendance.setAttendanceId1(attendanceId1);
 		attendance.setAttendanceId2(attendanceId2);
 		attendance.setTelework(telework);
@@ -364,8 +365,8 @@ public class AttendanceController {
 	@PostMapping("/edit")
 	public String newAttendance(
 			@RequestParam("ymd") String ymd,
-			@RequestParam("arrivingTime") Time arrivingTime,
-			@RequestParam("leftTime") Time leftTime,
+			@RequestParam(name = "arrivingTime", defaultValue = "") LocalTime arrivingTime,
+			@RequestParam(name = "leftTime", defaultValue = "") LocalTime leftTime,
 			@RequestParam("attendanceId1") Integer attendanceId1,
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
@@ -373,7 +374,7 @@ public class AttendanceController {
 
 		List<String> errorMessage = new ArrayList<String>();
 
-		if (arrivingTime.after(leftTime)) {
+		if (arrivingTime.isAfter(leftTime)) {
 			errorMessage.add("時間設定が間違っています");
 		}
 		if (errorMessage.size() > 0) {
@@ -381,12 +382,13 @@ public class AttendanceController {
 			return editAttendance(ymd, model);
 		}
 
-		attendanceEdit = new AttendanceEdit(LocalDate.now().toString(), LocalTime.now().toString().substring(0, 8),
+		attendanceEdit = new AttendanceEdit(LocalDate.now().toString(), LocalTime.now().toString().substring(0, 5),
 				user.getAccountId(), ymd, null, null, null, null, null);
 
 		attendanceEditRepository.save(attendanceEdit);
 
-		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString(), leftTime.toString(),
+		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString().substring(0, 5),
+				leftTime.toString().substring(0, 5),
 				attendanceId1, attendanceId2, telework);
 
 		String date = attendance.getDate();
@@ -414,21 +416,24 @@ public class AttendanceController {
 	public String createLeave(
 			@RequestParam(name = "date", required = false) LocalDate date,
 			@RequestParam(name = "leaveType") Integer leaveType,
-			@RequestParam(name = "message") String message,
+			@RequestParam(name = "message", required = false) String message,
 			@RequestParam(name = "approvalStatus") Integer approvalStatus,
 			Model model) {
 
-		if (date == null) {
-			model.addAttribute("message", "入力されていません");
-			return leaveRequest(model);
-		}
+		List<String> errorMessage = new ArrayList<String>();
 
 		Optional<Account> record = accountRepository.findByAccountId(user.getAccountId());
 
 		account = record.get();
 
+		if (date == null) {
+			errorMessage.add("日付が選択されていません");
+		}
 		if (account.getAuthoriserId() == null) {
-			model.addAttribute("message", "承認者を設定してください");
+			errorMessage.add("承認者を設定してください");
+		}
+		if (errorMessage.size() > 0) {
+			model.addAttribute("errorMessage", errorMessage);
 			return leaveRequest(model);
 		}
 

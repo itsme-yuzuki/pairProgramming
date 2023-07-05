@@ -28,8 +28,8 @@
 					<tr>
 						<td><span th:text="${date.ymd}"></span></td>
 						<td><span th:text="${date.weekname}"></td>
-						<td><input type="time" name="arrivingTime" th:value="${attendance.arrivingTime}"></td>
-						<td><input type="time" name="leftTime" th:value="${attendance.leftTime}"></td>
+						<td><input type="time" name="arrivingTime" step="60" th:value="${attendance.arrivingTime}"></td>
+						<td><input type="time" name="leftTime" step="60" th:value="${attendance.leftTime}"></td>
 						<td>
 							<select name="attendanceId1">
 								<option th:each="attendanceType:${attendanceType}"
@@ -76,8 +76,8 @@
 					<tr>
 						<td><span th:text="${date.ymd}"></span></td>
 						<td><span th:text="${date.weekname}"></span></td>
-						<td><input type="time" value="00:00:00" step="1" name="arrivingTime"></td>
-						<td><input type="time" value="00:00:00" step="1" name="leftTime"></td>
+						<td><input type="time" step="60" value="00:00" name="arrivingTime"></td>
+						<td><input type="time" step="60" value="00:00" name="leftTime"></td>
 						<td>
 							<select name="attendanceId1">
 								<option th:each="attendanceType:${attendanceType}"

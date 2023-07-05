@@ -35,7 +35,10 @@
 		<button name="approvalStatus" value="2">申請</button>
 		<button name="approvalStatus" value="1">下書き</button>
 	</form>
-	<span th:text="${message}" style="color: red;"></span>
+	<span th:text="${message}" style="color: blue;"></span>
+	<th:block th:if="${errorMessage != null}" th:each="errorMessage:${errorMessage}">
+		<span th:text="${errorMessage}" style="color: red;"></span>
+	</th:block>
 </body>
 
 </html>
