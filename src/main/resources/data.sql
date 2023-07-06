@@ -71,15 +71,15 @@ UPDATE date2023 SET month = 12 WHERE ymd LIKE '%-12-%';
 
 --attendanceテーブル
 
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(1, 1, '2023-07-03', '08:40', '16:00', 1, 4, '出社');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(2, 1, '2023-07-04', '08:40', '17:33', 1, 2, '出社');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(3, 1, '2023-07-05', '09:10', '17:40', 5, 2, '出社');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(4, 1, '2023-07-06', '08:55', '17:35', 1, 2, '出社');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(5, 3, '2023-07-03', '09:50', '17:30', 3, 2, '出社');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(6, 3, '2023-07-04', '08:50', '17:33', 1, 2, '出社');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(7, 3, '2023-07-05', '08:56', '17:45', 1, 2, 'テレワーク');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(8, 3, '2023-07-06', '08:38', '17:40', 1, 2, '出社');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(9, 4, '2023-07-03', '08:56', '17:45', 1, 2, '出社');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(10, 4, '2023-07-04', '08:55', '17:35', 1, 2, 'テレワーク');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(11, 4, '2023-07-05', '10:00', '17:35', 3, 2, '出社');
-INSERT INTO attendance(id, account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(12, 4, '2023-07-06', '08:50', '13:30', 1, 4, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(1, '2023-07-03', '08:40', '16:00', 1, 4, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(1, '2023-07-04', '08:40', '17:33', 1, 2, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(1, '2023-07-05', '09:10', '17:40', 5, 2, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(1, '2023-07-06', '08:55', '17:35', 1, 2, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(3, '2023-07-03', '09:50', '17:30', 3, 2, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(3, '2023-07-04', '08:50', '17:33', 1, 2, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(3, '2023-07-05', '08:56', '17:45', 1, 2, 'テレワーク');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(3, '2023-07-06', '08:38', '17:40', 1, 2, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(4, '2023-07-03', '08:56', '17:45', 1, 2, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(4, '2023-07-04', '08:55', '17:35', 1, 2, 'テレワーク');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(4, '2023-07-05', '10:00', '17:35', 3, 2, '出社');
+INSERT INTO attendance(account_id, submit_date, arriving_time, left_time, attendance_id1, attendance_id2, telework) VALUES(4, '2023-07-06', '08:50', '13:30', 1, 4, '出社');

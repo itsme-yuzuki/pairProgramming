@@ -385,16 +385,27 @@ public class AttendanceController {
 	@PostMapping("/edit")
 	public String newAttendance(
 			@RequestParam("ymd") String ymd,
-			@RequestParam(name = "arrivingTime", defaultValue = "") LocalTime arrivingTime,
-			@RequestParam(name = "leftTime", defaultValue = "") LocalTime leftTime,
+			@RequestParam(name = "arrivingTime") String arrivingTime,
+			@RequestParam(name = "leftTime") String leftTime,
 			@RequestParam("attendanceId1") Integer attendanceId1,
 			@RequestParam("attendanceId2") Integer attendanceId2,
 			@RequestParam("telework") String telework,
 			Model model) {
 
+		LocalTime arrive = null;
+		LocalTime left = null;
+		
 		List<String> errorMessage = new ArrayList<String>();
-
-		if (arrivingTime.isAfter(leftTime)) {
+		
+		try {
+			arrive = LocalTime.parse(arrivingTime);	
+			left = LocalTime.parse(leftTime);
+		} catch(Exception e) {
+			model.addAttribute("errorMessage", "時刻を設定してください");
+			return editAttendance(ymd, model);
+		}
+		
+		if (arrive.isAfter(left)) {
 			errorMessage.add("時間設定が間違っています");
 		}
 		if (errorMessage.size() > 0) {
@@ -407,8 +418,8 @@ public class AttendanceController {
 
 		attendanceEditRepository.save(attendanceEdit);
 
-		attendance = new Attendance(user.getAccountId(), ymd, arrivingTime.toString().substring(0, 5),
-				leftTime.toString().substring(0, 5),
+		attendance = new Attendance(user.getAccountId(), ymd, arrive.toString().substring(0, 5),
+				left.toString().substring(0, 5),
 				attendanceId1, attendanceId2, telework);
 
 		String date = attendance.getDate();
