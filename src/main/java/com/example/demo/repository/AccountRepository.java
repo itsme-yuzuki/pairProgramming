@@ -26,4 +26,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	List<Account> findByAuthoriserId(Integer authoriserId);
 
 	Optional<Account> findByEmail(String email);
+	
+//	@Query(value = "SELECT * FROM account WHERE account_id=(SELECT max(account_id) FROM account)" , nativeQuery = true)
+//	Optional<Account> findGreatestAccountId();
 }

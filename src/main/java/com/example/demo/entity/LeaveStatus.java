@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -13,7 +15,9 @@ import lombok.Data;
 @Entity
 @Table(name = "leave_status")
 public class LeaveStatus {
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "account_id")
 	private Integer accountId; // 社員番号
 
@@ -28,7 +32,11 @@ public class LeaveStatus {
 
 	}
 
-	public LeaveStatus(Integer accountId2, int i, int j) {
+	public LeaveStatus(Integer leaveDefault, Integer leaveRemain) {
+		this.leaveDefault = leaveDefault;
+		this.leaveRemain = leaveRemain;
 	}
+
+	
 
 }

@@ -36,10 +36,10 @@ INSERT INTO approval_status(approval_id, approval_status) VALUES(3, '差し戻�
 INSERT INTO approval_status(approval_id, approval_status) VALUES(4, '承認済み');
 
 --leave_statusデーブル
-INSERT INTO leave_status(account_id, leave_default, leave_remain) VALUES(1, 10, 10);
-INSERT INTO leave_status(account_id, leave_default, leave_remain) VALUES(2, 10, 10);
-INSERT INTO leave_status(account_id, leave_default, leave_remain) VALUES(3, 10, 10);
-INSERT INTO leave_status(account_id, leave_default, leave_remain) VALUES(4, 10, 10);
+INSERT INTO leave_status(leave_default, leave_remain) VALUES(10, 10);
+INSERT INTO leave_status(leave_default, leave_remain) VALUES(10, 10);
+INSERT INTO leave_status(leave_default, leave_remain) VALUES(10, 10);
+INSERT INTO leave_status(leave_default, leave_remain) VALUES(10, 10);
 
 --date2023テーブル
 insert into date2023(ymd) SELECT TO_CHAR('2023-01-01'::DATE + ARR.I, 'YYYY-MM-DD') AS ymd FROM GENERATE_SERIES(0, (SELECT EXTRACT(DAY FROM DATE_TRUNC('MONTH', CAST('2023-01-01'AS TIMESTAMP) + '1 MONTHS') + '-1 DAYS') -1)::INT) AS ARR(I);

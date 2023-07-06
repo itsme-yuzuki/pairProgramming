@@ -49,7 +49,7 @@ CREATE TABLE account
 -- 休暇日数テーブル
 CREATE TABLE leave_status
 (
-   account_id SERIAL REFERENCES account (account_id),
+   account_id SERIAL,
    leave_default Integer,
    leave_remain Integer
 );
