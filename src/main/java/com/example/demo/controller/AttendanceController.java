@@ -237,9 +237,9 @@ public class AttendanceController {
 
 			model.addAttribute("subAccount", subAccount);
 
-			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountIdDistinctByDate(accountId);
+//			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountIdDistinctByDate(accountId);
 
-//			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountId(accountId);
+			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountId(accountId);
 			
 			model.addAttribute("attendanceEdit", attendanceEdit);
 

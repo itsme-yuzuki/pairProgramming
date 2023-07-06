@@ -24,8 +24,11 @@ public class LeaveStatus {
 	private Integer leaveRemain; // 権限
 
 	//コンストラクタ	
-	private LeaveStatus() {
+	public LeaveStatus() {
 
+	}
+
+	public LeaveStatus(Integer accountId2, int i, int j) {
 	}
 
 }

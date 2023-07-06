@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import com.example.demo.entity.AttendanceEdit;
 
@@ -19,6 +18,6 @@ public interface AttendanceEditRepository extends JpaRepository<AttendanceEdit, 
 	
 	List<AttendanceEdit> findByAccountId(Integer accountId);
 	
-	@Query("SELECT distinct on(submit_date) submit_date, account_id FROM attendance_edit WHERE account_id = 1?")
-	List<AttendanceEdit> findByAccountIdDistinctByDate(Integer accountId);
+//	@Query("SELECT distinct on(submit_date) submit_date, account_id FROM attendance_edit WHERE account_id = 1?")
+//	List<AttendanceEdit> findByAccountIdDistinctByDate(Integer accountId);
 }

@@ -32,10 +32,10 @@ public class AdminController {
 
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	@Autowired
 	LeaveStatus leaveStatus;
-	
+
 	@Autowired
 	LeaveStatusRepository leaveStatusRepository;
 
@@ -90,6 +90,8 @@ public class AdminController {
 		user.setName(account.getName());
 		user.setAccountId(account.getAccountId());
 		user.setAuthorise(account.getAuthoriseId());
+		
+		
 
 		return "redirect:/admin";
 	}
@@ -115,10 +117,15 @@ public class AdminController {
 			@RequestParam(name = "name") String name,
 			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "password", defaultValue = "") String password,
-			@RequestParam(name = "authorise_id", defaultValue = "") Integer authoriseId,
+			@RequestParam(name = "authoriseId", defaultValue = "") Integer authoriseId,
 			Model model) {
 		Account account = new Account(name, email, password, authoriseId);
 		accountRepository.save(account);
+		
+		Account record = accountRepository.findByEmail(email).get();
+		
+		LeaveStatus leaveStatus= new LeaveStatus(record.getAccountId(), 10,10);
+		leaveStatusRepository.save(leaveStatus);
 
 		return "redirect:/admin";
 	}

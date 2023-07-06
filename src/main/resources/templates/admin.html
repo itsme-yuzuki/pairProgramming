@@ -8,7 +8,16 @@
 </head>
 
 <body>
-	<header th:replace="header"></header>
+	<header>
+		<br>
+		<h1>勤怠管理システム</h1>
+		<br>
+		<span th:text="${@user.name}+' さんが管理者でログイン中'"></span>
+		<br>
+		<form action="/logout" method="get">
+			<button>ログアウト</button>
+		</form>
+	</header>
 	<hr>
 	<main>
 		<h1>管理者 - アカウント一覧</h1>
