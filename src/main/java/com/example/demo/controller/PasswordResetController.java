@@ -42,36 +42,37 @@ public class PasswordResetController {
 			@RequestParam(name = "accountId") String accountId,
 			@RequestParam("email") String email,
 			Model model) {
-		
-		Integer id;
+
+		Integer id = null;
+
 		try {
 			id = Integer.parseInt(accountId);
 		} catch (Exception e) {
 			model.addAttribute("message", "社員番号は数字で入力してください");
-			return "login";
+			return "passwordReset";
 		}
-		
+
 		//社員番号があっているかどうかチェック
 		Optional<Account> record = accountRepository.findByAccountIdAndEmail(id, email);
-		if(record == null) {
-			model.addAttribute("error", "wrongEmail");
-			return "redirect:/passwordReset";
+
+		if (record.isEmpty()) {			
+			return "redirect:/passwordReset?error=wrong";	
+		} else if (record.isEmpty() == false) {
+			//データベースに仮パスワードを登録
+			int i = 12;
+			String password = PasswordResetGenerator.getRandomString(i);
+			account = record.get();
+			account.setPassword(password);
+			accountRepository.save(account);
+			mailController.send(email, password);
 		}
-		
-		int i = 12;
-		String password = PasswordResetGenerator.getRandomString(i);
 
 		//データベースに仮パスワードを登録
-		
-		account = record.get();
-		account.setPassword(password);
-		accountRepository.save(account);
 
-		mailController.send(email, password);
 		//登録した仮パスワードをメールアドレスに送信
 
 		//ログイン画面にリダイレクト
-		return "redirect:/login";
+		return "redirect:/login?a=sent";
 
 	}
 

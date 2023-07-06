@@ -41,13 +41,15 @@ public class AccountController {
 	//	 ログイン画面を表示
 	@GetMapping({ "/login", "/", "/logout" })
 	public String index(
-			@RequestParam(name = "error", defaultValue = "") String error,
+			@RequestParam(name = "a", defaultValue = "") String a,
 			Model model) {
 		// セッション情報を全てクリアする
 		session.invalidate();
 
-		if (error.equals("notLoggedIn")) {
-			model.addAttribute("message", "ログインしてください");
+		if (a.equals("notLoggedIn")) {
+			model.addAttribute("errorMessage", "ログインしてください");
+		} else if (a.equals("sent")) {
+			model.addAttribute("message", "仮パスワード送信いたしました");
 		}
 
 		// エラーパラメータのチェック
@@ -97,11 +99,11 @@ public class AccountController {
 	public String passwordReset(@RequestParam(name = "error", defaultValue = "") String error,
 			Model model) {
 
-		if (error.equals("wrongEmail")) {
+		if (error.equals("wrong")) {
 			model.addAttribute("message", "メールアドレスが一致しません");
 		}
 
-		return "reset";
+		return "passwordReset";
 	}
 
 	@GetMapping({ "admin/login", "admin/logout" })

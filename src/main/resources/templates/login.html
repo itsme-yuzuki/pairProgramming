@@ -13,6 +13,7 @@
 		<h1>勤怠管理システム</h1>
 	</header>
 	<main>
+		<span th:text="${message}" style="color: blue"></span>
 		<form action="/login" method="post">
 			<input type="text" name="accountId" placeholder="社員番号">
 			<br>
@@ -20,7 +21,7 @@
 			<br>
 			<br>
 			<button>ログイン</button>
-			<br> <span th:text="${message}" style="color: red"></span>
+			<br> <span th:text="${errorMessage}" style="color: red"></span>
 		</form>
 		<br>
 		<a href="/passwordReset">パスワードお忘れの方</a>

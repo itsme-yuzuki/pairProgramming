@@ -24,7 +24,7 @@ public class Aop {
 				|| user.getName().length() == 0) {
 			System.err.println("ログインしていません!");
 
-			return "redirect:/login?error=notLoggedIn";
+			return "redirect:/login?anotLoggedIn";
 		}
 		// Controller内のメソッドの実行
 		return jp.proceed();
