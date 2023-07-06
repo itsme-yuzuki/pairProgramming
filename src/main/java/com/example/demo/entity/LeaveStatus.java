@@ -37,6 +37,11 @@ public class LeaveStatus {
 		this.leaveRemain = leaveRemain;
 	}
 
+	public LeaveStatus(Integer accountId, Integer leaveDefault, Integer leaveRemain) {
+		super();
+		this.accountId = accountId;
+		this.leaveDefault = leaveDefault;
+		this.leaveRemain = leaveRemain;
+	}
 	
-
 }

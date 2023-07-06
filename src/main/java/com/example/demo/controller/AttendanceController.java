@@ -21,6 +21,7 @@ import com.example.demo.entity.AttendanceEdit;
 import com.example.demo.entity.AttendanceType;
 import com.example.demo.entity.Date2023;
 import com.example.demo.entity.Leave;
+import com.example.demo.entity.LeaveStatus;
 import com.example.demo.model.User;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.ApprovalStatusRepository;
@@ -29,6 +30,7 @@ import com.example.demo.repository.AttendanceRepository;
 import com.example.demo.repository.AttendanceTypeRepository;
 import com.example.demo.repository.Date2023Repository;
 import com.example.demo.repository.LeaveRepository;
+import com.example.demo.repository.LeaveStatusRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -82,6 +84,12 @@ public class AttendanceController {
 
 	@Autowired
 	AttendanceEditRepository attendanceEditRepository;
+
+	@Autowired
+	LeaveStatusRepository leaveStatusRepository;
+
+	@Autowired
+	LeaveStatus leaveStatus;
 
 	@GetMapping("/attendance")
 	public String attendance(@RequestParam(name = "status") Integer status,
@@ -532,10 +540,21 @@ public class AttendanceController {
 		Attendance attendance = new Attendance(date, accountId, leaveId, leaveId);
 		attendanceRepository.save(attendance);
 
-		if (id == 4) {
+		if (approvalId == 4) {
+			Optional<LeaveStatus> recordStatus = leaveStatusRepository.findById(leave.getAccountId());
+
+			leaveStatus = recordStatus.get();
+			Integer LeaveRemain = leaveStatus.getLeaveRemain();
+
+			Integer newLeaveRemain = LeaveRemain - 1;
+
+			LeaveStatus newLeaveStatus = new LeaveStatus(leaveStatus.getAccountId(), leaveStatus.getLeaveDefault(),
+					newLeaveRemain);
+			leaveStatusRepository.save(newLeaveStatus);
+
 			model.addAttribute("message", "承認しました");
 		}
-		if (id == 3) {
+		if (approvalId == 3) {
 			model.addAttribute("message", "差し戻ししました");
 		}
 

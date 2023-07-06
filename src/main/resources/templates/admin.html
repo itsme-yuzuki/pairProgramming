@@ -43,7 +43,7 @@
 					<th:block th:if="${accounts.authoriseId == 1}">上位</th:block>
 					<th:block th:if="${accounts.authoriseId == 2}">下位ユーザ</th:block>
 				</td>
-				<form th:action="|admin/${accounts.accountId}/edit|" method="get">
+				<form th:action="|admin/${accounts.accountId}/edit|" method="post">
 					<td><button>編集</button></td>
 				</form>
 				<form th:action="|admin/${accounts.accountId}/delete|" method="post">
