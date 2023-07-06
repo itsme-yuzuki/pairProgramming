@@ -50,7 +50,7 @@ public class AdminController {
 		
 		List<Account> accounts = accountRepository.findAllByOrderByAccountId();
 		model.addAttribute("accounts", accounts);
-		return "admin";
+		return "/admin";
 	}
 
 	//アカウント新規追加画面への遷移
@@ -79,7 +79,7 @@ public class AdminController {
 	}
 
 	//アカウント編集
-	@GetMapping("/admin/{id}/edit")
+	@PostMapping("/admin/{id}/edit")
 	public String editAccount(
 			@PathVariable("id") Integer id,
 			Model model) {
