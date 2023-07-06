@@ -30,6 +30,7 @@
 				<th>パスワード</th>
 				<th>付与済み権限</th>
 				<th></th>
+				<th></th>
 			</tr>
 
 			<tr th:each="accounts:${accounts}">
@@ -44,6 +45,10 @@
 				</td>
 				<form th:action="|admin/${accounts.accountId}/edit|" method="get">
 					<td><button>編集</button></td>
+				</form>
+				<form th:action="|admin/${accounts.accountId}/delete|" method="post">
+					<td><button>削除</button></td>
+					
 				</form>
 			</tr>
 

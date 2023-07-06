@@ -26,4 +26,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 	List<Account> findByAuthoriserId(Integer authoriserId);
 
 	Optional<Account> findByEmail(String email);
+	
+	
 }

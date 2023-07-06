@@ -121,10 +121,12 @@ public class AdminController {
 			Model model) {
 		Account account = new Account(name, email, password, authoriseId);
 		accountRepository.save(account);
+				
+		LeaveStatus leave= leaveStatusRepository.leaveS().get();
+	
 		
-		Account record = accountRepository.findByEmail(email).get();
+		LeaveStatus leaveStatus = new LeaveStatus(leave.getAccountId()+1,10,10);
 		
-		LeaveStatus leaveStatus= new LeaveStatus(record.getAccountId(), 10,10);
 		leaveStatusRepository.save(leaveStatus);
 
 		return "redirect:/admin";
