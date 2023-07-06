@@ -30,25 +30,15 @@ public class Aop {
 		return jp.proceed();
 	}
 
-//	@Around("execution(* com.example.demo.controller.AdminController.*(..))")
-//	public Object checkAdminLogin(ProceedingJoinPoint jp) throws Throwable {
-//
-//		if (user == null || user.getName() == null
-//				|| user.getName().length() == 0) {
-//			System.err.println("ログインしていません!");
-//
-//			return "redirect:/admin/login?error=notLoggedIn";
-//		}
-//		// Controller内のメソッドの実行
-//		return jp.proceed();
-//	}
+	@Around("execution(* com.example.demo.controller.AdminController.*(..))")
+	public Object checkAdminLogin(ProceedingJoinPoint jp) throws Throwable {
 
-//	@After("execution(* com.example.demo.controller.*(..)).*(..))")
-//	public Object Exception(ProceedingJoinPoint jp)  throws Throwable {
-//		Exception e;
-//		
-//		
-//		
-//		return "errorPage";
-//	}
+		if (user == null || user.getName() == null
+				|| user.getName().length() == 0) {
+			System.err.println("ログインしていません!");
+
+			return "redirect:/admin/login?error=notLoggedIn";
+		}
+		return jp.proceed();
+	}
 }

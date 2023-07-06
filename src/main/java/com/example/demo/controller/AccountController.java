@@ -116,4 +116,62 @@ public class AccountController {
 		return "";
 	}
 
+	@GetMapping({ "admin/login", "admin/logout" })
+	public String index(
+			@RequestParam(name = "error", defaultValue = "") String error,
+			Model model) {
+
+		if (error.equals("notLoggedIn")) {
+			model.addAttribute("message", "ログインしてください");
+		}
+		// セッション情報を全てクリアする
+		session.invalidate();
+
+		return "adminLogin";
+	}
+
+	// ログインを実行
+	@PostMapping("/admin/login")
+	public String adminLogin(
+			@RequestParam(name = "accountId", defaultValue = "") String accountId,
+			@RequestParam("password") String password,
+			Model model) {
+
+		Integer id;
+		try {
+			id = Integer.parseInt(accountId);
+		} catch (Exception e) {
+			model.addAttribute("message", "社員番号は数字で入力してください");
+			return "adminLogin";
+		}
+
+		account = null;
+
+		Optional<Account> record = accountRepository.findByAccountIdAndPassword(id, password);
+
+		if (record.isEmpty() == false && record.get().getAuthoriseId() == 0) {
+			account = record.get();
+		}
+
+		if (record.isEmpty() == false && record.get().getAuthoriseId() != 0) {
+			model.addAttribute("message", "管理者権限がありません");
+			return "adminLogin";
+		}
+
+		if (account == null) {
+			model.addAttribute("message", "メールアドレスとパスワードが一致しませんでした");
+			return "adminLogin";
+		}
+
+		leaveStatus = leaveStatusRepository.findById(id).get();
+
+		// セッション管理されたアカウント情報に名前をセット
+		user.setLeaveRemain(leaveStatus.getLeaveRemain());
+		user.setName(account.getName());
+		user.setAccountId(account.getAccountId());
+		user.setAuthorise(account.getAuthoriseId());
+
+		return "redirect:/admin";
+	}
+
 }
