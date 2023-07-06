@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -38,13 +39,30 @@ public class PasswordResetController {
 	//仮パスワードを生成
 	@PostMapping("/reset")
 	public String reset(
-			@RequestParam(name = "accountId") Integer accountId,
-			@RequestParam("email") String email) {
+			@RequestParam(name = "accountId") String accountId,
+			@RequestParam("email") String email,
+			Model model) {
+		
+		Integer id;
+		try {
+			id = Integer.parseInt(accountId);
+		} catch (Exception e) {
+			model.addAttribute("message", "社員番号は数字で入力してください");
+			return "login";
+		}
+		
+		//社員番号があっているかどうかチェック
+		Optional<Account> record = accountRepository.findByAccountIdAndEmail(id, email);
+		if(record == null) {
+			model.addAttribute("error", "wrongEmail");
+			return "redirect:/passwordReset";
+		}
+		
 		int i = 12;
 		String password = PasswordResetGenerator.getRandomString(i);
 
 		//データベースに仮パスワードを登録
-		Optional<Account> record = accountRepository.findById(accountId);
+		
 		account = record.get();
 		account.setPassword(password);
 		accountRepository.save(account);

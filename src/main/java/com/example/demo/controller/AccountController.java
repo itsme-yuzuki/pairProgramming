@@ -102,8 +102,8 @@ public class AccountController {
 	//パスワードリセット作業
 	@PostMapping("/passwordReset")
 	public String passwordReset(
-			@RequestParam("accountId") Integer accountId,
-			@RequestParam("email") String email,
+			@RequestParam(name = "accountId", required = false) Integer accountId,
+			@RequestParam(name = "email", required = false) String email,
 			Model model) {
 
 		Optional<Account> emailCheck = accountRepository.findByAccountIdAndEmail(accountId, email);
