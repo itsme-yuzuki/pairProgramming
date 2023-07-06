@@ -66,7 +66,7 @@ public class AccountController {
 		try {
 			id = Integer.parseInt(accountId);
 		} catch (Exception e) {
-			model.addAttribute("message", "社員番号は数字で入力してください");
+			model.addAttribute("errorMessage", "社員番号は数字で入力してください");
 			return "login";
 		}
 
@@ -79,7 +79,7 @@ public class AccountController {
 		}
 
 		if (account == null) {
-			model.addAttribute("message", "メールアドレスとパスワードが一致しませんでした");
+			model.addAttribute("errorMessage", "メールアドレスとパスワードが一致しませんでした");
 			return "login";
 		}
 

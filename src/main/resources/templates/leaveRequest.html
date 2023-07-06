@@ -21,6 +21,9 @@
 				<th>概要</th>
 				<td>
 					<select name="leaveType">
+						<option value="0">
+							--休暇種類--
+						</option>
 						<option th:each="attendanceType:${attendanceType}" th:value="${attendanceType.attendanceId}">
 							[[${attendanceType.attendanceType}]]
 						</option>

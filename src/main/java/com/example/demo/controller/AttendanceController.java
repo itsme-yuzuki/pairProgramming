@@ -350,6 +350,7 @@ public class AttendanceController {
 		if (arrivingTime.isAfter(leftTime)) {
 			errorMessage.add("時間設定が間違っています");
 		}
+
 		if (errorMessage.size() > 0) {
 			model.addAttribute("errorMessage", errorMessage);
 			return editAttendance(attendance.getDate(), model);
@@ -440,6 +441,9 @@ public class AttendanceController {
 		if (account.getAuthoriserId() == null) {
 			errorMessage.add("承認者を設定してください");
 		}
+		if (leaveType == 0) {
+			errorMessage.add("休暇種類を選んでください");
+		}
 		if (errorMessage.size() > 0) {
 			model.addAttribute("errorMessage", errorMessage);
 			return leaveRequest(model);
@@ -512,7 +516,7 @@ public class AttendanceController {
 	public String index(
 			Model model) {
 		List<Leave> pendings = leaveRepository.findByAuthoriserIdAndApprovalId(user.getAccountId(), 2);
-		
+
 		List<Account> account = accountRepository.findAll();
 
 		model.addAttribute("pendings", pendings);

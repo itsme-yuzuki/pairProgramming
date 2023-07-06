@@ -64,6 +64,7 @@ public class AccountController2 {
 	public String accountDetail(
 			@RequestParam(name = "oldPassword") String oldPassword,
 			@RequestParam(name = "newPassword", defaultValue = "") String newPassword,
+			@RequestParam(name = "comPassword", defaultValue = "") String comPassword,
 			Model model) {
 		Optional<Account> record = accountRepository.findById(user.getAccountId());
 		//		Optional<Account> record = accountRepository.findById(1);
@@ -73,11 +74,15 @@ public class AccountController2 {
 		List<String> errormessage = new ArrayList<String>();
 
 		if (account.getPassword().equals(oldPassword) == false) {
-			errormessage.add("パスワードが不一致");
+			errormessage.add("登録中のパスワードと一致しません");
 		}
 
-		if (newPassword.equals("")) {
-			errormessage.add("新しいパスワードを入力してください");
+		if (newPassword.equals("") || newPassword.length() < 10) {
+			errormessage.add("新しいパスワードは最低10桁で設定してください");
+		}
+
+		if (comPassword.equals(newPassword) == false) {
+			errormessage.add("確認用のパスワードが間違っています");
 		}
 
 		if (errormessage.size() > 0) {

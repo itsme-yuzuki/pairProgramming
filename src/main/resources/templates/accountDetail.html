@@ -40,13 +40,17 @@
 					<th>新しいパスワード</th>
 					<td><input type="password" name="newPassword"></td>
 				</tr>
+				<tr>
+					<th>新しいパスワード（確認用）</th>
+					<td><input type="password" name="comPassword"></td>
+				</tr>
 			</table>
 			<button>パスワード変更</button>
 		</form>
 		<th:block th:each="errormessage: ${errormessage}">
 			<span style="color: red">[[${errormessage}]]</span><br>
 		</th:block>
-		<span th:text="${message}" style="color:red"></span>
+		<span th:text="${message}" style="color:blue"></span>
 	</main>
 </body>
 
