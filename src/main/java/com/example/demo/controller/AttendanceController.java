@@ -504,6 +504,7 @@ public class AttendanceController {
 	public String index(
 			Model model) {
 		List<Leave> pendings = leaveRepository.findByAuthoriserIdAndApprovalId(user.getAccountId(), 2);
+		
 		List<Account> account = accountRepository.findAll();
 
 		model.addAttribute("pendings", pendings);

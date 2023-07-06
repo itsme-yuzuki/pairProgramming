@@ -35,7 +35,7 @@
 								<option th:each="attendanceType:${attendanceType}"
 									th:value="${attendanceType.attendanceId}" th:if="${attendanceType.attendanceId == 1 || 
 									attendanceType.attendanceId == 3 || 
-									attendanceType.attendanceId == 5}">
+									attendanceType.attendanceId == 5}" th:selected="${attendance.attendanceId1 == attendanceType.attendanceId}">
 									[[${attendanceType.attendanceType}]]
 								</option>
 							</select>
@@ -44,7 +44,7 @@
 							<select name="attendanceId2">
 								<option th:each="attendanceType:${attendanceType}"
 									th:value="${attendanceType.attendanceId}" th:if="${attendanceType.attendanceId == 2 || 
-									attendanceType.attendanceId == 4}">
+									attendanceType.attendanceId == 4}" th:selected="${attendance.attendanceId2 == attendanceType.attendanceId}">
 									[[${attendanceType.attendanceType}]]
 								</option>
 							</select>

@@ -41,7 +41,6 @@ public class AccountController {
 	//	 ログイン画面を表示
 	@GetMapping({ "/login", "/", "/logout" })
 	public String index(
-			@RequestParam(name = "password", defaultValue = "") String password,
 			@RequestParam(name = "error", defaultValue = "") String error,
 			Model model) {
 		// セッション情報を全てクリアする
@@ -52,12 +51,6 @@ public class AccountController {
 		}
 
 		// エラーパラメータのチェック
-		if (password.equals("forget")) {
-			return "passwordReset";
-		} else if (password.equals("reset")) {
-			model.addAttribute("message", "パスワード送信済み");
-		}
-
 		return "login";
 	}
 
@@ -99,25 +92,20 @@ public class AccountController {
 		return "redirect:/index";
 	}
 
-	//パスワードリセット作業
-	@PostMapping("/passwordReset")
-	public String passwordReset(
-			@RequestParam("accountId") Integer accountId,
-			@RequestParam("email") String email,
+	//	//パスワードリセット作業
+	@GetMapping("/passwordReset")
+	public String passwordReset(@RequestParam(name = "error", defaultValue = "") String error,
 			Model model) {
 
-		Optional<Account> emailCheck = accountRepository.findByAccountIdAndEmail(accountId, email);
-
-		if (emailCheck.isEmpty()) {
-			model.addAttribute("message", "社員番号とメールアドレスが不一致");
-			return "passwordReset";
+		if (error.equals("wrongEmail")) {
+			model.addAttribute("message", "メールアドレスが一致しません");
 		}
 
-		return "";
+		return "reset";
 	}
 
 	@GetMapping({ "admin/login", "admin/logout" })
-	public String index(
+	public String adminIndex(
 			@RequestParam(name = "error", defaultValue = "") String error,
 			Model model) {
 

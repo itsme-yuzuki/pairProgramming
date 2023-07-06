@@ -39,10 +39,10 @@
 					[[${approvalStatus.approvalStatus}]]</th:block>
 			</td>
 			<td>
-				<form th:action="|/leave/${leave.id}/delete|" method="post">
-					<input type="hidden" th:value="${leave.id}">
-					<button>削除</button>
-				</form>
+					<form th:action="|/leave/${leave.id}/delete|" method="post">
+						<input type="hidden" th:value="${leave.id}">
+						<button>削除</button>
+					</form>
 			</td>
 			<td>
 				<th:block th:if="${leave.approvalId == 1}">

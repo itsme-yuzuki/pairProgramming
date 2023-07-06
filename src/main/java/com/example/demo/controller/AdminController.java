@@ -42,8 +42,12 @@ public class AdminController {
 
 	//getでアカウント一覧を表示
 	@GetMapping("/admin")
-	public String index(
-			Model model) {
+	public String index(@RequestParam(name = "error", defaultValue = "0") Integer error, Model model) {
+		
+		if(error == 1) {
+			model.addAttribute("errorMessage","ログイン中のユーザーを削除できません");
+		}
+		
 		List<Account> accounts = accountRepository.findAllByOrderByAccountId();
 		model.addAttribute("accounts", accounts);
 		return "admin";
@@ -102,23 +106,22 @@ public class AdminController {
 	}
 
 	//アカウント削除
-	@PostMapping("/admin/{id}/delete")
+	@PostMapping("/admin/{idd}/delete")
 	public String deleteAccount(
-			@PathVariable("id") Integer id,
+			@PathVariable("idd") Integer id,
 			Model model) {
-		
+
 		account = accountRepository.findByAccountId(id).get();
-		
-		if(account.getAccountId() == user.getAccountId()) {
-			model.addAttribute("errorMessage","ログイン中ユーザは削除できません");
-			return index(model);
+
+		if (account.getAccountId() == user.getAccountId()) {
+			return "redirect:/admin?error=1";
 		}
-		
+
 		accountRepository.deleteById(id);
-		
+
 		leaveStatusRepository.deleteById(id);
 
-		return "redirect:/account";
+		return "redirect:/admin";
 	}
 
 }
