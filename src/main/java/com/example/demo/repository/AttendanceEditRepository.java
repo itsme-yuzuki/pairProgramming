@@ -16,9 +16,9 @@ public interface AttendanceEditRepository extends JpaRepository<AttendanceEdit, 
 	Optional<AttendanceEdit> findByDateAndAccountId(String date, Integer accountId);
 
 	Optional<AttendanceEdit> findByDateLike(String date);
-	
+
 	List<AttendanceEdit> findByAccountId(Integer accountId);
-	
-	@Query("SELECT distinct on(submit_date) submit_date, account_id FROM attendance_edit WHERE account_id = 1?")
+
+	@Query(value = "SELECT distinct on(submit_date) * FROM attendance_edit WHERE account_id = ?1", nativeQuery = true )
 	List<AttendanceEdit> findByAccountIdDistinctByDate(Integer accountId);
 }

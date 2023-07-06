@@ -239,8 +239,8 @@ public class AttendanceController {
 
 			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountIdDistinctByDate(accountId);
 
-//			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountId(accountId);
-			
+			//			List<AttendanceEdit> attendanceEdit = attendanceEditRepository.findByAccountId(accountId);
+
 			model.addAttribute("attendanceEdit", attendanceEdit);
 
 			if (month == null) {
